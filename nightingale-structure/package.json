@@ -3,7 +3,6 @@
   "description": "Nightingale Structure",
   "files": [
     "dist",
-    "src/af-confidence",
     "src"
   ],
   "main": "dist/index.js",
