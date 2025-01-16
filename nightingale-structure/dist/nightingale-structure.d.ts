@@ -43,7 +43,7 @@ declare class NightingaleStructure extends NightingaleStructure_base {
     "protein-accession"?: string;
     "structure-id": string;
     "custom-download-url"?: string;
-    "lipscore-array"?: Array<number>;
+    "lipscore-array": Array<number>;
     selectedMolecule?: {
         id: string;
         mappings?: Mapping[];

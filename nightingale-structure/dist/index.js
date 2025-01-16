@@ -4811,7 +4811,7 @@ function isList(maybeList) {
   return Boolean(maybeList && maybeList[IS_LIST_SYMBOL]);
 }
 
-var List$2 = /*@__PURE__*/(function (IndexedCollection) {
+var List$3 = /*@__PURE__*/(function (IndexedCollection) {
   function List(value) {
     var empty = emptyList();
     if (value === undefined || value === null) {
@@ -5032,9 +5032,9 @@ var List$2 = /*@__PURE__*/(function (IndexedCollection) {
   return List;
 }(IndexedCollection));
 
-List$2.isList = isList;
+List$3.isList = isList;
 
-var ListPrototype = List$2.prototype;
+var ListPrototype = List$3.prototype;
 ListPrototype[IS_LIST_SYMBOL] = true;
 ListPrototype[DELETE] = ListPrototype.remove;
 ListPrototype.merge = ListPrototype.concat;
@@ -6462,7 +6462,7 @@ mixin(Collection, {
 
   toList: function toList() {
     // Use Late Binding here to solve the circular dependency.
-    return List$2(isKeyed(this) ? this.valueSeq() : this);
+    return List$3(isKeyed(this) ? this.valueSeq() : this);
   },
 
   // ### Common JavaScript methods and properties
@@ -7235,7 +7235,7 @@ var Record = function Record(defaultValues, name) {
       }
     }
     this.__ownerID = undefined;
-    this._values = List$2().withMutations(function (l) {
+    this._values = List$3().withMutations(function (l) {
       l.setSize(this$1$1._keys.length);
       KeyedCollection(values).forEach(function (v, k) {
         l.set(this$1$1._indices[k], v === this$1$1._defaultValues[k] ? undefined : v);
@@ -23737,7 +23737,7 @@ function bin(state, length) {
 /**
  * decode string
  */
-function str$9(state, length) {
+function str$a(state, length) {
     var value = utf8Read(state.buffer, state.offset, length);
     state.offset += length;
     return value;
@@ -23779,7 +23779,7 @@ function parse$2(state) {
     if ((type & 0xe0) === 0xa0) {
         length = type & 0x1f;
         state.offset++;
-        return str$9(state, length);
+        return str$a(state, length);
     }
     // Negative FixInt
     if ((type & 0xe0) === 0xe0) {
@@ -23859,17 +23859,17 @@ function parse$2(state) {
         case 0xd9:
             length = state.dataView.getUint8(state.offset + 1);
             state.offset += 2;
-            return str$9(state, length);
+            return str$a(state, length);
         // str 16
         case 0xda:
             length = state.dataView.getUint16(state.offset + 1);
             state.offset += 3;
-            return str$9(state, length);
+            return str$a(state, length);
         // str 32
         case 0xdb:
             length = state.dataView.getUint32(state.offset + 1);
             state.offset += 5;
-            return str$9(state, length);
+            return str$a(state, length);
         // array 16
         case 0xdc:
             length = state.dataView.getUint16(state.offset + 1);
@@ -24184,17 +24184,17 @@ function createTable(key, schema, frame, aliases) {
  *
  * @author molstar/ciftools package
  */
-var Schema$6 = Column.Schema;
-var str$8 = Schema$6.str;
-var int$6 = Schema$6.int;
-var float$5 = Schema$6.float;
-var coord$1 = Schema$6.coord;
-var Aliased$3 = Schema$6.Aliased;
-var Matrix$2 = Schema$6.Matrix;
-var Vector$1 = Schema$6.Vector;
-var lstr$2 = Schema$6.lstr;
-var List$1 = Schema$6.List;
-var mmCIF_Schema = {
+var Schema$7 = Column.Schema;
+var str$9 = Schema$7.str;
+var int$7 = Schema$7.int;
+var float$6 = Schema$7.float;
+var coord$2 = Schema$7.coord;
+var Aliased$4 = Schema$7.Aliased;
+var Matrix$3 = Schema$7.Matrix;
+var Vector$2 = Schema$7.Vector;
+var lstr$3 = Schema$7.lstr;
+var List$2 = Schema$7.List;
+var mmCIF_Schema$1 = {
     /**
      * Data items in the ATOM_SITE category record details about
      * the atom sites in a macromolecular crystal structure, such as
@@ -24216,19 +24216,19 @@ var mmCIF_Schema = {
          * may be provided by an author in order to match the identification
          * used in the publication that describes the structure.
          */
-        auth_asym_id: str$8,
+        auth_asym_id: str$9,
         /**
          * An alternative identifier for _atom_site.label_atom_id that
          * may be provided by an author in order to match the identification
          * used in the publication that describes the structure.
          */
-        auth_atom_id: str$8,
+        auth_atom_id: str$9,
         /**
          * An alternative identifier for _atom_site.label_comp_id that
          * may be provided by an author in order to match the identification
          * used in the publication that describes the structure.
          */
-        auth_comp_id: str$8,
+        auth_comp_id: str$9,
         /**
          * An alternative identifier for _atom_site.label_seq_id that
          * may be provided by an author in order to match the identification
@@ -24249,7 +24249,7 @@ var mmCIF_Schema = {
          * scheme used here must match the scheme used in the publication
          * that describes the structure.
          */
-        auth_seq_id: int$6,
+        auth_seq_id: int$7,
         /**
          * Isotropic atomic displacement parameter, or equivalent isotropic
          * atomic displacement parameter, B~eq~, calculated from the
@@ -24273,34 +24273,34 @@ var mmCIF_Schema = {
          * The particular type of ADP stored in this item is qualified
          * by item _refine.pdbx_adp_type.
          */
-        B_iso_or_equiv: float$5,
+        B_iso_or_equiv: float$6,
         /**
          * The x atom-site coordinate in angstroms specified according to
          * a set of orthogonal Cartesian axes related to the cell axes as
          * specified by the description given in
          * _atom_sites.Cartn_transform_axes.
          */
-        Cartn_x: coord$1,
+        Cartn_x: coord$2,
         /**
          * The y atom-site coordinate in angstroms specified according to
          * a set of orthogonal Cartesian axes related to the cell axes as
          * specified by the description given in
          * _atom_sites.Cartn_transform_axes.
          */
-        Cartn_y: coord$1,
+        Cartn_y: coord$2,
         /**
          * The z atom-site coordinate in angstroms specified according to
          * a set of orthogonal Cartesian axes related to the cell axes as
          * specified by the description given in
          * _atom_sites.Cartn_transform_axes.
          */
-        Cartn_z: coord$1,
+        Cartn_z: coord$2,
         /**
          * The group of atoms to which the atom site belongs. This data
          * item is provided for compatibility with the original Protein
          * Data Bank format, and only for that purpose.
          */
-        group_PDB: Aliased$3(str$8),
+        group_PDB: Aliased$4(str$9),
         /**
          * The value of _atom_site.id must uniquely identify a record in the
          * ATOM_SITE list.
@@ -24324,7 +24324,7 @@ var mmCIF_Schema = {
          * identify an atom site as for non-polymers _atom_site.label_seq_id
          * is '.'.
          */
-        id: int$6,
+        id: int$7,
         /**
          * A place holder to indicate alternate conformation. The alternate conformation
          * can be an entire polymer chain, or several residues or
@@ -24333,7 +24333,7 @@ var mmCIF_Schema = {
          * non-blank alternate location indicator must be used for
          * each of the atomic positions.
          */
-        label_alt_id: str$8,
+        label_alt_id: str$9,
         /**
          * A component of the identifier for this atom site.
          * For further details, see the definition of the STRUCT_ASYM
@@ -24342,82 +24342,82 @@ var mmCIF_Schema = {
          * This data item is a pointer to _struct_asym.id in the
          * STRUCT_ASYM category.
          */
-        label_asym_id: str$8,
+        label_asym_id: str$9,
         /**
          * A component of the identifier for this atom site.
          *
          * This data item is a pointer to _chem_comp_atom.atom_id in the
          * CHEM_COMP_ATOM category.
          */
-        label_atom_id: str$8,
+        label_atom_id: str$9,
         /**
          * A component of the identifier for this atom site.
          *
          * This data item is a pointer to _chem_comp.id in the CHEM_COMP
          * category.
          */
-        label_comp_id: str$8,
+        label_comp_id: str$9,
         /**
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        label_entity_id: str$8,
+        label_entity_id: str$9,
         /**
          * This data item is a pointer to _entity_poly_seq.num in the
          * ENTITY_POLY_SEQ category.
          */
-        label_seq_id: int$6,
+        label_seq_id: int$7,
         /**
          * The fraction of the atom type present at this site.
          * The sum of the occupancies of all the atom types at this site
          * may not exceed 1.0 unless it is a dummy site.
          */
-        occupancy: float$5,
+        occupancy: float$6,
         /**
          * This data item is a pointer to _atom_type.symbol in the
          * ATOM_TYPE category.
          */
-        type_symbol: str$8,
+        type_symbol: str$9,
         /**
          * PDB insertion code.
          */
-        pdbx_PDB_ins_code: str$8,
+        pdbx_PDB_ins_code: str$9,
         /**
          * PDB model number.
          */
-        pdbx_PDB_model_num: int$6,
+        pdbx_PDB_model_num: int$7,
         /**
          * The net integer charge assigned to this atom. This is the
          * formal charge assignment normally found in chemical diagrams.
          */
-        pdbx_formal_charge: int$6,
+        pdbx_formal_charge: int$7,
         /**
          * This data item is an ordinal which identifies distinct chemical components in the atom_site category, both
          * polymeric and non-polymeric.
          */
-        pdbx_label_index: int$6,
+        pdbx_label_index: int$7,
         /**
          * The name of additional external databases with residue level mapping.
          */
-        pdbx_sifts_xref_db_name: str$8,
+        pdbx_sifts_xref_db_name: str$9,
         /**
          * The accession code related to the additional external database entry.
          */
-        pdbx_sifts_xref_db_acc: str$8,
+        pdbx_sifts_xref_db_acc: str$9,
         /**
          * The sequence position of the external database entry that corresponds
          * to the residue mapping defined by the SIFTS process.
          */
-        pdbx_sifts_xref_db_num: str$8,
+        pdbx_sifts_xref_db_num: str$9,
         /**
          * Describes the residue type of the given UniProt match
          */
-        pdbx_sifts_xref_db_res: str$8,
+        pdbx_sifts_xref_db_res: str$9,
         /**
          * The model id corresponding to the atom site.
          * This data item is a pointer to _ihm_model_list.model_id
          * in the IHM_MODEL_LIST category.
          */
-        ihm_model_id: int$6,
+        ihm_model_id: int$7,
     },
     /**
      * Data items in the ATOM_SITE_ANISOTROP category record details
@@ -24430,12 +24430,12 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.id in the ATOM_SITE
          * category.
          */
-        id: int$6,
+        id: int$7,
         /**
          * This data item is a pointer to _atom_type.symbol in the
          * ATOM_TYPE category.
          */
-        type_symbol: str$8,
+        type_symbol: str$9,
         /**
          * The elements of the standard anisotropic atomic
          * displacement matrix U, which appears in the structure-factor
@@ -24455,52 +24455,52 @@ var mmCIF_Schema = {
          * The unique elements of the real symmetric matrix are
          * entered by row.
          */
-        U: Matrix$2(3, 3),
+        U: Matrix$3(3, 3),
         /**
          * The standard uncertainty (estimated standard deviation)
          * of _atom_site_anisotrop.U.
          */
-        U_esd: Matrix$2(3, 3),
+        U_esd: Matrix$3(3, 3),
         /**
          * Pointer to _atom_site.auth_seq_id
          */
-        pdbx_auth_seq_id: str$8,
+        pdbx_auth_seq_id: str$9,
         /**
          * Pointer to _atom_site.auth_asym_id
          */
-        pdbx_auth_asym_id: str$8,
+        pdbx_auth_asym_id: str$9,
         /**
          * Pointer to _atom_site.auth_atom_id
          */
-        pdbx_auth_atom_id: str$8,
+        pdbx_auth_atom_id: str$9,
         /**
          * Pointer to _atom_site.auth_comp_id
          */
-        pdbx_auth_comp_id: str$8,
+        pdbx_auth_comp_id: str$9,
         /**
          * Pointer to _atom_site.label_seq_id
          */
-        pdbx_label_seq_id: int$6,
+        pdbx_label_seq_id: int$7,
         /**
          * Pointer to _atom_site.label_alt_id.
          */
-        pdbx_label_alt_id: str$8,
+        pdbx_label_alt_id: str$9,
         /**
          * Pointer to _atom_site.label_asym_id
          */
-        pdbx_label_asym_id: str$8,
+        pdbx_label_asym_id: str$9,
         /**
          * Pointer to _atom_site.label_atom_id
          */
-        pdbx_label_atom_id: str$8,
+        pdbx_label_atom_id: str$9,
         /**
          * Pointer to _atom_site.label_comp_id
          */
-        pdbx_label_comp_id: str$8,
+        pdbx_label_comp_id: str$9,
         /**
          * Pointer to _atom_site.pdbx_PDB_ins_code
          */
-        pdbx_PDB_ins_code: str$8,
+        pdbx_PDB_ins_code: str$9,
     },
     /**
      * Data items in the ATOM_SITES category record details about
@@ -24511,7 +24511,7 @@ var mmCIF_Schema = {
         /**
          * This data item is a pointer to _entry.id in the ENTRY category.
          */
-        entry_id: str$8,
+        entry_id: str$9,
         /**
          * The elements of the 3x3 matrix used to transform Cartesian
          * coordinates in the ATOM_SITE category to fractional coordinates
@@ -24524,7 +24524,7 @@ var mmCIF_Schema = {
          * |y'|~fractional~ = |21 22 23| |y|~Cartesian~ + |2|
          * |z'|               |31 32 33| |z|              |3|
          */
-        fract_transf_matrix: Matrix$2(3, 3),
+        fract_transf_matrix: Matrix$3(3, 3),
         /**
          * The elements of the three-element vector used to transform
          * Cartesian coordinates in the ATOM_SITE category to fractional
@@ -24537,7 +24537,7 @@ var mmCIF_Schema = {
          * |y'|~fractional~ = |21 22 23| |y|~Cartesian~ + |2|
          * |z'|               |31 32 33| |z|              |3|
          */
-        fract_transf_vector: Vector$1(3),
+        fract_transf_vector: Vector$2(3),
     },
     /**
      * Data items in the AUDIT_AUTHOR category record details about
@@ -24550,16 +24550,16 @@ var mmCIF_Schema = {
          * The family name(s), followed by a comma and including any
          * dynastic components, precedes the first name(s) or initial(s).
          */
-        name: str$8,
+        name: str$9,
         /**
          * This data item defines the order of the author's name in the
          * list of audit authors.
          */
-        pdbx_ordinal: int$6,
+        pdbx_ordinal: int$7,
         /**
          * The Open Researcher and Contributor ID (ORCID).
          */
-        identifier_ORCID: str$8,
+        identifier_ORCID: str$9,
     },
     /**
      * Data items in the AUDIT_CONFORM category describe the
@@ -24571,17 +24571,17 @@ var mmCIF_Schema = {
          * A file name or uniform resource locator (URL) for the
          * dictionary to which the current data block conforms.
          */
-        dict_location: str$8,
+        dict_location: str$9,
         /**
          * The string identifying the highest-level dictionary defining
          * data names used in this file.
          */
-        dict_name: str$8,
+        dict_name: str$9,
         /**
          * The version number of the dictionary to which the current
          * data block conforms.
          */
-        dict_version: str$8,
+        dict_version: str$9,
     },
     /**
      * Data items in the CELL category record details about the
@@ -24591,34 +24591,34 @@ var mmCIF_Schema = {
         /**
          * Unit-cell angle alpha of the reported structure in degrees.
          */
-        angle_alpha: float$5,
+        angle_alpha: float$6,
         /**
          * Unit-cell angle beta of the reported structure in degrees.
          */
-        angle_beta: float$5,
+        angle_beta: float$6,
         /**
          * Unit-cell angle gamma of the reported structure in degrees.
          */
-        angle_gamma: float$5,
+        angle_gamma: float$6,
         /**
          * This data item is a pointer to _entry.id in the ENTRY category.
          */
-        entry_id: str$8,
+        entry_id: str$9,
         /**
          * Unit-cell length a corresponding to the structure reported in
          * angstroms.
          */
-        length_a: float$5,
+        length_a: float$6,
         /**
          * Unit-cell length b corresponding to the structure reported in
          * angstroms.
          */
-        length_b: float$5,
+        length_b: float$6,
         /**
          * Unit-cell length c corresponding to the structure reported in
          * angstroms.
          */
-        length_c: float$5,
+        length_c: float$6,
         /**
          * The number of the polymeric chains in a unit cell. In the case
          * of heteropolymers, Z is the number of occurrences of the most
@@ -24627,12 +24627,12 @@ var mmCIF_Schema = {
          * This data item is provided for compatibility with the original
          * Protein Data Bank format, and only for that purpose.
          */
-        Z_PDB: int$6,
+        Z_PDB: int$7,
         /**
          * To further identify unique axis if necessary.  E.g., P 21 with
          * an unique C axis will have 'C' in this field.
          */
-        pdbx_unique_axis: str$8,
+        pdbx_unique_axis: str$9,
     },
     /**
      * Data items in the CHEM_COMP category give details about each
@@ -24664,11 +24664,11 @@ var mmCIF_Schema = {
          * are listed purely in alphabetic order of their symbol. This
          * is the 'Hill' system used by Chemical Abstracts.
          */
-        formula: str$8,
+        formula: str$9,
         /**
          * Formula mass in daltons of the chemical component.
          */
-        formula_weight: float$5,
+        formula_weight: float$6,
         /**
          * The value of _chem_comp.id must uniquely identify each item in
          * the CHEM_COMP list.
@@ -24679,7 +24679,7 @@ var mmCIF_Schema = {
          * For nucleic acid polymer entities, this is the one-letter code
          * for the base.
          */
-        id: str$8,
+        id: str$9,
         /**
          * 'yes' indicates that this is a 'standard' monomer, 'no'
          * indicates that it is 'nonstandard'. Nonstandard monomers
@@ -24687,22 +24687,22 @@ var mmCIF_Schema = {
          * _chem_comp.mon_nstd_parent, _chem_comp.mon_nstd_class and
          * _chem_comp.mon_nstd_details data items.
          */
-        mon_nstd_flag: Aliased$3(lstr$2),
+        mon_nstd_flag: Aliased$4(lstr$3),
         /**
          * The full name of the component.
          */
-        name: str$8,
+        name: str$9,
         /**
          * For standard polymer components, the type of the monomer.
          * Note that monomers that will form polymers are of three types:
          * linking monomers, monomers with some type of N-terminal (or 5')
          * cap and monomers with some type of C-terminal (or 3') cap.
          */
-        type: Aliased$3(lstr$2),
+        type: Aliased$4(lstr$3),
         /**
          * Synonym list for the component.
          */
-        pdbx_synonyms: List$1(';', function (x) { return x; }),
+        pdbx_synonyms: List$2(';', function (x) { return x; }),
     },
     /**
      * Data items in the CHEM_COMP_BOND category record details about
@@ -24717,37 +24717,37 @@ var mmCIF_Schema = {
          * This data item is a pointer to _chem_comp_atom.atom_id in the
          * CHEM_COMP_ATOM category.
          */
-        atom_id_1: str$8,
+        atom_id_1: str$9,
         /**
          * The ID of the second of the two atoms that define the bond.
          *
          * This data item is a pointer to _chem_comp_atom.atom_id in the
          * CHEM_COMP_ATOM category.
          */
-        atom_id_2: str$8,
+        atom_id_2: str$9,
         /**
          * This data item is a pointer to _chem_comp.id in the CHEM_COMP
          * category.
          */
-        comp_id: str$8,
+        comp_id: str$9,
         /**
          * The value that should be taken as the target for the chemical
          * bond associated with the specified atoms, expressed as a bond
          * order.
          */
-        value_order: Aliased$3(lstr$2),
+        value_order: Aliased$4(lstr$3),
         /**
          * Ordinal index for the component bond list.
          */
-        pdbx_ordinal: int$6,
+        pdbx_ordinal: int$7,
         /**
          * Stereochemical configuration across a double bond.
          */
-        pdbx_stereo_config: Aliased$3(lstr$2),
+        pdbx_stereo_config: Aliased$4(lstr$3),
         /**
          * A flag indicating an aromatic bond.
          */
-        pdbx_aromatic_flag: Aliased$3(lstr$2),
+        pdbx_aromatic_flag: Aliased$4(lstr$3),
     },
     /**
      * Data items in the CITATION category record details about the
@@ -24759,12 +24759,12 @@ var mmCIF_Schema = {
          * The name of the publisher of the citation; relevant
          * for books or book chapters.
          */
-        book_publisher: str$8,
+        book_publisher: str$9,
         /**
          * The country/region of publication; relevant for books
          * and book chapters.
          */
-        country: str$8,
+        country: str$9,
         /**
          * The value of _citation.id must uniquely identify a record in the
          * CITATION list.
@@ -24776,65 +24776,65 @@ var mmCIF_Schema = {
          * Note that this item need not be a number; it can be any unique
          * identifier.
          */
-        id: str$8,
+        id: str$9,
         /**
          * Abbreviated name of the cited journal as given in the
          * Chemical Abstracts Service Source Index.
          */
-        journal_abbrev: str$8,
+        journal_abbrev: str$9,
         /**
          * The American Society for Testing and Materials (ASTM) code
          * assigned to the journal cited (also referred to as the CODEN
          * designator of the Chemical Abstracts Service); relevant for
          * journal articles.
          */
-        journal_id_ASTM: str$8,
+        journal_id_ASTM: str$9,
         /**
          * The Cambridge Structural Database (CSD) code assigned to the
          * journal cited; relevant for journal articles. This is also the
          * system used at the Protein Data Bank (PDB).
          */
-        journal_id_CSD: str$8,
+        journal_id_CSD: str$9,
         /**
          * The International Standard Serial Number (ISSN) code assigned to
          * the journal cited; relevant for journal articles.
          */
-        journal_id_ISSN: str$8,
+        journal_id_ISSN: str$9,
         /**
          * Volume number of the journal cited; relevant for journal
          * articles.
          */
-        journal_volume: str$8,
+        journal_volume: str$9,
         /**
          * The first page of the citation; relevant for journal
          * articles, books and book chapters.
          */
-        page_first: str$8,
+        page_first: str$9,
         /**
          * The last page of the citation; relevant for journal
          * articles, books and book chapters.
          */
-        page_last: str$8,
+        page_last: str$9,
         /**
          * The title of the citation; relevant for journal articles, books
          * and book chapters.
          */
-        title: str$8,
+        title: str$9,
         /**
          * The year of the citation; relevant for journal articles, books
          * and book chapters.
          */
-        year: int$6,
+        year: int$7,
         /**
          * Document Object Identifier used by doi.org to uniquely
          * specify bibliographic entry.
          */
-        pdbx_database_id_DOI: str$8,
+        pdbx_database_id_DOI: str$9,
         /**
          * Ascession number used by PubMed to categorize a specific
          * bibliographic entry.
          */
-        pdbx_database_id_PubMed: int$6,
+        pdbx_database_id_PubMed: int$7,
     },
     /**
      * Data items in the CITATION_AUTHOR category record details
@@ -24846,7 +24846,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _citation.id in the CITATION
          * category.
          */
-        citation_id: str$8,
+        citation_id: str$9,
         /**
          * Name of an author of the citation; relevant for journal
          * articles, books and book chapters.
@@ -24854,12 +24854,12 @@ var mmCIF_Schema = {
          * The family name(s), followed by a comma and including any
          * dynastic components, precedes the first name(s) or initial(s).
          */
-        name: str$8,
+        name: str$9,
         /**
          * This data item defines the order of the author's name in the
          * list of authors of a citation.
          */
-        ordinal: int$6,
+        ordinal: int$7,
     },
     /**
      * Data items in the DATABASE_2 category record details about the
@@ -24879,12 +24879,12 @@ var mmCIF_Schema = {
         /**
          * An abbreviation that identifies the database.
          */
-        database_id: Aliased$3(lstr$2),
+        database_id: Aliased$4(lstr$3),
         /**
          * The code assigned by the database identified in
          * _database_2.database_id.
          */
-        database_code: str$8,
+        database_code: str$9,
     },
     /**
      * Data items in the ENTITY category record details (such as
@@ -24921,11 +24921,11 @@ var mmCIF_Schema = {
         /**
          * A description of special aspects of the entity.
          */
-        details: str$8,
+        details: str$9,
         /**
          * Formula mass in daltons of the entity.
          */
-        formula_weight: float$5,
+        formula_weight: float$6,
         /**
          * The value of _entity.id must uniquely identify a record in the
          * ENTITY list.
@@ -24933,7 +24933,7 @@ var mmCIF_Schema = {
          * Note that this item need not be a number; it can be any unique
          * identifier.
          */
-        id: str$8,
+        id: str$9,
         /**
          * The method by which the sample for the entity was produced.
          * Entities isolated directly from natural sources (tissues, soil
@@ -24942,7 +24942,7 @@ var mmCIF_Schema = {
          * manipulated sources are expected to have further information in
          * the ENTITY_SRC_GEN category.
          */
-        src_method: Aliased$3(lstr$2),
+        src_method: Aliased$4(lstr$3),
         /**
          * Defines the type of the entity.
          *
@@ -24955,30 +24955,30 @@ var mmCIF_Schema = {
          * Water entities are not expected to have corresponding
          * entries in the ENTITY category.
          */
-        type: Aliased$3(lstr$2),
+        type: Aliased$4(lstr$3),
         /**
          * A description of the entity.
          *
          * Corresponds to the compound name in the PDB format.
          */
-        pdbx_description: List$1(',', function (x) { return x; }),
+        pdbx_description: List$2(',', function (x) { return x; }),
         /**
          * A place holder for the number of molecules of the entity in
          * the entry.
          */
-        pdbx_number_of_molecules: int$6,
+        pdbx_number_of_molecules: int$7,
         /**
          * Details about any entity mutation(s).
          */
-        pdbx_mutation: str$8,
+        pdbx_mutation: str$9,
         /**
          * Entity fragment description(s).
          */
-        pdbx_fragment: str$8,
+        pdbx_fragment: str$9,
         /**
          * Enzyme Commission (EC) number(s)
          */
-        pdbx_ec: List$1(',', function (x) { return x; }),
+        pdbx_ec: List$2(',', function (x) { return x; }),
     },
     /**
      * Data items in the ENTITY_POLY category record details about the
@@ -24989,26 +24989,26 @@ var mmCIF_Schema = {
         /**
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * A flag to indicate whether the polymer contains at least
          * one monomer-to-monomer link different from that implied by
          * _entity_poly.type.
          */
-        nstd_linkage: Aliased$3(lstr$2),
+        nstd_linkage: Aliased$4(lstr$3),
         /**
          * A flag to indicate whether the polymer contains at least
          * one monomer that is not considered standard.
          */
-        nstd_monomer: Aliased$3(lstr$2),
+        nstd_monomer: Aliased$4(lstr$3),
         /**
          * The type of the polymer.
          */
-        type: Aliased$3(str$8),
+        type: Aliased$4(str$9),
         /**
          * The PDB strand/chain id(s) corresponding to this polymer entity.
          */
-        pdbx_strand_id: List$1(',', function (x) { return x; }),
+        pdbx_strand_id: List$2(',', function (x) { return x; }),
         /**
          * Sequence of protein or nucleic acid polymer in standard one-letter
          * codes of amino acids or nucleotides. Non-standard amino
@@ -25057,7 +25057,7 @@ var mmCIF_Schema = {
          * (ACE) for Acetylation cap
          * (NH2) for Amidation cap
          */
-        pdbx_seq_one_letter_code: str$8,
+        pdbx_seq_one_letter_code: str$9,
         /**
          * Canonical sequence of protein or nucleic acid polymer in standard
          * one-letter codes of amino acids or nucleotides,
@@ -25074,11 +25074,11 @@ var mmCIF_Schema = {
          * all corresponding parent amino acid codes will be listed
          * (ex. chromophores).
          */
-        pdbx_seq_one_letter_code_can: str$8,
+        pdbx_seq_one_letter_code_can: str$9,
         /**
          * For Structural Genomics entries, the sequence's target identifier registered at the TargetTrack database.
          */
-        pdbx_target_identifier: str$8,
+        pdbx_target_identifier: str$9,
     },
     /**
      * Data items in the ENTITY_POLY_SEQ category specify the sequence
@@ -25092,17 +25092,17 @@ var mmCIF_Schema = {
         /**
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * A flag to indicate whether this monomer in the polymer is
          * heterogeneous in sequence.
          */
-        hetero: Aliased$3(lstr$2),
+        hetero: Aliased$4(lstr$3),
         /**
          * This data item is a pointer to _chem_comp.id in the CHEM_COMP
          * category.
          */
-        mon_id: str$8,
+        mon_id: str$9,
         /**
          * The value of _entity_poly_seq.num must uniquely and sequentially
          * identify a record in the ENTITY_POLY_SEQ list.
@@ -25110,7 +25110,7 @@ var mmCIF_Schema = {
          * Note that this item must be a number and that the sequence
          * numbers must progress in increasing numerical order.
          */
-        num: int$6,
+        num: int$7,
     },
     /**
      * There is only one item in the ENTRY category, _entry.id. This
@@ -25125,7 +25125,7 @@ var mmCIF_Schema = {
          * Note that this item need not be a number; it can be any unique
          * identifier.
          */
-        id: str$8,
+        id: str$9,
     },
     /**
      * Data items in the EXPTL category record details about the
@@ -25136,11 +25136,11 @@ var mmCIF_Schema = {
         /**
          * This data item is a pointer to _entry.id in the ENTRY category.
          */
-        entry_id: str$8,
+        entry_id: str$9,
         /**
          * The method used in the experiment.
          */
-        method: Aliased$3(str$8),
+        method: Aliased$4(str$9),
     },
     /**
      * Data items in the SOFTWARE category record details about
@@ -25157,32 +25157,32 @@ var mmCIF_Schema = {
          * The classification of the program according to its
          * major function.
          */
-        classification: str$8,
+        classification: str$9,
         /**
          * The date the software was released.
          */
-        date: str$8,
+        date: str$9,
         /**
          * Description of the software.
          */
-        description: str$8,
+        description: str$9,
         /**
          * The name of the software.
          */
-        name: str$8,
+        name: str$9,
         /**
          * The classification of the software according to the most
          * common types.
          */
-        type: Aliased$3(lstr$2),
+        type: Aliased$4(lstr$3),
         /**
          * The version of the software.
          */
-        version: str$8,
+        version: str$9,
         /**
          * An ordinal index for this category
          */
-        pdbx_ordinal: int$6,
+        pdbx_ordinal: int$7,
     },
     /**
      * Data items in the STRUCT category record details about the
@@ -25192,18 +25192,18 @@ var mmCIF_Schema = {
         /**
          * This data item is a pointer to _entry.id in the ENTRY category.
          */
-        entry_id: str$8,
+        entry_id: str$9,
         /**
          * A title for the data block. The author should attempt to convey
          * the essence of the structure archived in the CIF in the title,
          * and to distinguish this structural result from others.
          */
-        title: str$8,
+        title: str$9,
         /**
          * An automatically generated descriptor for an NDB structure or
          * the unstructured content of the PDB COMPND record.
          */
-        pdbx_descriptor: str$8,
+        pdbx_descriptor: str$9,
     },
     /**
      * Data items in the STRUCT_ASYM category record details about the
@@ -25214,11 +25214,11 @@ var mmCIF_Schema = {
          * A description of special aspects of this portion of the contents
          * of the asymmetric unit.
          */
-        details: str$8,
+        details: str$9,
         /**
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * The value of _struct_asym.id must uniquely identify a record in
          * the STRUCT_ASYM list.
@@ -25226,16 +25226,16 @@ var mmCIF_Schema = {
          * Note that this item need not be a number; it can be any unique
          * identifier.
          */
-        id: str$8,
+        id: str$9,
         /**
          * This data item indicates whether the structural elements are modified.
          */
-        pdbx_modified: str$8,
+        pdbx_modified: str$9,
         /**
          * A flag indicating that this entity was originally labeled
          * with a blank PDB chain id.
          */
-        pdbx_blank_PDB_chainid_flag: Aliased$3(str$8),
+        pdbx_blank_PDB_chainid_flag: Aliased$4(str$9),
     },
     /**
      * Data items in the STRUCT_CONF category record details about
@@ -25252,7 +25252,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_asym_id in the
          * ATOM_SITE category.
          */
-        beg_label_asym_id: str$8,
+        beg_label_asym_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * conformation segment begins.
@@ -25260,7 +25260,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_comp_id in
          * the ATOM_SITE category.
          */
-        beg_label_comp_id: str$8,
+        beg_label_comp_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * conformation segment begins.
@@ -25268,7 +25268,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_seq_id in the
          * ATOM_SITE category.
          */
-        beg_label_seq_id: int$6,
+        beg_label_seq_id: int$7,
         /**
          * A component of the identifier for the residue at which the
          * conformation segment begins.
@@ -25276,7 +25276,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_asym_id in the
          * ATOM_SITE category.
          */
-        beg_auth_asym_id: str$8,
+        beg_auth_asym_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * conformation segment begins.
@@ -25284,7 +25284,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_comp_id in
          * the ATOM_SITE category.
          */
-        beg_auth_comp_id: str$8,
+        beg_auth_comp_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * conformation segment begins.
@@ -25292,16 +25292,16 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_seq_id in the
          * ATOM_SITE category.
          */
-        beg_auth_seq_id: int$6,
+        beg_auth_seq_id: int$7,
         /**
          * This data item is a pointer to _struct_conf_type.id in the
          * STRUCT_CONF_TYPE category.
          */
-        conf_type_id: Aliased$3(lstr$2),
+        conf_type_id: Aliased$4(lstr$3),
         /**
          * A description of special aspects of the conformation assignment.
          */
-        details: str$8,
+        details: str$9,
         /**
          * A component of the identifier for the residue at which the
          * conformation segment ends.
@@ -25309,7 +25309,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_asym_id in the
          * ATOM_SITE category.
          */
-        end_label_asym_id: str$8,
+        end_label_asym_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * conformation segment ends.
@@ -25317,7 +25317,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_comp_id in the
          * ATOM_SITE category.
          */
-        end_label_comp_id: str$8,
+        end_label_comp_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * conformation segment ends.
@@ -25325,7 +25325,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_seq_id in the
          * ATOM_SITE category.
          */
-        end_label_seq_id: int$6,
+        end_label_seq_id: int$7,
         /**
          * A component of the identifier for the residue at which the
          * conformation segment ends.
@@ -25333,7 +25333,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_asym_id in the
          * ATOM_SITE category.
          */
-        end_auth_asym_id: str$8,
+        end_auth_asym_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * conformation segment ends.
@@ -25341,7 +25341,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_comp_id in the
          * ATOM_SITE category.
          */
-        end_auth_comp_id: str$8,
+        end_auth_comp_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * conformation segment ends.
@@ -25349,7 +25349,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_seq_id in the
          * ATOM_SITE category.
          */
-        end_auth_seq_id: int$6,
+        end_auth_seq_id: int$7,
         /**
          * The value of _struct_conf.id must uniquely identify a record in
          * the STRUCT_CONF list.
@@ -25357,32 +25357,32 @@ var mmCIF_Schema = {
          * Note that this item need not be a number; it can be any unique
          * identifier.
          */
-        id: str$8,
+        id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * conformation segment starts.
          */
-        pdbx_beg_PDB_ins_code: str$8,
+        pdbx_beg_PDB_ins_code: str$9,
         /**
          * A component of the identifier for the residue at which the
          * conformation segment ends.
          */
-        pdbx_end_PDB_ins_code: str$8,
+        pdbx_end_PDB_ins_code: str$9,
         /**
          * This item is a place holder for the helix class used in the PDB
          * HELIX record.
          */
-        pdbx_PDB_helix_class: str$8,
+        pdbx_PDB_helix_class: str$9,
         /**
          * A placeholder for the lengths of the helix of the PDB
          * HELIX record.
          */
-        pdbx_PDB_helix_length: int$6,
+        pdbx_PDB_helix_length: int$7,
         /**
          * A placeholder for the helix identifier of the PDB
          * HELIX record.
          */
-        pdbx_PDB_helix_id: str$8,
+        pdbx_PDB_helix_id: str$9,
     },
     /**
      * Data items in the STRUCT_CONN category record details about
@@ -25397,11 +25397,11 @@ var mmCIF_Schema = {
          * This data item is a pointer to _struct_conn_type.id in the
          * STRUCT_CONN_TYPE category.
          */
-        conn_type_id: Aliased$3(lstr$2),
+        conn_type_id: Aliased$4(lstr$3),
         /**
          * A description of special aspects of the connection.
          */
-        details: str$8,
+        details: str$9,
         /**
          * The value of _struct_conn.id must uniquely identify a record in
          * the STRUCT_CONN list.
@@ -25409,7 +25409,7 @@ var mmCIF_Schema = {
          * Note that this item need not be a number; it can be any unique
          * identifier.
          */
-        id: str$8,
+        id: str$9,
         /**
          * A component of the identifier for partner 1 of the structure
          * connection.
@@ -25417,7 +25417,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_asym_id in the
          * ATOM_SITE category.
          */
-        ptnr1_label_asym_id: str$8,
+        ptnr1_label_asym_id: str$9,
         /**
          * A component of the identifier for partner 1 of the structure
          * connection.
@@ -25425,7 +25425,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _chem_comp_atom.atom_id in the
          * CHEM_COMP_ATOM category.
          */
-        ptnr1_label_atom_id: str$8,
+        ptnr1_label_atom_id: str$9,
         /**
          * A component of the identifier for partner 1 of the structure
          * connection.
@@ -25433,7 +25433,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_comp_id in the
          * ATOM_SITE category.
          */
-        ptnr1_label_comp_id: str$8,
+        ptnr1_label_comp_id: str$9,
         /**
          * A component of the identifier for partner 1 of the structure
          * connection.
@@ -25441,7 +25441,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_seq_id in the
          * ATOM_SITE category.
          */
-        ptnr1_label_seq_id: int$6,
+        ptnr1_label_seq_id: int$7,
         /**
          * A component of the identifier for partner 1 of the structure
          * connection.
@@ -25449,7 +25449,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_asym_id in the
          * ATOM_SITE category.
          */
-        ptnr1_auth_asym_id: str$8,
+        ptnr1_auth_asym_id: str$9,
         /**
          * A component of the identifier for partner 1 of the structure
          * connection.
@@ -25457,7 +25457,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_comp_id in the
          * ATOM_SITE category.
          */
-        ptnr1_auth_comp_id: str$8,
+        ptnr1_auth_comp_id: str$9,
         /**
          * A component of the identifier for partner 1 of the structure
          * connection.
@@ -25465,13 +25465,13 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_seq_id in the
          * ATOM_SITE category.
          */
-        ptnr1_auth_seq_id: int$6,
+        ptnr1_auth_seq_id: int$7,
         /**
          * Describes the symmetry operation that should be applied to the
          * atom set specified by _struct_conn.ptnr1_label* to generate the
          * first partner in the structure connection.
          */
-        ptnr1_symmetry: str$8,
+        ptnr1_symmetry: str$9,
         /**
          * A component of the identifier for partner 2 of the structure
          * connection.
@@ -25479,7 +25479,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_asym_id in the
          * ATOM_SITE category.
          */
-        ptnr2_label_asym_id: str$8,
+        ptnr2_label_asym_id: str$9,
         /**
          * A component of the identifier for partner 2 of the structure
          * connection.
@@ -25487,7 +25487,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _chem_comp_atom.atom_id in the
          * CHEM_COMP_ATOM category.
          */
-        ptnr2_label_atom_id: str$8,
+        ptnr2_label_atom_id: str$9,
         /**
          * A component of the identifier for partner 2 of the structure
          * connection.
@@ -25495,7 +25495,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_comp_id in the
          * ATOM_SITE category.
          */
-        ptnr2_label_comp_id: str$8,
+        ptnr2_label_comp_id: str$9,
         /**
          * A component of the identifier for partner 2 of the structure
          * connection.
@@ -25503,7 +25503,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_seq_id in the
          * ATOM_SITE category.
          */
-        ptnr2_label_seq_id: int$6,
+        ptnr2_label_seq_id: int$7,
         /**
          * A component of the identifier for partner 2 of the structure
          * connection.
@@ -25511,7 +25511,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_asym_id in the
          * ATOM_SITE category.
          */
-        ptnr2_auth_asym_id: str$8,
+        ptnr2_auth_asym_id: str$9,
         /**
          * A component of the identifier for partner 2 of the structure
          * connection.
@@ -25519,7 +25519,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_comp_id in the
          * ATOM_SITE category.
          */
-        ptnr2_auth_comp_id: str$8,
+        ptnr2_auth_comp_id: str$9,
         /**
          * A component of the identifier for partner 2 of the structure
          * connection.
@@ -25527,13 +25527,13 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_seq_id in the
          * ATOM_SITE category.
          */
-        ptnr2_auth_seq_id: int$6,
+        ptnr2_auth_seq_id: int$7,
         /**
          * Describes the symmetry operation that should be applied to the
          * atom set specified by _struct_conn.ptnr2_label* to generate the
          * second partner in the structure connection.
          */
-        ptnr2_symmetry: str$8,
+        ptnr2_symmetry: str$9,
         /**
          * A component of the identifier for partner 1 of the structure
          * connection.
@@ -25541,18 +25541,18 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.pdbx_PDB_ins_code in the
          * ATOM_SITE category.
          */
-        pdbx_ptnr1_PDB_ins_code: str$8,
+        pdbx_ptnr1_PDB_ins_code: str$9,
         /**
          * A component of the identifier for partner 1 of the
          * structure connection. This data item is a pointer to
          * _atom_site.label_alt_id in the ATOM_SITE category.
          */
-        pdbx_ptnr1_label_alt_id: str$8,
+        pdbx_ptnr1_label_alt_id: str$9,
         /**
          * A placeholder for the standard residue name found in
          * the MODRES record of a PDB file.
          */
-        pdbx_ptnr1_standard_comp_id: str$8,
+        pdbx_ptnr1_standard_comp_id: str$9,
         /**
          * A component of the identifier for partner 1 of the structure
          * connection.
@@ -25560,64 +25560,64 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.pdbx_PDB_ins_code in the
          * ATOM_SITE category.
          */
-        pdbx_ptnr2_PDB_ins_code: str$8,
+        pdbx_ptnr2_PDB_ins_code: str$9,
         /**
          * A component of the identifier for partner 2 of the
          * structure connection. This data item is a pointer to
          * _atom_site.label_alt_id in the ATOM_SITE category.
          */
-        pdbx_ptnr2_label_alt_id: str$8,
+        pdbx_ptnr2_label_alt_id: str$9,
         /**
          * A component of the identifier for partner 3 of the
          * structure connection. This data item is a pointer to
          * _atom_site.pdbx_PDB_ins_code in the ATOM_SITE category.
          */
-        pdbx_ptnr3_PDB_ins_code: str$8,
+        pdbx_ptnr3_PDB_ins_code: str$9,
         /**
          * A component of the identifier for partner 3 of the
          * structure connection. This data item is a pointer to
          * _atom_site.label_alt_id in the ATOM_SITE category.
          */
-        pdbx_ptnr3_label_alt_id: str$8,
+        pdbx_ptnr3_label_alt_id: str$9,
         /**
          * A component of the identifier for partner 3 of the
          * structure connection. This data item is a pointer to
          * _atom_site.label_asym_id in the ATOM_SITE category.
          */
-        pdbx_ptnr3_label_asym_id: str$8,
+        pdbx_ptnr3_label_asym_id: str$9,
         /**
          * A component of the identifier for partner 3 of the
          * structure connection. This data item is a pointer to
          * _atom_site.label_atom_id in the ATOM_SITE category.
          */
-        pdbx_ptnr3_label_atom_id: str$8,
+        pdbx_ptnr3_label_atom_id: str$9,
         /**
          * A component of the identifier for partner 3 of the
          * structure connection. This data item is a pointer to
          * _atom_site.label_comp_id in the ATOM_SITE category.
          */
-        pdbx_ptnr3_label_comp_id: str$8,
+        pdbx_ptnr3_label_comp_id: str$9,
         /**
          * A component of the identifier for partner 1 of the
          * structure connection. This data item is a pointer to
          * _atom_site.label_seq_id in the ATOM_SITE category.
          */
-        pdbx_ptnr3_label_seq_id: int$6,
+        pdbx_ptnr3_label_seq_id: int$7,
         /**
          * A placeholder for the PDB id in the case the category
          * is used to hold the information of the MODRES record of
          * a PDB file.
          */
-        pdbx_PDB_id: str$8,
+        pdbx_PDB_id: str$9,
         /**
          * Distance value for this contact.
          */
-        pdbx_dist_value: float$5,
+        pdbx_dist_value: float$6,
         /**
          * The chemical bond order associated with the specified atoms in
          * this contact.
          */
-        pdbx_value_order: Aliased$3(lstr$2),
+        pdbx_value_order: Aliased$4(lstr$3),
     },
     /**
      * Data items in the STRUCT_CONN_TYPE category record details
@@ -25628,16 +25628,16 @@ var mmCIF_Schema = {
         /**
          * The criteria used to define the interaction.
          */
-        criteria: str$8,
+        criteria: str$9,
         /**
          * The chemical or structural type of the interaction.
          */
-        id: Aliased$3(lstr$2),
+        id: Aliased$4(lstr$3),
         /**
          * A reference that specifies the criteria used to define the
          * interaction.
          */
-        reference: str$8,
+        reference: str$9,
     },
     /**
      * Data items in the STRUCT_KEYWORDS category specify keywords
@@ -25647,15 +25647,15 @@ var mmCIF_Schema = {
         /**
          * This data item is a pointer to _entry.id in the ENTRY category.
          */
-        entry_id: str$8,
+        entry_id: str$9,
         /**
          * Keywords describing this structure.
          */
-        text: List$1(',', function (x) { return x; }),
+        text: List$2(',', function (x) { return x; }),
         /**
          * Terms characterizing the macromolecular structure.
          */
-        pdbx_keywords: str$8,
+        pdbx_keywords: str$9,
     },
     /**
      * Data items in the STRUCT_NCS_OPER category describe the
@@ -25674,29 +25674,29 @@ var mmCIF_Schema = {
          * those that are given in the data block (in which case the value
          * of code is 'generate').
          */
-        code: Aliased$3(str$8),
+        code: Aliased$4(str$9),
         /**
          * A description of special aspects of the noncrystallographic
          * symmetry operator.
          */
-        details: str$8,
+        details: str$9,
         /**
          * The value of _struct_ncs_oper.id must uniquely identify a
          * record in the STRUCT_NCS_OPER list.
          *
          * Note that for PDB _struct_ncs_oper.id must be a number.
          */
-        id: int$6,
+        id: int$7,
         /**
          * The elements of the 3x3 matrix component of a
          * noncrystallographic symmetry operation.
          */
-        matrix: Matrix$2(3, 3),
+        matrix: Matrix$3(3, 3),
         /**
          * The elements of the three-element vector component of a
          * noncrystallographic symmetry operation.
          */
-        vector: Vector$1(3),
+        vector: Vector$2(3),
     },
     /**
      * Data items in the STRUCT_SHEET_RANGE category record details
@@ -25713,7 +25713,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _struct_asym.id in the
          * STRUCT_ASYM category.
          */
-        beg_label_asym_id: str$8,
+        beg_label_asym_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * beta-sheet range begins.
@@ -25721,7 +25721,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _chem_comp.id in the CHEM_COMP
          * category.
          */
-        beg_label_comp_id: str$8,
+        beg_label_comp_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * beta-sheet range begins.
@@ -25729,7 +25729,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_seq_id in the
          * ATOM_SITE category.
          */
-        beg_label_seq_id: int$6,
+        beg_label_seq_id: int$7,
         /**
          * A component of the identifier for the residue at which the
          * beta-sheet range ends.
@@ -25737,7 +25737,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _struct_asym.id in the
          * STRUCT_ASYM category.
          */
-        end_label_asym_id: str$8,
+        end_label_asym_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * beta-sheet range ends.
@@ -25745,7 +25745,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _chem_comp.id in the CHEM_COMP
          * category.
          */
-        end_label_comp_id: str$8,
+        end_label_comp_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * beta-sheet range ends.
@@ -25753,7 +25753,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.label_seq_id in the
          * ATOM_SITE category.
          */
-        end_label_seq_id: int$6,
+        end_label_seq_id: int$7,
         /**
          * A component of the identifier for the residue at which the
          * beta-sheet range begins.
@@ -25761,7 +25761,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_asym_id in the
          * ATOM_SITE category.
          */
-        beg_auth_asym_id: str$8,
+        beg_auth_asym_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * beta-sheet range begins.
@@ -25769,7 +25769,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_comp_id in
          * the ATOM_SITE category.
          */
-        beg_auth_comp_id: str$8,
+        beg_auth_comp_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * beta-sheet range begins.
@@ -25777,7 +25777,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_seq_id in the
          * ATOM_SITE category.
          */
-        beg_auth_seq_id: int$6,
+        beg_auth_seq_id: int$7,
         /**
          * A component of the identifier for the residue at which the
          * beta-sheet range ends.
@@ -25785,7 +25785,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_asym_id in the
          * ATOM_SITE category.
          */
-        end_auth_asym_id: str$8,
+        end_auth_asym_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * beta-sheet range ends.
@@ -25793,7 +25793,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_comp_id in the
          * ATOM_SITE category.
          */
-        end_auth_comp_id: str$8,
+        end_auth_comp_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * beta-sheet range ends.
@@ -25801,7 +25801,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _atom_site.auth_seq_id in the
          * ATOM_SITE category.
          */
-        end_auth_seq_id: int$6,
+        end_auth_seq_id: int$7,
         /**
          * The value of _struct_sheet_range.id must uniquely identify a
          * range in a given sheet in the STRUCT_SHEET_RANGE list.
@@ -25809,22 +25809,22 @@ var mmCIF_Schema = {
          * Note that this item need not be a number; it can be any unique
          * identifier.
          */
-        id: str$8,
+        id: str$9,
         /**
          * This data item is a pointer to _struct_sheet.id in the
          * STRUCT_SHEET category.
          */
-        sheet_id: str$8,
+        sheet_id: str$9,
         /**
          * A component of the identifier for the residue at which the
          * beta sheet range begins.  Insertion code.
          */
-        pdbx_beg_PDB_ins_code: str$8,
+        pdbx_beg_PDB_ins_code: str$9,
         /**
          * A component of the identifier for the residue at which the
          * beta sheet range ends. Insertion code.
          */
-        pdbx_end_PDB_ins_code: str$8,
+        pdbx_end_PDB_ins_code: str$9,
     },
     /**
      * Data items in the STRUCT_SITE category record details about
@@ -25836,7 +25836,7 @@ var mmCIF_Schema = {
         /**
          * A description of special aspects of the site.
          */
-        details: str$8,
+        details: str$9,
         /**
          * The value of _struct_site.id must uniquely identify a record in
          * the STRUCT_SITE list.
@@ -25844,40 +25844,40 @@ var mmCIF_Schema = {
          * Note that this item need not be a number; it can be any unique
          * identifier.
          */
-        id: str$8,
+        id: str$9,
         /**
          * Number of residues in the site.
          */
-        pdbx_num_residues: int$6,
+        pdbx_num_residues: int$7,
         /**
          * Source of evidence supporting the assignment of this site.
          */
-        pdbx_evidence_code: str$8,
+        pdbx_evidence_code: str$9,
         /**
          * A component of the identifier for the ligand in the site.
          *
          * This data item is a pointer to _atom_site.auth_asym_id in the
          * ATOM_SITE category.
          */
-        pdbx_auth_asym_id: str$8,
+        pdbx_auth_asym_id: str$9,
         /**
          * A component of the identifier for the ligand in the site.
          *
          * This data item is a pointer to _atom_site.auth_comp_id in the
          * ATOM_SITE category.
          */
-        pdbx_auth_comp_id: str$8,
+        pdbx_auth_comp_id: str$9,
         /**
          * A component of the identifier for the ligand in the site.
          *
          * This data item is a pointer to _atom_site.auth_seq_id in the
          * ATOM_SITE category.
          */
-        pdbx_auth_seq_id: str$8,
+        pdbx_auth_seq_id: str$9,
         /**
          * PDB insertion code for the ligand in the site.
          */
-        pdbx_auth_ins_code: str$8,
+        pdbx_auth_ins_code: str$9,
     },
     /**
      * Data items in the STRUCT_SITE_GEN category record details about
@@ -25889,7 +25889,7 @@ var mmCIF_Schema = {
          * A description of special aspects of the symmetry generation of
          * this portion of the structural site.
          */
-        details: str$8,
+        details: str$9,
         /**
          * The value of _struct_site_gen.id must uniquely identify a record
          * in the STRUCT_SITE_GEN list.
@@ -25897,82 +25897,82 @@ var mmCIF_Schema = {
          * Note that this item need not be a number; it can be any unique
          * identifier.
          */
-        id: str$8,
+        id: str$9,
         /**
          * A component of the identifier for participants in the site.
          *
          * This data item is a pointer to _atom_sites_alt.id in the
          * ATOM_SITES_ALT category.
          */
-        label_alt_id: str$8,
+        label_alt_id: str$9,
         /**
          * A component of the identifier for participants in the site.
          *
          * This data item is a pointer to _atom_site.label_asym_id in the
          * ATOM_SITE category.
          */
-        label_asym_id: str$8,
+        label_asym_id: str$9,
         /**
          * A component of the identifier for participants in the site.
          *
          * This data item is a pointer to _chem_comp_atom.atom_id in the
          * CHEM_COMP_ATOM category.
          */
-        label_atom_id: str$8,
+        label_atom_id: str$9,
         /**
          * A component of the identifier for participants in the site.
          *
          * This data item is a pointer to _atom_site.label_comp_id in the
          * ATOM_SITE category.
          */
-        label_comp_id: str$8,
+        label_comp_id: str$9,
         /**
          * A component of the identifier for participants in the site.
          *
          * This data item is a pointer to _atom_site.label_seq_id in the
          * ATOM_SITE category.
          */
-        label_seq_id: int$6,
+        label_seq_id: int$7,
         /**
          * A component of the identifier for participants in the site.
          *
          * This data item is a pointer to _atom_site.auth_asym_id in the
          * ATOM_SITE category.
          */
-        auth_asym_id: str$8,
+        auth_asym_id: str$9,
         /**
          * A component of the identifier for participants in the site.
          *
          * This data item is a pointer to _atom_site.auth_comp_id in the
          * ATOM_SITE category.
          */
-        auth_comp_id: str$8,
+        auth_comp_id: str$9,
         /**
          * A component of the identifier for participants in the site.
          *
          * This data item is a pointer to _atom_site.auth_seq_id in the
          * ATOM_SITE category.
          */
-        auth_seq_id: str$8,
+        auth_seq_id: str$9,
         /**
          * This data item is a pointer to _struct_site.id in the STRUCT_SITE
          * category.
          */
-        site_id: str$8,
+        site_id: str$9,
         /**
          * Describes the symmetry operation that should be applied to the
          * atom set specified by _struct_site_gen.label* to generate a
          * portion of the site.
          */
-        symmetry: str$8,
+        symmetry: str$9,
         /**
          * PDB insertion code.
          */
-        pdbx_auth_ins_code: str$8,
+        pdbx_auth_ins_code: str$9,
         /**
          * Number of residues in the site.
          */
-        pdbx_num_res: int$6,
+        pdbx_num_res: int$7,
     },
     /**
      * Data items in the SYMMETRY category record details about the
@@ -25982,16 +25982,16 @@ var mmCIF_Schema = {
         /**
          * This data item is a pointer to _entry.id in the ENTRY category.
          */
-        entry_id: str$8,
+        entry_id: str$9,
         /**
          * The cell settings for this space-group symmetry.
          */
-        cell_setting: Aliased$3(lstr$2),
+        cell_setting: Aliased$4(lstr$3),
         /**
          * Space-group number from International Tables for Crystallography
          * Vol. A (2002).
          */
-        Int_Tables_number: int$6,
+        Int_Tables_number: int$7,
         /**
          * Space-group symbol as described by Hall (1981). This symbol
          * gives the space-group setting explicitly. Leave spaces between
@@ -26000,7 +26000,7 @@ var mmCIF_Schema = {
          * Ref: Hall, S. R. (1981). Acta Cryst. A37, 517-525; erratum
          * (1981) A37, 921.
          */
-        space_group_name_Hall: str$8,
+        space_group_name_Hall: str$9,
         /**
          * Hermann-Mauguin space-group symbol. Note that the
          * Hermann-Mauguin symbol does not necessarily contain complete
@@ -26014,7 +26014,7 @@ var mmCIF_Schema = {
          * spaces between symbols referring to
          * different axes.
          */
-        'space_group_name_H-M': str$8,
+        'space_group_name_H-M': str$9,
     },
     /**
      * These are internal RCSB records to keep track of data processing
@@ -26024,53 +26024,53 @@ var mmCIF_Schema = {
         /**
          * Code for status of file.
          */
-        status_code: Aliased$3(str$8),
+        status_code: Aliased$4(str$9),
         /**
          * Code for status of structure factor file.
          */
-        status_code_sf: Aliased$3(str$8),
+        status_code_sf: Aliased$4(str$9),
         /**
          * Code for status of NMR constraints file.
          */
-        status_code_mr: Aliased$3(str$8),
+        status_code_mr: Aliased$4(str$9),
         /**
          * The value of _pdbx_database_status.entry_id identifies the data block.
          */
-        entry_id: str$8,
+        entry_id: str$9,
         /**
          * The date of initial deposition.  (The first message for
          * deposition has been received.)
          */
-        recvd_initial_deposition_date: str$8,
+        recvd_initial_deposition_date: str$9,
         /**
          * This code indicates whether the entry belongs to
          * Structural Genomics Project.
          */
-        SG_entry: Aliased$3(lstr$2),
+        SG_entry: Aliased$4(lstr$3),
         /**
          * The site where the file was deposited.
          */
-        deposit_site: Aliased$3(str$8),
+        deposit_site: Aliased$4(str$9),
         /**
          * The site where the file was deposited.
          */
-        process_site: Aliased$3(str$8),
+        process_site: Aliased$4(str$9),
         /**
          * Code for status of chemical shift data file.
          */
-        status_code_cs: Aliased$3(str$8),
+        status_code_cs: Aliased$4(str$9),
         /**
          * The methods development category in which this
          * entry has been placed.
          */
-        methods_development_category: Aliased$3(str$8),
+        methods_development_category: Aliased$4(str$9),
         /**
          * A flag indicating that the entry is compatible with the PDB format.
          *
          * A value of 'N' indicates that the no PDB format data file is
          * corresponding to this entry is available in the PDB archive.
          */
-        pdb_format_compatible: Aliased$3(lstr$2),
+        pdb_format_compatible: Aliased$4(lstr$3),
     },
     /**
      * The PDBX_NONPOLY_SCHEME category provides residue level nomenclature
@@ -26080,45 +26080,45 @@ var mmCIF_Schema = {
         /**
          * Pointer to _atom_site.label_asym_id.
          */
-        asym_id: str$8,
+        asym_id: str$9,
         /**
          * Pointer to _atom_site.label_entity_id.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * Pointer to _atom_site.label_comp_id.
          */
-        mon_id: str$8,
+        mon_id: str$9,
         /**
          * PDB strand/chain id.
          */
-        pdb_strand_id: str$8,
+        pdb_strand_id: str$9,
         /**
          * NDB/RCSB residue number.
          */
-        ndb_seq_num: str$8,
+        ndb_seq_num: str$9,
         /**
          * PDB residue number.
          */
-        pdb_seq_num: str$8,
+        pdb_seq_num: str$9,
         /**
          * Author provided residue numbering.   This value may differ from the PDB residue
          * number and may not correspond to residue numbering within the coordinate records.
          */
-        auth_seq_num: str$8,
+        auth_seq_num: str$9,
         /**
          * PDB residue identifier.
          */
-        pdb_mon_id: str$8,
+        pdb_mon_id: str$9,
         /**
          * Author provided residue identifier.   This value may differ from the PDB residue
          * identifier and may not correspond to residue identification within the coordinate records.
          */
-        auth_mon_id: str$8,
+        auth_mon_id: str$9,
         /**
          * PDB insertion code.
          */
-        pdb_ins_code: str$8,
+        pdb_ins_code: str$9,
     },
     /**
      * Data items in PDBX_DATABASE_RELATED contain references to entries
@@ -26128,19 +26128,19 @@ var mmCIF_Schema = {
         /**
          * The name of the database containing the related entry.
          */
-        db_name: str$8,
+        db_name: str$9,
         /**
          * A description of the related entry.
          */
-        details: str$8,
+        details: str$9,
         /**
          * The identifying code in the related database.
          */
-        db_id: str$8,
+        db_id: str$9,
         /**
          * The identifying content type of the related entry.
          */
-        content_type: Aliased$3(str$8),
+        content_type: Aliased$4(str$9),
     },
     /**
      * The PDBX_ENTITY_NONPOLY category provides a mapping between
@@ -26150,15 +26150,15 @@ var mmCIF_Schema = {
         /**
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * This data item is a pointer to _chem_comp.id in the CHEM_COMP category.
          */
-        comp_id: str$8,
+        comp_id: str$9,
         /**
          * A name for the non-polymer entity
          */
-        name: str$8,
+        name: str$9,
     },
     /**
      * PDBX_CHEM_COMP_SYNONYMS holds chemical name and synonym correspondences.
@@ -26167,15 +26167,15 @@ var mmCIF_Schema = {
         /**
          * The synonym of this particular chemical component.
          */
-        name: str$8,
+        name: str$9,
         /**
          * The chemical component for which this synonym applies.
          */
-        comp_id: str$8,
+        comp_id: str$9,
         /**
          * The provenance of this synonym.
          */
-        provenance: Aliased$3(str$8),
+        provenance: Aliased$4(str$9),
     },
     /**
      * Data items in the CHEM_COMP_IDENTIFIER category provide
@@ -26186,26 +26186,26 @@ var mmCIF_Schema = {
          * This data item is a pointer to _chem_comp.id in the CHEM_COMP
          * category.
          */
-        comp_id: str$8,
+        comp_id: str$9,
         /**
          * This data item contains the identifier value for this
          * component.
          */
-        identifier: str$8,
+        identifier: str$9,
         /**
          * This data item contains the identifier type.
          */
-        type: Aliased$3(str$8),
+        type: Aliased$4(str$9),
         /**
          * This data item contains the name of the program
          * or library used to compute the identifier.
          */
-        program: str$8,
+        program: str$9,
         /**
          * This data item contains the version of the program
          * or library used to compute the identifier.
          */
-        program_version: str$8,
+        program_version: str$9,
     },
     /**
      * Data items in the PDBX_UNOBS_OR_ZERO_OCC_RESIDUES category list the
@@ -26218,73 +26218,73 @@ var mmCIF_Schema = {
          *
          * This is an integer serial number.
          */
-        id: int$6,
+        id: int$7,
         /**
          * The value of polymer flag indicates whether the unobserved or
          * zero occupancy residue is part of a polymer chain or not
          */
-        polymer_flag: Aliased$3(lstr$2),
+        polymer_flag: Aliased$4(lstr$3),
         /**
          * The value of occupancy flag indicates whether the residue
          * is unobserved (= 1) or the coordinates have an occupancy of zero (=0)
          */
-        occupancy_flag: Aliased$3(int$6),
+        occupancy_flag: Aliased$4(int$7),
         /**
          * Part of the identifier for the unobserved or zero occupancy residue.
          *
          * This data item is a pointer to _atom_site.pdbx_PDB_model_num in the
          * ATOM_SITE category.
          */
-        PDB_model_num: int$6,
+        PDB_model_num: int$7,
         /**
          * Part of the identifier for the unobserved or zero occupancy residue.
          *
          * This data item is a pointer to _atom_site.auth_asym_id in the
          * ATOM_SITE category.
          */
-        auth_asym_id: str$8,
+        auth_asym_id: str$9,
         /**
          * Part of the identifier for the unobserved or zero occupancy residue.
          *
          * This data item is a pointer to _atom_site.auth_comp_id in the
          * ATOM_SITE category.
          */
-        auth_comp_id: str$8,
+        auth_comp_id: str$9,
         /**
          * Part of the identifier for the unobserved or zero occupancy residue.
          *
          * This data item is a pointer to _atom_site.auth_seq_id in the
          * ATOM_SITE category.
          */
-        auth_seq_id: str$8,
+        auth_seq_id: str$9,
         /**
          * Part of the identifier for the unobserved or zero occupancy residue.
          *
          * This data item is a pointer to _atom_site.pdbx_PDB_ins_code in the
          * ATOM_SITE category.
          */
-        PDB_ins_code: str$8,
+        PDB_ins_code: str$9,
         /**
          * Part of the identifier for the unobserved or zero occupancy residue.
          *
          * This data item is a pointer to _atom_site.label_asym_id in the
          * ATOM_SITE category.
          */
-        label_asym_id: str$8,
+        label_asym_id: str$9,
         /**
          * Part of the identifier for the unobserved or zero occupancy residue.
          *
          * This data item is a pointer to _atom_site.label_comp_id in the
          * ATOM_SITE category.
          */
-        label_comp_id: str$8,
+        label_comp_id: str$9,
         /**
          * Part of the identifier for the unobserved or zero occupancy residue.
          *
          * This data item is a pointer to _atom_site.label_seq_id in the
          * ATOM_SITE category.
          */
-        label_seq_id: int$6,
+        label_seq_id: int$7,
     },
     /**
      * Data items in the PDBX_STRUCT_MOD_RESIDUE category list the
@@ -26298,64 +26298,64 @@ var mmCIF_Schema = {
          *
          * This is an integer serial number.
          */
-        id: int$6,
+        id: int$7,
         /**
          * Part of the identifier for the modified polymer component.
          *
          * This data item is a pointer to _atom_site.auth_asym_id in the
          * ATOM_SITE category.
          */
-        auth_asym_id: str$8,
+        auth_asym_id: str$9,
         /**
          * Part of the identifier for the modified polymer component.
          *
          * This data item is a pointer to _atom_site.auth_comp_id in the
          * ATOM_SITE category.
          */
-        auth_comp_id: str$8,
+        auth_comp_id: str$9,
         /**
          * Part of the identifier for the modified polymer component.
          *
          * This data item is a pointer to _atom_site.auth_seq_id in the
          * ATOM_SITE category.
          */
-        auth_seq_id: int$6,
+        auth_seq_id: int$7,
         /**
          * Part of the identifier for the modified polymer component.
          *
          * This data item is a pointer to _atom_site.pdbx_PDB_ins_code in the
          * ATOM_SITE category.
          */
-        PDB_ins_code: str$8,
+        PDB_ins_code: str$9,
         /**
          * Part of the identifier for the modified polymer component.
          *
          * This data item is a pointer to _atom_site.label_asym_id in the
          * ATOM_SITE category.
          */
-        label_asym_id: str$8,
+        label_asym_id: str$9,
         /**
          * Part of the identifier for the modified polymer component.
          *
          * This data item is a pointer to _atom_site.label_comp_id in the
          * ATOM_SITE category.
          */
-        label_comp_id: str$8,
+        label_comp_id: str$9,
         /**
          * Part of the identifier for the unobserved or zero occupancy residue.
          *
          * This data item is a pointer to _atom_site.label_seq_id in the
          * ATOM_SITE category.
          */
-        label_seq_id: int$6,
+        label_seq_id: int$7,
         /**
          * The parent component identifier for this modified polymer component.
          */
-        parent_comp_id: str$8,
+        parent_comp_id: str$9,
         /**
          * Details of the modification for this polymer component.
          */
-        details: str$8,
+        details: str$9,
     },
     /**
      * Data items in the PDBX_STRUCT_OPER_LIST category describe
@@ -26367,29 +26367,29 @@ var mmCIF_Schema = {
          * This identifier code must uniquely identify a
          * record in the PDBX_STRUCT_OPER_LIST list.
          */
-        id: str$8,
+        id: str$9,
         /**
          * A code to indicate the type of operator.
          */
-        type: Aliased$3(str$8),
+        type: Aliased$4(str$9),
         /**
          * A descriptive name for the transformation operation.
          */
-        name: str$8,
+        name: str$9,
         /**
          * The symmetry operation corresponding to the transformation operation.
          */
-        symmetry_operation: str$8,
+        symmetry_operation: str$9,
         /**
          * The elements of the 3x3 matrix component of the
          * transformation operation.
          */
-        matrix: Matrix$2(3, 3),
+        matrix: Matrix$3(3, 3),
         /**
          * The elements of the three-element vector component of the
          * transformation operation.
          */
-        vector: Vector$1(3),
+        vector: Vector$2(3),
     },
     /**
      * Data items in the PDBX_STRUCT_ASSEMBLY category record details about
@@ -26400,15 +26400,15 @@ var mmCIF_Schema = {
          * Provides details of the method used to determine or
          * compute the assembly.
          */
-        method_details: str$8,
+        method_details: str$9,
         /**
          * Provides the details of the oligomeric state of the assembly.
          */
-        oligomeric_details: str$8,
+        oligomeric_details: str$9,
         /**
          * The number of polymer molecules in the assembly.
          */
-        oligomeric_count: int$6,
+        oligomeric_count: int$7,
         /**
          * A description of special aspects of the macromolecular assembly.
          *
@@ -26416,12 +26416,12 @@ var mmCIF_Schema = {
          * 'complete icosahedral assembly', 'software_defined_assembly', 'author_defined_assembly',
          * and 'author_and_software_defined_assembly' are considered "biologically relevant assemblies.
          */
-        details: str$8,
+        details: str$9,
         /**
          * The value of _pdbx_struct_assembly.id must uniquely identify a record in
          * the PDBX_STRUCT_ASSEMBLY list.
          */
-        id: str$8,
+        id: str$9,
     },
     /**
      * Data items in the PDBX_STRUCT_ASSEMBLY_GEN category record details about
@@ -26436,12 +26436,12 @@ var mmCIF_Schema = {
          *
          * This item may be expressed as a comma separated list of identifiers.
          */
-        asym_id_list: List$1(',', function (x) { return x; }),
+        asym_id_list: List$2(',', function (x) { return x; }),
         /**
          * This data item is a pointer to _pdbx_struct_assembly.id in the
          * PDBX_STRUCT_ASSEMBLY category.
          */
-        assembly_id: str$8,
+        assembly_id: str$9,
         /**
          * Identifies the operation of collection of operations
          * from category PDBX_STRUCT_OPER_LIST.
@@ -26456,7 +26456,7 @@ var mmCIF_Schema = {
          * the cartesian product of parenthetical
          * groups applied from right to left)
          */
-        oper_expression: str$8,
+        oper_expression: str$9,
     },
     /**
      * Data items in the PDBX_REFERENCE_ENTITY_LIST category record
@@ -26467,24 +26467,24 @@ var mmCIF_Schema = {
          * The value of _pdbx_reference_entity_list.prd_id is a reference
          * _pdbx_reference_molecule.prd_id in the PDBX_REFERENCE_MOLECULE category.
          */
-        prd_id: str$8,
+        prd_id: str$9,
         /**
          * The value of _pdbx_reference_entity_list.ref_entity_id is a unique identifier
          * the a constituent entity within this reference molecule.
          */
-        ref_entity_id: str$8,
+        ref_entity_id: str$9,
         /**
          * Defines the polymer characteristic of the entity.
          */
-        type: Aliased$3(lstr$2),
+        type: Aliased$4(lstr$3),
         /**
          * Additional details about this entity.
          */
-        details: str$8,
+        details: str$9,
         /**
          * The component number of this entity within the molecule.
          */
-        component_id: int$6,
+        component_id: int$7,
     },
     /**
      * Data items in the PDBX_REFERENCE_ENTITY_LINK category give details about
@@ -26495,17 +26495,17 @@ var mmCIF_Schema = {
          * The value of _pdbx_reference_entity_link.link_id uniquely identifies
          * linkages between entities with a molecule.
          */
-        link_id: int$6,
+        link_id: int$7,
         /**
          * The value of _pdbx_reference_entity_link.prd_id is a reference
          * _pdbx_reference_entity_list.prd_id in the PDBX_REFERENCE_ENTITY_LIST category.
          */
-        prd_id: str$8,
+        prd_id: str$9,
         /**
          * A description of special aspects of a linkage between
          * chemical components in the structure.
          */
-        details: str$8,
+        details: str$9,
         /**
          * The reference entity id of the first of the two entities joined by the
          * linkage.
@@ -26513,7 +26513,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_list.ref_entity_id
          * in the PDBX_REFERENCE_ENTITY_LIST category.
          */
-        ref_entity_id_1: str$8,
+        ref_entity_id_1: str$9,
         /**
          * The reference entity id of the second of the two entities joined by the
          * linkage.
@@ -26521,7 +26521,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_list.ref_entity_id
          * in the PDBX_REFERENCE_ENTITY_LIST category.
          */
-        ref_entity_id_2: str$8,
+        ref_entity_id_2: str$9,
         /**
          * For a polymer entity, the sequence number in the first of
          * the two entities containing the linkage.
@@ -26529,7 +26529,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_poly_seq.num
          * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
          */
-        entity_seq_num_1: int$6,
+        entity_seq_num_1: int$7,
         /**
          * For a polymer entity, the sequence number in the second of
          * the two entities containing the linkage.
@@ -26537,7 +26537,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_poly_seq.num
          * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
          */
-        entity_seq_num_2: int$6,
+        entity_seq_num_2: int$7,
         /**
          * The component identifier in the first of the two entities containing the linkage.
          *
@@ -26548,7 +26548,7 @@ var mmCIF_Schema = {
          * _pdbx_reference_entity_nonpoly.chem_comp_id in the
          * PDBX_REFERENCE_ENTITY_NONPOLY category.
          */
-        comp_id_1: str$8,
+        comp_id_1: str$9,
         /**
          * The component identifier in the second of the two entities containing the linkage.
          *
@@ -26559,31 +26559,31 @@ var mmCIF_Schema = {
          * _pdbx_reference_entity_nonpoly.chem_comp_id in the
          * PDBX_REFERENCE_ENTITY_NONPOLY category.
          */
-        comp_id_2: str$8,
+        comp_id_2: str$9,
         /**
          * The atom identifier/name in the first of the two entities containing the linkage.
          */
-        atom_id_1: str$8,
+        atom_id_1: str$9,
         /**
          * The atom identifier/name in the second of the two entities containing the linkage.
          */
-        atom_id_2: str$8,
+        atom_id_2: str$9,
         /**
          * The bond order target for the chemical linkage.
          */
-        value_order: Aliased$3(lstr$2),
+        value_order: Aliased$4(lstr$3),
         /**
          * The entity component identifier for the first of two entities containing the linkage.
          */
-        component_1: int$6,
+        component_1: int$7,
         /**
          * The entity component identifier for the second of two entities containing the linkage.
          */
-        component_2: int$6,
+        component_2: int$7,
         /**
          * A code indicating the entity types involved in the linkage.
          */
-        link_class: Aliased$3(str$8),
+        link_class: Aliased$4(str$9),
     },
     /**
      * Data items in the PDBX_REFERENCE_ENTITY_POLY_LINK category give details about
@@ -26595,23 +26595,23 @@ var mmCIF_Schema = {
          * The value of _pdbx_reference_entity_poly_link.link_id uniquely identifies
          * a linkage within a polymer entity.
          */
-        link_id: int$6,
+        link_id: int$7,
         /**
          * The value of _pdbx_reference_entity_poly_link.prd_id is a reference
          * _pdbx_reference_entity_list.prd_id in the PDBX_REFERENCE_ENTITY_POLY category.
          */
-        prd_id: str$8,
+        prd_id: str$9,
         /**
          * The reference entity id of the polymer entity containing the linkage.
          *
          * This data item is a pointer to _pdbx_reference_entity_poly.ref_entity_id
          * in the PDBX_REFERENCE_ENTITY_POLY category.
          */
-        ref_entity_id: str$8,
+        ref_entity_id: str$9,
         /**
          * The entity component identifier entity containing the linkage.
          */
-        component_id: int$6,
+        component_id: int$7,
         /**
          * For a polymer entity, the sequence number in the first of
          * the two components making the linkage.
@@ -26619,7 +26619,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_poly_seq.num
          * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
          */
-        entity_seq_num_1: int$6,
+        entity_seq_num_1: int$7,
         /**
          * For a polymer entity, the sequence number in the second of
          * the two components making the linkage.
@@ -26627,7 +26627,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_poly_seq.num
          * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
          */
-        entity_seq_num_2: int$6,
+        entity_seq_num_2: int$7,
         /**
          * The component identifier in the first of the two components making the
          * linkage.
@@ -26635,7 +26635,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_poly_seq.mon_id
          * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
          */
-        comp_id_1: str$8,
+        comp_id_1: str$9,
         /**
          * The component identifier in the second of the two components making the
          * linkage.
@@ -26643,21 +26643,21 @@ var mmCIF_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_poly_seq.mon_id
          * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
          */
-        comp_id_2: str$8,
+        comp_id_2: str$9,
         /**
          * The atom identifier/name in the first of the two components making
          * the linkage.
          */
-        atom_id_1: str$8,
+        atom_id_1: str$9,
         /**
          * The atom identifier/name in the second of the two components making
          * the linkage.
          */
-        atom_id_2: str$8,
+        atom_id_2: str$9,
         /**
          * The bond order target for the non-standard linkage.
          */
-        value_order: Aliased$3(lstr$2),
+        value_order: Aliased$4(lstr$3),
     },
     /**
      * Data items in the PDBX_MOLECULE category identify reference molecules
@@ -26668,16 +26668,16 @@ var mmCIF_Schema = {
          * The value of _pdbx_molecule.prd_id is the PDB accession code for this
          * reference molecule.
          */
-        prd_id: str$8,
+        prd_id: str$9,
         /**
          * The value of _pdbx_molecule.instance_id is identifies a particular molecule
          * in the molecule list.
          */
-        instance_id: int$6,
+        instance_id: int$7,
         /**
          * A reference to _struct_asym.id in the STRUCT_ASYM category.
          */
-        asym_id: str$8,
+        asym_id: str$9,
     },
     /**
      * Data items in the PDBX_MOLECULE_FEATURES category record features of molecules
@@ -26688,23 +26688,23 @@ var mmCIF_Schema = {
          * The value of _pdbx_molecule_features.prd_id is the accession code for this
          * reference molecule.
          */
-        prd_id: str$8,
+        prd_id: str$9,
         /**
          * Broadly defines the function of the molecule.
          */
-        class: Aliased$3(lstr$2),
+        class: Aliased$4(lstr$3),
         /**
          * Defines the structural classification of the molecule.
          */
-        type: Aliased$3(lstr$2),
+        type: Aliased$4(lstr$3),
         /**
          * A name of the molecule.
          */
-        name: str$8,
+        name: str$9,
         /**
          * Additional details describing the molecule.
          */
-        details: str$8,
+        details: str$9,
     },
     /**
      * Data items in the ENTITY_SRC_NAT category record details of
@@ -26715,33 +26715,33 @@ var mmCIF_Schema = {
         /**
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * Scientific name of the organism of the natural source.
          */
-        pdbx_organism_scientific: str$8,
+        pdbx_organism_scientific: str$9,
         /**
          * The plasmid containing the gene.
          */
-        pdbx_plasmid_name: str$8,
+        pdbx_plasmid_name: str$9,
         /**
          * This data item is an ordinal identifier for entity_src_nat data records.
          */
-        pdbx_src_id: int$6,
+        pdbx_src_id: int$7,
         /**
          * The beginning polymer sequence position for the polymer section corresponding
          * to this source.
          *
          * A reference to the sequence position in the entity_poly category.
          */
-        pdbx_beg_seq_num: int$6,
+        pdbx_beg_seq_num: int$7,
         /**
          * The ending polymer sequence position for the polymer section corresponding
          * to this source.
          *
          * A reference to the sequence position in the entity_poly category.
          */
-        pdbx_end_seq_num: int$6,
+        pdbx_end_seq_num: int$7,
     },
     /**
      * Data items in the ENTITY_SRC_GEN category record details of
@@ -26756,15 +26756,15 @@ var mmCIF_Schema = {
         /**
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * Identifies the gene.
          */
-        pdbx_gene_src_gene: List$1(',', function (x) { return x; }),
+        pdbx_gene_src_gene: List$2(',', function (x) { return x; }),
         /**
          * Scientific name of the organism.
          */
-        pdbx_gene_src_scientific_name: str$8,
+        pdbx_gene_src_scientific_name: str$9,
         /**
          * The name of the plasmid that produced the entity in the host
          * organism. Where full details of the protein production are available
@@ -26772,25 +26772,25 @@ var mmCIF_Schema = {
          * _pdbx_construct.name of the construct pointed to from
          * _entity_src_gen_express.plasmid_id.
          */
-        plasmid_name: str$8,
+        plasmid_name: str$9,
         /**
          * This data item is an ordinal identifier for entity_src_gen data records.
          */
-        pdbx_src_id: int$6,
+        pdbx_src_id: int$7,
         /**
          * The beginning polymer sequence position for the polymer section corresponding
          * to this source.
          *
          * A reference to the sequence position in the entity_poly category.
          */
-        pdbx_beg_seq_num: int$6,
+        pdbx_beg_seq_num: int$7,
         /**
          * The ending polymer sequence position for the polymer section corresponding
          * to this source.
          *
          * A reference to the sequence position in the entity_poly category.
          */
-        pdbx_end_seq_num: int$6,
+        pdbx_end_seq_num: int$7,
     },
     /**
      * The data items in category PDBX_ENTITY_SRC_SYN record the source details
@@ -26801,29 +26801,29 @@ var mmCIF_Schema = {
          * The scientific name of the organism from which the sequence of
          * the synthetic entity was derived.
          */
-        organism_scientific: str$8,
+        organism_scientific: str$9,
         /**
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * This data item is an ordinal identifier for pdbx_entity_src_syn data records.
          */
-        pdbx_src_id: int$6,
+        pdbx_src_id: int$7,
         /**
          * The beginning polymer sequence position for the polymer section corresponding
          * to this source.
          *
          * A reference to the sequence position in the entity_poly category.
          */
-        pdbx_beg_seq_num: int$6,
+        pdbx_beg_seq_num: int$7,
         /**
          * The ending polymer sequence position for the polymer section corresponding
          * to this source.
          *
          * A reference to the sequence position in the entity_poly category.
          */
-        pdbx_end_seq_num: int$6,
+        pdbx_end_seq_num: int$7,
     },
     /**
      * Data items in the PDBX_ENTITY_BRANCH_DESCRIPTOR category provide
@@ -26834,30 +26834,30 @@ var mmCIF_Schema = {
          * This data item is a pointer to _entity_poly.entity_id in the ENTITY
          * category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * This data item contains the descriptor value for this
          * entity.
          */
-        descriptor: str$8,
+        descriptor: str$9,
         /**
          * This data item contains the descriptor type.
          */
-        type: Aliased$3(lstr$2),
+        type: Aliased$4(lstr$3),
         /**
          * This data item contains the name of the program
          * or library used to compute the descriptor.
          */
-        program: str$8,
+        program: str$9,
         /**
          * This data item contains the version of the program
          * or library used to compute the descriptor.
          */
-        program_version: str$8,
+        program_version: str$9,
         /**
          * Ordinal index for this category.
          */
-        ordinal: int$6,
+        ordinal: int$7,
     },
     /**
      * Data items in the pdbx_entity_instance_feature category records
@@ -26867,39 +26867,39 @@ var mmCIF_Schema = {
         /**
          * Special structural details about this entity instance.
          */
-        details: str$8,
+        details: str$9,
         /**
          * A feature type associated with entity instance.
          */
-        feature_type: Aliased$3(str$8),
+        feature_type: Aliased$4(str$9),
         /**
          * Author instance identifier (formerly PDB Chain ID)
          */
-        auth_asym_id: str$8,
+        auth_asym_id: str$9,
         /**
          * Instance identifier for this entity.
          */
-        asym_id: str$8,
+        asym_id: str$9,
         /**
          * Author provided residue number.
          */
-        auth_seq_num: str$8,
+        auth_seq_num: str$9,
         /**
          * Position in the sequence.
          */
-        seq_num: int$6,
+        seq_num: int$7,
         /**
          * Chemical component identifier
          */
-        comp_id: str$8,
+        comp_id: str$9,
         /**
          * The author provided chemical component identifier
          */
-        auth_comp_id: str$8,
+        auth_comp_id: str$9,
         /**
          * An ordinal index for this category
          */
-        ordinal: int$6,
+        ordinal: int$7,
     },
     /**
      * Data items in the PDBX_ENTITY_BRANCH_LIST category specify the list
@@ -26913,22 +26913,22 @@ var mmCIF_Schema = {
         /**
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * A flag to indicate whether this monomer in the entity is
          * heterogeneous in sequence.
          */
-        hetero: Aliased$3(lstr$2),
+        hetero: Aliased$4(lstr$3),
         /**
          * This data item is a pointer to _chem_comp.id in the CHEM_COMP
          * category.
          */
-        comp_id: str$8,
+        comp_id: str$9,
         /**
          * The value pair  _pdbx_entity_branch_list.num and _pdbx_entity_branch_list.comp_id
          * must uniquely identify a record in the PDBX_ENTITY_BRANCH_LIST list.
          */
-        num: int$6,
+        num: int$7,
     },
     /**
      * Data items in the PDBX_ENTITY_BRANCH_LINK category give details about
@@ -26939,74 +26939,74 @@ var mmCIF_Schema = {
          * The value of _pdbx_entity_branch_link.link_id uniquely identifies
          * linkages within the branched entity.
          */
-        link_id: int$6,
+        link_id: int$7,
         /**
          * A description of special aspects of this linkage.
          */
-        details: str$8,
+        details: str$9,
         /**
          * The entity id for this branched entity.
          *
          * This data item is a pointer to _pdbx_entity_branch_list.entity_id
          * in the PDBX_ENTITY_BRANCH_LIST category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * The component number for the first component making the linkage.
          *
          * This data item is a pointer to _pdbx_entity_branch_list.num
          * in the PDBX_ENTITY_BRANCH_LIST category.
          */
-        entity_branch_list_num_1: int$6,
+        entity_branch_list_num_1: int$7,
         /**
          * The component number for the second component making the linkage.
          *
          * This data item is a pointer to _pdbx_entity_branch_list.num
          * in the PDBX_ENTITY_BRANCH_LIST category.
          */
-        entity_branch_list_num_2: int$6,
+        entity_branch_list_num_2: int$7,
         /**
          * The component identifier for the first component making the linkage.
          *
          * This data item is a pointer to _pdbx_entity_branch_list.comp_id
          * in the PDBX_ENTITY_BRANCH_LIST category.
          */
-        comp_id_1: str$8,
+        comp_id_1: str$9,
         /**
          * The component identifier for the second component making the linkage.
          *
          * This data item is a pointer to _pdbx_entity_branch_list.comp_id
          * in the PDBX_ENTITY_BRANCH_LIST category.
          */
-        comp_id_2: str$8,
+        comp_id_2: str$9,
         /**
          * The atom identifier/name for the first atom making the linkage.
          */
-        atom_id_1: str$8,
+        atom_id_1: str$9,
         /**
          * The leaving atom identifier/name bonded to the first atom making the linkage.
          */
-        leaving_atom_id_1: str$8,
+        leaving_atom_id_1: str$9,
         /**
          * The chiral configuration of the first atom making the linkage.
          */
-        atom_stereo_config_1: Aliased$3(lstr$2),
+        atom_stereo_config_1: Aliased$4(lstr$3),
         /**
          * The atom identifier/name for the second atom making the linkage.
          */
-        atom_id_2: str$8,
+        atom_id_2: str$9,
         /**
          * The leaving atom identifier/name bonded to the second atom making the linkage.
          */
-        leaving_atom_id_2: str$8,
+        leaving_atom_id_2: str$9,
         /**
          * The chiral configuration of the second atom making the linkage.
          */
-        atom_stereo_config_2: Aliased$3(lstr$2),
+        atom_stereo_config_2: Aliased$4(lstr$3),
         /**
          * The bond order target for the chemical linkage.
          */
-        value_order: Aliased$3(lstr$2),
+        value_order: Aliased$4(lstr$3),
     },
     /**
      * Data items in the PDBX_ENTITY_BRANCH category specify the list
@@ -27018,11 +27018,11 @@ var mmCIF_Schema = {
          *
          * This data item is a pointer to _entity.id
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * The type of this branched oligosaccharide.
          */
-        type: Aliased$3(str$8),
+        type: Aliased$4(str$9),
     },
     /**
      * The PDBX_BRANCH_SCHEME category provides residue level nomenclature
@@ -27032,56 +27032,56 @@ var mmCIF_Schema = {
         /**
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * A flag to indicate whether this monomer in the entity is
          * heterogeneous in sequence.
          */
-        hetero: Aliased$3(lstr$2),
+        hetero: Aliased$4(lstr$3),
         /**
          * Pointer to _atom_site.label_asym_id.
          */
-        asym_id: str$8,
+        asym_id: str$9,
         /**
          * This data item is a pointer to _atom_site.label_comp_id in the
          * PDBX_ENTITY_BRANCH_LIST category.
          */
-        mon_id: str$8,
+        mon_id: str$9,
         /**
          * This data item is a pointer to _pdbx_entity_branch_list.num in the
          * PDBX_ENTITY_BRANCH_LIST category.
          */
-        num: int$6,
+        num: int$7,
         /**
          * This data item is a pointer to _atom_site.auth_asym_id in the
          * ATOM_SITE category.
          */
-        pdb_asym_id: str$8,
+        pdb_asym_id: str$9,
         /**
          * This data item is a pointer to _atom_site.auth_seq_id in the
          * ATOM_SITE category.
          */
-        pdb_seq_num: str$8,
+        pdb_seq_num: str$9,
         /**
          * This data item is a pointer to _atom_site.auth_comp_id in the
          * ATOM_SITE category.
          */
-        pdb_mon_id: str$8,
+        pdb_mon_id: str$9,
         /**
          * This data item is a pointer to _atom_site.pdbx_auth_asym_id in the
          * ATOM_SITE category.
          */
-        auth_asym_id: str$8,
+        auth_asym_id: str$9,
         /**
          * This data item is a pointer to _atom_site.pdbx_auth_seq_id in the
          * ATOM_SITE category.
          */
-        auth_seq_num: str$8,
+        auth_seq_num: str$9,
         /**
          * This data item is a pointer to _atom_site.pdbx_auth_comp_id in the
          * ATOM_SITE category.
          */
-        auth_mon_id: str$8,
+        auth_mon_id: str$9,
     },
     /**
      * PDBX_CHEM_COMP_RELATED describes the relationship between two chemical components.
@@ -27090,19 +27090,19 @@ var mmCIF_Schema = {
         /**
          * The chemical component for which this relationship applies.
          */
-        comp_id: str$8,
+        comp_id: str$9,
         /**
          * The related chemical component for which this chemical component is based.
          */
-        related_comp_id: str$8,
+        related_comp_id: str$9,
         /**
          * Describes the type of relationship
          */
-        relationship_type: Aliased$3(str$8),
+        relationship_type: Aliased$4(str$9),
         /**
          * Describes the type of relationship
          */
-        details: str$8,
+        details: str$9,
     },
     /**
      * Data items in the IHM_STARTING_MODEL_DETAILS category records the
@@ -27113,32 +27113,32 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the starting structural model.
          */
-        starting_model_id: str$8,
+        starting_model_id: str$9,
         /**
          * A unique identifier for the distinct molecular entities.
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * A text description of the molecular entity
          */
-        entity_description: str$8,
+        entity_description: str$9,
         /**
          * An asym/strand identifier for the entity molecule.
          * This data item is a pointer to _struct_asym.id in the
          * STRUCT_ASYM category.
          */
-        asym_id: str$8,
+        asym_id: str$9,
         /**
          * The identifier for the polymeric segment modeled using this starting model.
          * This data item is a pointer to _ihm_entity_poly_segment.id in the
          * IHM_ENTITY_POLY_SEGMENT category.
          */
-        entity_poly_segment_id: int$6,
+        entity_poly_segment_id: int$7,
         /**
          * The source of the starting model.
          */
-        starting_model_source: Aliased$3(str$8),
+        starting_model_source: Aliased$4(str$9),
         /**
          * The author assigned chainId/auth_asym_id corresponding to this starting model.
          * This corresponds to the chainId/auth_asym_id of the experimental models in the
@@ -27146,19 +27146,19 @@ var mmCIF_Schema = {
          * via a DOI. If starting models are included in IHM_STARTING_MODEL_COORD, then
          * this will be the same as _ihm_starting_model_details.asym_id.
          */
-        starting_model_auth_asym_id: str$8,
+        starting_model_auth_asym_id: str$9,
         /**
          * The offset in residue numbering between the starting model and the deposited I/H model, if applicable.
          * I/H model residue number = Starting model residue number + offset
          */
-        starting_model_sequence_offset: int$6,
+        starting_model_sequence_offset: int$7,
         /**
          * Identifier to the starting model (comparative, experimental or integrative)
          * used as input in the integrative modeling.
          * This data item is a pointer to the _ihm_dataset_list.id in the
          * IHM_DATASET_LIST category.
          */
-        dataset_list_id: int$6,
+        dataset_list_id: int$7,
     },
     /**
      * Data items in the IHM_STARTING_COMPARATIVE_MODELS category records
@@ -27169,56 +27169,56 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the starting comparative model.
          */
-        id: int$6,
+        id: int$7,
         /**
          * The identifier for the starting structural model.
          * This data item is a pointer to _ihm_starting_model_details.starting_model_id
          * in the IHM_STARTING_MODEL_DETAILS category.
          */
-        starting_model_id: str$8,
+        starting_model_id: str$9,
         /**
          * The chainId/auth_asym_id corresponding to the starting model.
          */
-        starting_model_auth_asym_id: str$8,
+        starting_model_auth_asym_id: str$9,
         /**
          * The starting residue index of the starting model.
          */
-        starting_model_seq_id_begin: int$6,
+        starting_model_seq_id_begin: int$7,
         /**
          * The ending residue index of the starting model.
          */
-        starting_model_seq_id_end: int$6,
+        starting_model_seq_id_end: int$7,
         /**
          * The chainId/auth_asym_id corresponding to the template.
          */
-        template_auth_asym_id: str$8,
+        template_auth_asym_id: str$9,
         /**
          * The starting residue index of the template.
          */
-        template_seq_id_begin: int$6,
+        template_seq_id_begin: int$7,
         /**
          * The ending residue index of the template.
          */
-        template_seq_id_end: int$6,
+        template_seq_id_end: int$7,
         /**
          * The percentage sequence identity between the template sequence and the comparative model sequence.
          */
-        template_sequence_identity: float$5,
+        template_sequence_identity: float$6,
         /**
          * The denominator used while calculating the sequence identity provided in
          * _ihm_starting_comparative_models.template_sequence_identity.
          */
-        template_sequence_identity_denominator: Aliased$3(int$6),
+        template_sequence_identity_denominator: Aliased$4(int$7),
         /**
          * The dataset list id corresponding to the template used to obtain the comparative model.
          * This data item is a pointer to _ihm_dataset_list.id in the IHM_DATASET_LIST category.
          */
-        template_dataset_list_id: int$6,
+        template_dataset_list_id: int$7,
         /**
          * The file id corresponding to the sequence alignment of the template sequence and the comparative model sequence.
          * This data item is a pointer to _ihm_external_files.id in the IHM_EXTERNAL_FILES category.
          */
-        alignment_file_id: int$6,
+        alignment_file_id: int$7,
     },
     /**
      * Data items in the IHM_STARTING_MODEL_SEQ_DIF category provide a
@@ -27233,53 +27233,53 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the entry.
          */
-        id: int$6,
+        id: int$7,
         /**
          * A unique identifier for the distinct molecular entities.
          * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * An asym/strand identifier for the entity molecule.
          * This data item is a pointer to _struct_asym.id in the
          * STRUCT_ASYM category.
          */
-        asym_id: str$8,
+        asym_id: str$9,
         /**
          * The residue index.
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id: int$6,
+        seq_id: int$7,
         /**
          * The component identifier for the residue.
          * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
          */
-        comp_id: str$8,
+        comp_id: str$9,
         /**
          * Unique identifier for the starting model record.
          * This data item is a pointer to _ihm_starting_model_details.starting_model_id in the
          * IHM_STARTING_MODEL_DETAILS category.
          */
-        starting_model_id: str$8,
+        starting_model_id: str$9,
         /**
          * The asym/strand identifier for the entity molecule of the database starting model.
          */
-        db_asym_id: str$8,
+        db_asym_id: str$9,
         /**
          * The corresponding residue index of the database starting model.
          */
-        db_seq_id: int$6,
+        db_seq_id: int$7,
         /**
          * The correspinding component identifier for the residue in the database starting model.
          */
-        db_comp_id: str$8,
+        db_comp_id: str$9,
         /**
          * A description of special aspects of the point differences
          * between the sequence of the entity or biological unit described
          * in the data block and that in the starting model referenced
          * from a database.
          */
-        details: str$8,
+        details: str$9,
     },
     /**
      * Data items in the IHM_MODEL_REPRESENTATION category lists the
@@ -27290,15 +27290,15 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the model representation.
          */
-        id: int$6,
+        id: int$7,
         /**
          * Name/brief description for the model representation.
          */
-        name: str$8,
+        name: str$9,
         /**
          * Additional details about the model representation.
          */
-        details: str$8,
+        details: str$9,
     },
     /**
      * Data items in the IHM_MODEL_REPRESENTATION_DETAILS category records the
@@ -27309,57 +27309,57 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the category.
          */
-        id: int$6,
+        id: int$7,
         /**
          * An identifier that collects or groups together a set of representations.
          * This data item is a pointer to _ihm_model_representation.id in the
          * IHM_MODEL_REPRESENTATION category.
          */
-        representation_id: int$6,
+        representation_id: int$7,
         /**
          * The identifier for the polymeric segment in the representation.
          * This data item is a pointer to _ihm_entity_poly_segment.id in the
          * IHM_ENTITY_POLY_SEGMENT category.
          */
-        entity_poly_segment_id: int$6,
+        entity_poly_segment_id: int$7,
         /**
          * A unique identifier distinct molecular entities.
          * This data item is a pointer to _entity.id in the
          * ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * A text description of the molecular entity
          */
-        entity_description: str$8,
+        entity_description: str$9,
         /**
          * An asym/strand identifier for the entity molecule.
          * This data item is a pointer to _struct_asym.id in the
          * STRUCT_ASYM category.
          */
-        entity_asym_id: str$8,
+        entity_asym_id: str$9,
         /**
          * The primitive object used to model this segment.
          */
-        model_object_primitive: Aliased$3(str$8),
+        model_object_primitive: Aliased$4(str$9),
         /**
          * The identifier for the starting structural model.
          * This data item is a pointer to _ihm_starting_model_details.starting_model_id
          * in the IHM_STARTING_MODEL_DETAILS category.
          */
-        starting_model_id: str$8,
+        starting_model_id: str$9,
         /**
          * The manner in which the segment is modeled.
          */
-        model_mode: Aliased$3(str$8),
+        model_mode: Aliased$4(str$9),
         /**
          * The level of detail at which model primitive objects are applied to the structure.
          */
-        model_granularity: Aliased$3(str$8),
+        model_granularity: Aliased$4(str$9),
         /**
          * The number of primitive objects used to model a feature in the case of 'by-feature' granularity.
          */
-        model_object_count: int$6,
+        model_object_count: int$7,
     },
     /**
      * Data items in the IHM_STRUCT_ASSEMBLY_DETAILS category records
@@ -27370,7 +27370,7 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the structural assembly description.
          */
-        id: int$6,
+        id: int$7,
         /**
          * An identifier for the structural assembly.
          * This data item will remain the same for all components
@@ -27378,7 +27378,7 @@ var mmCIF_Schema = {
          * This data item is a pointer to _ihm_struct_assembly.id
          * in the IHM_STRUCT_ASSEMBLY category.
          */
-        assembly_id: int$6,
+        assembly_id: int$7,
         /**
          * The parent of this assembly in a hierarchy.
          * This data item is a pointer to _ihm_struct_assembly.id in the
@@ -27390,29 +27390,29 @@ var mmCIF_Schema = {
          * _ihm_struct_assembly_details.parent_assembly_id is the same as
          * _ihm_struct_assembly_details.assembly_id indicating a self-parent.
          */
-        parent_assembly_id: int$6,
+        parent_assembly_id: int$7,
         /**
          * A text description of the molecular entity
          */
-        entity_description: str$8,
+        entity_description: str$9,
         /**
          * A unique identifier for distinct molecular entities.
          * This data item is a pointer to _entity.id in the
          * ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * An asym/strand identifier for the component in the assembly.
          * This data item is a pointer to _struct_asym.id in the
          * STRUCT_ASYM category.
          */
-        asym_id: str$8,
+        asym_id: str$9,
         /**
          * The identifier for the polymeric segment in the assembly.
          * This data item is a pointer to _ihm_entity_poly_segment.id in the
          * IHM_ENTITY_POLY_SEGMENT category.
          */
-        entity_poly_segment_id: int$6,
+        entity_poly_segment_id: int$7,
     },
     /**
      * Data items in the IHM_STRUCT_ASSEMBLY category lists
@@ -27423,15 +27423,15 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the structural assembly.
          */
-        id: int$6,
+        id: int$7,
         /**
          * A name for the structural assembly.
          */
-        name: str$8,
+        name: str$9,
         /**
          * Description of the structural assembly.
          */
-        description: str$8,
+        description: str$9,
     },
     /**
      * Data items in the IHM_MODELING_PROTOCOL category lists all
@@ -27441,15 +27441,15 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the modeling protocol.
          */
-        id: int$6,
+        id: int$7,
         /**
          * Number of independent steps in the modeling protocol.
          */
-        num_steps: int$6,
+        num_steps: int$7,
         /**
          * The name for the modeling protocol.
          */
-        protocol_name: str$8,
+        protocol_name: str$9,
     },
     /**
      * Data items in the IHM_MODELING_PROTOCOL_DETAILS category records the
@@ -27459,17 +27459,17 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the modeling protocol/step combination.
          */
-        id: int$6,
+        id: int$7,
         /**
          * An index for the modeling protocol carried out.
          * This data item is a pointer to _ihm_modeling_protocol.id in the
          * IHM_MODELING_PROTOCOL category.
          */
-        protocol_id: int$6,
+        protocol_id: int$7,
         /**
          * An index for a particular step within the modeling protocol.
          */
-        step_id: int$6,
+        step_id: int$7,
         /**
          * An index for the structural assembly being modeled.
          * This is an indicator to whether the whole assembly is modeled
@@ -27480,56 +27480,56 @@ var mmCIF_Schema = {
          * The default value for this data item is "1", indicating that the entire
          * assembly is being modeled.
          */
-        struct_assembly_id: int$6,
+        struct_assembly_id: int$7,
         /**
          * An index for the dataset group being used in the modeling protocol.
          * This data item is a pointer to the _ihm_dataset_group.id in the
          * IHM_DATASET_GROUP category.
          */
-        dataset_group_id: int$6,
+        dataset_group_id: int$7,
         /**
          * A textual description of the structural assembly being modeled.
          */
-        struct_assembly_description: str$8,
+        struct_assembly_description: str$9,
         /**
          * The name or type of the modeling step.
          */
-        step_name: str$8,
+        step_name: str$9,
         /**
          * Description of the method involved in the modeling step.
          */
-        step_method: str$8,
+        step_method: str$9,
         /**
          * The number of models in the beginning of the step.
          */
-        num_models_begin: int$6,
+        num_models_begin: int$7,
         /**
          * The number of models at the end of the step.
          */
-        num_models_end: int$6,
+        num_models_end: int$7,
         /**
          * A flag to indicate if the modeling is multi scale.
          */
-        multi_scale_flag: Aliased$3(lstr$2),
+        multi_scale_flag: Aliased$4(lstr$3),
         /**
          * A flag to indicate if the modeling is multi state.
          */
-        multi_state_flag: Aliased$3(lstr$2),
+        multi_state_flag: Aliased$4(lstr$3),
         /**
          * A flag to indicate if the modeling involves an ensemble ordered by time or other order.
          */
-        ordered_flag: Aliased$3(lstr$2),
+        ordered_flag: Aliased$4(lstr$3),
         /**
          * The file id corresponding to the script used in the modeling protocol step.
          * This data item is a pointer to _ihm_external_files.id in the IHM_EXTERNAL_FILES category.
          */
-        script_file_id: int$6,
+        script_file_id: int$7,
         /**
          * Identifier to the software used in the modeling protocol step.
          * This data item is a pointer to the _software.pdbx_ordinal in the
          * SOFTWARE category.
          */
-        software_id: int$6,
+        software_id: int$7,
     },
     /**
      * Data items in the IHM_MULTI_STATE_MODELING category records the
@@ -27539,37 +27539,37 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for a particular state in the multi-state modeling.
          */
-        state_id: int$6,
+        state_id: int$7,
         /**
          * An identifier for a collections of states in the multi-state modeling.
          * This data item can be used when structural models belong to diffent
          * multi-state modeling types.
          */
-        state_group_id: int$6,
+        state_group_id: int$7,
         /**
          * A fraction representing the population of the particular state.
          */
-        population_fraction: float$5,
+        population_fraction: float$6,
         /**
          * The standard deviation of the population fraction.
          */
-        population_fraction_sd: float$5,
+        population_fraction_sd: float$6,
         /**
          * The type that the multiple states being modeled belong to.
          */
-        state_type: str$8,
+        state_type: str$9,
         /**
          * A descriptive name for the state.
          */
-        state_name: str$8,
+        state_name: str$9,
         /**
          * The type of multi-state modeling experiment carried out.
          */
-        experiment_type: Aliased$3(str$8),
+        experiment_type: Aliased$4(str$9),
         /**
          * Additional textual details of the multi-state modeling, if required.
          */
-        details: str$8,
+        details: str$9,
     },
     /**
      * Data items in the IHM_MODELING_POST_PROCESS category records
@@ -27580,40 +27580,40 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the post modeling analysis/step combination.
          */
-        id: int$6,
+        id: int$7,
         /**
          * An identifier for the modeling protocol, whose post modeling analysis
          * is being carried out.
          * This data item is a pointer to the _ihm_modeling_protocol.id
          * in the IHM_MODELING_PROTOCOL category.
          */
-        protocol_id: int$6,
+        protocol_id: int$7,
         /**
          * An identifier for the post modeling analysis. This data item accounts for
          * multiple post-modeling analyses that can be carried out.
          */
-        analysis_id: int$6,
+        analysis_id: int$7,
         /**
          * In a multi-step process, this identifier denotes the particular
          * step in the post modeling analysis.
          */
-        step_id: int$6,
+        step_id: int$7,
         /**
          * The type of post modeling analysis being carried out.
          */
-        type: Aliased$3(str$8),
+        type: Aliased$4(str$9),
         /**
          * The parameter/feature used in the post modeling analysis.
          */
-        feature: Aliased$3(str$8),
+        feature: Aliased$4(str$9),
         /**
          * The number of models at the beginning of the post processing step.
          */
-        num_models_begin: int$6,
+        num_models_begin: int$7,
         /**
          * The number of models the the end of the post processing step.
          */
-        num_models_end: int$6,
+        num_models_end: int$7,
     },
     /**
      * Data items in the IHM_ENSEMBLE_INFO category records the
@@ -27624,39 +27624,39 @@ var mmCIF_Schema = {
         /**
          * A unique id for the ensemble.
          */
-        ensemble_id: int$6,
+        ensemble_id: int$7,
         /**
          * An optional name for the cluster or ensemble for better description.
          */
-        ensemble_name: str$8,
+        ensemble_name: str$9,
         /**
          * An identifier for the post modeling analyses carried out.
          * This data item is a pointer to _ihm_modeling_post_process.id in
          * the IHM_MODELING_POST_PROCESS category.
          */
-        post_process_id: int$6,
+        post_process_id: int$7,
         /**
          * An identifier for the cluster or group of models being deposited.
          * This data item is a pointer to the _ihm_model_group.id
          * in the IHM_MODEL_GROUP category.
          */
-        model_group_id: int$6,
+        model_group_id: int$7,
         /**
          * The clustering method used to obtain the ensemble, if applicable.
          */
-        ensemble_clustering_method: Aliased$3(str$8),
+        ensemble_clustering_method: Aliased$4(str$9),
         /**
          * The parameter/feature used for clustering the models, if applicable.
          */
-        ensemble_clustering_feature: Aliased$3(str$8),
+        ensemble_clustering_feature: Aliased$4(str$9),
         /**
          * The number of models in the current ensemble being described.
          */
-        num_ensemble_models: int$6,
+        num_ensemble_models: int$7,
         /**
          * The number of models from the current ensemble that is deposited.
          */
-        num_ensemble_models_deposited: int$6,
+        num_ensemble_models_deposited: int$7,
         /**
          * The precision of each cluster or ensemble is calculated as dRMSD, which
          * is the average C-alpha distance root mean square deviation (dRMSD)
@@ -27664,7 +27664,7 @@ var mmCIF_Schema = {
          * The cluster centroid is defined as the model with the minimal sum of
          * dRMSDs to the other models in the cluster or ensemble.
          */
-        ensemble_precision_value: float$5,
+        ensemble_precision_value: float$6,
         /**
          * A reference to the external file containing the structural models
          * in the ensemble. The number of models in the external file should
@@ -27678,7 +27678,7 @@ var mmCIF_Schema = {
          * The topology can be inferred from the IHM_SPHERE_OBJ_SITE and the
          * ATOM_SITE categories in the corresponding mmCIF file.
          */
-        ensemble_file_id: int$6,
+        ensemble_file_id: int$7,
     },
     /**
      * Data items in the IHM_MODEL_LIST category record the
@@ -27688,29 +27688,29 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the structural model being deposited.
          */
-        model_id: int$6,
+        model_id: int$7,
         /**
          * A decsriptive name for the model.
          */
-        model_name: str$8,
+        model_name: str$9,
         /**
          * An identifier to the structure assembly corresponding to the model.
          * This data item is a pointer to the _ihm_struct_assembly.id
          * in the IHM_STRUCT_ASSEMBLY category.
          */
-        assembly_id: int$6,
+        assembly_id: int$7,
         /**
          * An identifier to the modeling protocol that produced the model.
          * This data item is a pointer to the _ihm_modeling_protocol.id
          * in the IHM_MODELING_PROTOCOL category.
          */
-        protocol_id: int$6,
+        protocol_id: int$7,
         /**
          * An identifier to the multi-scale model representation id of the model.
          * This data item is a pointer to the _ihm_model_representation.id
          * in the IHM_MODEL_REPRESENTATION category.
          */
-        representation_id: int$6,
+        representation_id: int$7,
     },
     /**
      * IHM_MODEL_GROUP category defines collections or groups of integrative
@@ -27731,15 +27731,15 @@ var mmCIF_Schema = {
          * representative is calculated from the ensemble (i.e., centroid), then it is
          * recommended that the representative be separated into a different group.
          */
-        id: int$6,
+        id: int$7,
         /**
          * A name for the collection of models.
          */
-        name: str$8,
+        name: str$9,
         /**
          * Additional details about the collection of models.
          */
-        details: str$8,
+        details: str$9,
     },
     /**
      * IHM_MODEL_GROUP_LINK category provides the list of models present in
@@ -27751,13 +27751,13 @@ var mmCIF_Schema = {
          * This data item is a pointer to _ihm_model_list.model_id in the
          * IHM_MODEL_LIST category.
          */
-        model_id: int$6,
+        model_id: int$7,
         /**
          * An identifier for the structural model group.
          * This data item is a pointer to _ihm_model_group.id in the
          * IHM_MODEL_GROUP category.
          */
-        group_id: int$6,
+        group_id: int$7,
     },
     /**
      * Data items in the IHM_MODEL_REPRESENTATIVE category record the
@@ -27767,23 +27767,23 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the representative of the model group.
          */
-        id: int$6,
+        id: int$7,
         /**
          * The model group identifier corresponding to the representative model.
          * This data item is a pointer to _ihm_model_group.id in the
          * IHM_MODEL_GROUP category.
          */
-        model_group_id: int$6,
+        model_group_id: int$7,
         /**
          * The model identifier corresponding to the representative model.
          * This data item is a pointer to _ihm_model_list.model_id in the
          * IHM_MODEL_LIST category.
          */
-        model_id: int$6,
+        model_id: int$7,
         /**
          * The selection criteria based on which the representative is chosen.
          */
-        selection_criteria: Aliased$3(str$8),
+        selection_criteria: Aliased$4(str$9),
     },
     /**
      * Category holds the list of all datasets used in the IHM modeling.
@@ -27798,16 +27798,16 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the dataset.
          */
-        id: int$6,
+        id: int$7,
         /**
          * The type of data held in the dataset.
          */
-        data_type: Aliased$3(str$8),
+        data_type: Aliased$4(str$9),
         /**
          * A flag that indicates whether the dataset is archived in
          * an IHM related database or elsewhere.
          */
-        database_hosted: Aliased$3(lstr$2),
+        database_hosted: Aliased$4(lstr$3),
     },
     /**
      * Category to define groups or collections of input datasets.
@@ -27816,19 +27816,19 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the dataset group.
          */
-        id: int$6,
+        id: int$7,
         /**
          * A name for the dataset group.
          */
-        name: str$8,
+        name: str$9,
         /**
          * The application / utilization of the dataset group in modeling.
          */
-        application: Aliased$3(str$8),
+        application: Aliased$4(str$9),
         /**
          * Additional details regarding the dataset group.
          */
-        details: str$8,
+        details: str$9,
     },
     /**
      * IHM_DATASET_GROUP_LINK category provides the list of datasets present in
@@ -27840,13 +27840,13 @@ var mmCIF_Schema = {
          * This data item is a pointer to _ihm_dataset_list.id in the
          * IHM_DATASET_LIST category.
          */
-        dataset_list_id: int$6,
+        dataset_list_id: int$7,
         /**
          * An identifier for the dataset group.
          * This data item is a pointer to _ihm_dataset_group.id in the
          * IHM_DATASET_GROUP category.
          */
-        group_id: int$6,
+        group_id: int$7,
     },
     /**
      * Category holds information about related datasets, where one is derived from the other.
@@ -27857,13 +27857,13 @@ var mmCIF_Schema = {
          * This data item is a pointer to _ihm_dataset_list.id in the
          * IHM_DATASET_LIST category.
          */
-        dataset_list_id_derived: int$6,
+        dataset_list_id_derived: int$7,
         /**
          * The primary dataset list id from which the corresponding derived dataset is obtained.
          * This data item is a pointer to _ihm_dataset_list.id in the
          * IHM_DATASET_LIST category.
          */
-        dataset_list_id_primary: int$6,
+        dataset_list_id_primary: int$7,
     },
     /**
      * Category holds information related to data sources for the entry.
@@ -27874,29 +27874,29 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the related database entry.
          */
-        id: int$6,
+        id: int$7,
         /**
          * Identifier to the dataset list used in the IHM modeling.
          * This data item is a pointer to the _ihm_dataset_list.id in the
          * IHM_DATASET_LIST category.
          */
-        dataset_list_id: int$6,
+        dataset_list_id: int$7,
         /**
          * The name of the database containing the dataset entry.
          */
-        db_name: Aliased$3(str$8),
+        db_name: Aliased$4(str$9),
         /**
          * The accession code for the database entry.
          */
-        accession_code: str$8,
+        accession_code: str$9,
         /**
          * Version of the database entry, if the database allows versioning.
          */
-        version: str$8,
+        version: str$9,
         /**
          * Details regarding the dataset entry.
          */
-        details: str$8,
+        details: str$9,
     },
     /**
      * Category holds links to other external data sources for the I/H model entry.
@@ -27914,33 +27914,33 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the external reference.
          */
-        reference_id: int$6,
+        reference_id: int$7,
         /**
          * The name of the reference provider.
          */
-        reference_provider: str$8,
+        reference_provider: str$9,
         /**
          * The type of external reference.
          * Currently, only Digital Object Identifiers (DOIs) and supplementary files
          * stored locally are supported.
          */
-        reference_type: Aliased$3(str$8),
+        reference_type: Aliased$4(str$9),
         /**
          * The external reference or the Digital Object Identifier (DOI).
          * This field is not relevant for local files.
          */
-        reference: str$8,
+        reference: str$9,
         /**
          * The type of object that the external reference points to, usually
          * a single file or an archive.
          */
-        refers_to: Aliased$3(str$8),
+        refers_to: Aliased$4(str$9),
         /**
          * The Uniform Resource Locator (URL) corresponding to the external reference (DOI).
          * This URL should link to the corresponding downloadable file or archive and is provided
          * to enable automated software to download the referenced file or archive.
          */
-        associated_url: str$8,
+        associated_url: str$9,
     },
     /**
      * Category provides details regarding external files. The IHM_EXTERNAL_REFERENCE_INFO
@@ -27952,13 +27952,13 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for each external file.
          */
-        id: int$6,
+        id: int$7,
         /**
          * A pointer to the source of the external file - either DOI or locally stored.
          * This data item is a pointer to _ihm_external_reference_info.reference_id in the
          * IHM_EXTERNAL_REFERENCE_INFO category.
          */
-        reference_id: int$6,
+        reference_id: int$7,
         /**
          * The relative path (including filename) for each external file.
          * Absolute paths (starting with "/") are not permitted.
@@ -27967,19 +27967,19 @@ var mmCIF_Schema = {
          * files organized within a directory structure.
          * This data item assumes a POSIX-like directory structure or file path.
          */
-        file_path: str$8,
+        file_path: str$9,
         /**
          * The type of content in the file.
          */
-        content_type: Aliased$3(str$8),
+        content_type: Aliased$4(str$9),
         /**
          * Storage size of the external file in bytes.
          */
-        file_size_bytes: float$5,
+        file_size_bytes: float$6,
         /**
          * Additional textual details regarding the external file.
          */
-        details: str$8,
+        details: str$9,
     },
     /**
      * Category provides additional details regarding input data hosted externally
@@ -27989,19 +27989,19 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the external data.
          */
-        id: int$6,
+        id: int$7,
         /**
          * Identifier to the dataset list used in the I/H modeling.
          * This data item is a pointer to the _ihm_dataset_list.id in the
          * IHM_DATASET_LIST category.
          */
-        dataset_list_id: int$6,
+        dataset_list_id: int$7,
         /**
          * The file id corresponding to this external data file.
          * This data item is a pointer to _ihm_external_files.id
          * in the IHM_EXTERNAL_FILES category.
          */
-        file_id: int$6,
+        file_id: int$7,
     },
     /**
      * Data items in the IHM_LOCALIZATION_DENSITY_FILES category records the
@@ -28014,35 +28014,35 @@ var mmCIF_Schema = {
         /**
          * A unique identifier.
          */
-        id: int$6,
+        id: int$7,
         /**
          * The file id for the externally stored localization density file.
          * This data item is a pointer to _ihm_external_files.id
          * in the IHM_EXTERNAL_FILES category.
          */
-        file_id: int$6,
+        file_id: int$7,
         /**
          * The ensemble identifier for the ensemble, for which the localization density is provided.
          * This data item is a pointer to _ihm_ensemble_info.ensemble_id in the IHM_ENSEMBLE_INFO category.
          */
-        ensemble_id: int$6,
+        ensemble_id: int$7,
         /**
          * The entity identifier corresponding to this localization density.
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * The identifier for the polymeric segment corresponding to this
          * localization density.
          * This data item is a pointer to _ihm_entity_poly_segment.id in the
          * IHM_ENTITY_POLY_SEGMENT category.
          */
-        entity_poly_segment_id: int$6,
+        entity_poly_segment_id: int$7,
         /**
          * An asym/strand identifier corresponding to this localization density.
          * This data item is a pointer to _struct_asym.id in the STRUCT_ASYM category.
          */
-        asym_id: str$8,
+        asym_id: str$9,
     },
     /**
      * Data items in the IHM_PREDICTED_CONTACT_RESTRAINT category records the
@@ -28056,98 +28056,98 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the predicted contact restraint.
          */
-        id: int$6,
+        id: int$7,
         /**
          * An identifier to group the predicted contacts.
          */
-        group_id: int$6,
+        group_id: int$7,
         /**
          * The entity identifier for the first monomer partner in the predicted contact.
          * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY_SEQ category.
          */
-        entity_id_1: str$8,
+        entity_id_1: str$9,
         /**
          * The entity identifier for the second monomer partner in the predicted contact.
          * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY_SEQ category.
          */
-        entity_id_2: str$8,
+        entity_id_2: str$9,
         /**
          * An asym/strand identifier for the first monomer partner in the predicted contact.
          * This data item is a pointer to _struct_asym.id in the
          * STRUCT_ASYM category.
          */
-        asym_id_1: str$8,
+        asym_id_1: str$9,
         /**
          * An asym/strand identifier for the second monomer partner in the predicted contact.
          * This data item is a pointer to _struct_asym.id in the
          * STRUCT_ASYM category.
          */
-        asym_id_2: str$8,
+        asym_id_2: str$9,
         /**
          * The component identifier for the first monomer partner in the predicted contact.
          * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
          */
-        comp_id_1: str$8,
+        comp_id_1: str$9,
         /**
          * The component identifier for the second monomer partner in the predicted contact.
          * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
          */
-        comp_id_2: str$8,
+        comp_id_2: str$9,
         /**
          * The sequence index for the first monomer partner in the predicted contact.
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id_1: int$6,
+        seq_id_1: int$7,
         /**
          * The sequence index for the second monomer partner in the predicted contact.
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id_2: int$6,
+        seq_id_2: int$7,
         /**
          * If _ihm_predicted_contact_restraint.model_granularity is by-residue, then indicate the atom
          * used to represent the first monomer partner in three-dimension. Default is the C-alpha atom.
          */
-        rep_atom_1: Aliased$3(str$8),
+        rep_atom_1: Aliased$4(str$9),
         /**
          * If _ihm_predicted_contact_restraint.model_granularity is by-residue, then indicate the atom
          * used to represent the second monomer partner in three-dimension. Default is the C-alpha atom.
          */
-        rep_atom_2: Aliased$3(str$8),
+        rep_atom_2: Aliased$4(str$9),
         /**
          * The lower limit to the distance threshold applied to this predicted contact restraint
          * in the integrative modeling task.
          */
-        distance_lower_limit: float$5,
+        distance_lower_limit: float$6,
         /**
          * The upper limit to the distance threshold applied to this predicted contact restraint
          * in the integrative modeling task.
          */
-        distance_upper_limit: float$5,
+        distance_upper_limit: float$6,
         /**
          * The real number that indicates the probability that the predicted distance restraint
          * is correct. This number should fall between 0.0 and 1.0.
          */
-        probability: float$5,
+        probability: float$6,
         /**
          * The type of distance restraint applied.
          */
-        restraint_type: Aliased$3(str$8),
+        restraint_type: Aliased$4(str$9),
         /**
          * The granularity of the predicted contact as applied to the multi-scale model.
          */
-        model_granularity: Aliased$3(str$8),
+        model_granularity: Aliased$4(str$9),
         /**
          * Identifier to the predicted contacts dataset.
          * This data item is a pointer to the _ihm_dataset_list.id in the
          * IHM_DATASET_LIST category.
          */
-        dataset_list_id: int$6,
+        dataset_list_id: int$7,
         /**
          * Identifier to the software used to obtain the predicted contacts dataset.
          * This data item is a pointer to the _software.pdbx_ordinal in the
          * SOFTWARE category.
          */
-        software_id: int$6,
+        software_id: int$7,
     },
     /**
      * Data items in the IHM_CROSS_LINK_LIST category records the
@@ -28158,66 +28158,66 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the cross link restraint.
          */
-        id: int$6,
+        id: int$7,
         /**
          * An identifier for a set of ambiguous crosslink restraints.
          * Handles experimental uncertainties in the identities of
          * crosslinked residues.
          */
-        group_id: int$6,
+        group_id: int$7,
         /**
          * A text description of molecular entity 1.
          */
-        entity_description_1: str$8,
+        entity_description_1: str$9,
         /**
          * A text description of molecular entity 2.
          */
-        entity_description_2: str$8,
+        entity_description_2: str$9,
         /**
          * The entity identifier for the first monomer partner in the cross link
          * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY_SEQ category.
          */
-        entity_id_1: str$8,
+        entity_id_1: str$9,
         /**
          * The entity identifier for the second monomer partner in the cross link
          *
          * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY_SEQ category.
          */
-        entity_id_2: str$8,
+        entity_id_2: str$9,
         /**
          * The component identifier for the first monomer partner in the cross link.
          *
          * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
          */
-        comp_id_1: str$8,
+        comp_id_1: str$9,
         /**
          * The component identifier for the second monomer partner in the cross link.
          *
          * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
          */
-        comp_id_2: str$8,
+        comp_id_2: str$9,
         /**
          * The sequence index for the first monomer partner in the cross link.
          *
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id_1: int$6,
+        seq_id_1: int$7,
         /**
          * The sequence index for the second monomer partner in the cross link.
          *
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id_2: int$6,
+        seq_id_2: int$7,
         /**
          * The type of crosslinker used.
          */
-        linker_type: Aliased$3(str$8),
+        linker_type: Aliased$4(str$9),
         /**
          * Identifier to the crosslinking dataset.
          * This data item is a pointer to the _ihm_dataset_list.id in the
          * IHM_DATASET_LIST category.
          */
-        dataset_list_id: int$6,
+        dataset_list_id: int$7,
     },
     /**
      * Data items in the IHM_CROSS_LINK_RESTRAINT category enumerates the
@@ -28229,113 +28229,113 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the cross link record.
          */
-        id: int$6,
+        id: int$7,
         /**
          * An identifier for a set of ambiguous cross-links.
          * Handles implementation uncertainties related to multiple copies of subunit.
          * This data item is a pointer to _ihm_cross_link_list.id in the
          * IHM_CROSS_LINK_LIST category.
          */
-        group_id: int$6,
+        group_id: int$7,
         /**
          * The entity identifier for the first monomer partner in the cross link
          *
          * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY_SEQ category
          * and the _ihm_cross_link_restraint.entity_id_1 in the IHM_CROSS_LINK_RESTRAINT category.
          */
-        entity_id_1: str$8,
+        entity_id_1: str$9,
         /**
          * The entity identifier for the second monomer partner in the cross link
          *
          * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY_SEQ category
          * and the _ihm_cross_link_restraint.entity_id_2 in the IHM_CROSS_LINK_RESTRAINT category.
          */
-        entity_id_2: str$8,
+        entity_id_2: str$9,
         /**
          * An asym/strand identifier for the first monomer partner in the cross-link.
          *
          * This data item is a pointer to _struct_asym.id in the
          * STRUCT_ASYM category.
          */
-        asym_id_1: str$8,
+        asym_id_1: str$9,
         /**
          * An asym/strand identifier for the second monomer partner in the cross-link.
          *
          * This data item is a pointer to _struct_asym.id in the
          * STRUCT_ASYM category.
          */
-        asym_id_2: str$8,
+        asym_id_2: str$9,
         /**
          * The component identifier for the first monomer partner in the cross link.
          *
          * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category
          * and the _ihm_cross_link_restraint.comp_id_1 in the IHM_CROSS_LINK_RESTRAINT category.
          */
-        comp_id_1: str$8,
+        comp_id_1: str$9,
         /**
          * The component identifier for the second monomer partner in the cross link.
          *
          * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category
          * and the _ihm_cross_link_restraint.comp_id_2 in the IHM_CROSS_LINK_RESTRAINT category.
          */
-        comp_id_2: str$8,
+        comp_id_2: str$9,
         /**
          * The sequence index for the first monomer partner in the cross link.
          *
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category
          * and the _ihm_cross_link_restraint.seq_id_1 in the IHM_CROSS_LINK_RESTRAINT category.
          */
-        seq_id_1: int$6,
+        seq_id_1: int$7,
         /**
          * The sequence index for the second monomer partner in the cross link.
          *
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category
          * and the _ihm_cross_link_restraint.seq_id_2 in the IHM_CROSS_LINK_RESTRAINT category.
          */
-        seq_id_2: int$6,
+        seq_id_2: int$7,
         /**
          * The atom identifier for the first monomer partner in the cross link.
          * This data item is a pointer to _chem_comp_atom.atom_id in the
          * CHEM_COMP_ATOM category.
          */
-        atom_id_1: str$8,
+        atom_id_1: str$9,
         /**
          * The atom identifier for the second monomer partner in the cross link.
          * This data item is a pointer to _chem_comp_atom.atom_id in the
          * CHEM_COMP_ATOM category.
          */
-        atom_id_2: str$8,
+        atom_id_2: str$9,
         /**
          * The type of the cross link restraint applied.
          */
-        restraint_type: Aliased$3(str$8),
+        restraint_type: Aliased$4(str$9),
         /**
          * The cross link conditionality.
          */
-        conditional_crosslink_flag: Aliased$3(str$8),
+        conditional_crosslink_flag: Aliased$4(str$9),
         /**
          * The coarse-graining information for the crosslink implementation.
          */
-        model_granularity: Aliased$3(str$8),
+        model_granularity: Aliased$4(str$9),
         /**
          * The distance threshold applied to this crosslink in the integrative modeling task.
          */
-        distance_threshold: float$5,
+        distance_threshold: float$6,
         /**
          * The uncertainty in the crosslinking experimental data;
          * may be approximated to the false positive rate.
          */
-        psi: float$5,
+        psi: float$6,
         /**
          * The uncertainty in the position of residue 1 in the crosslink
          * arising due to the multi-scale nature of the model represention.
          */
-        sigma_1: float$5,
+        sigma_1: float$6,
         /**
          * The uncertainty in the position of residue 2 in the crosslink
          * arising due to the multi-scale nature of the model represention.
          */
-        sigma_2: float$5,
+        sigma_2: float$6,
     },
     /**
      * Data items in the IHM_CROSS_LINK_RESULT_PARAMETERS category records the
@@ -28345,34 +28345,34 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the restraint/model combination.
          */
-        id: int$6,
+        id: int$7,
         /**
          * An identifier for the crosslink restraint between a pair of residues.
          * This data item is a pointer to _ihm_cross_link_restraint.id in the
          * IHM_CROSS_LINK_RESTRAINT category.
          */
-        restraint_id: int$6,
+        restraint_id: int$7,
         /**
          * The model number corresponding to the cross link result presented.
          * This data item is a pointer to _ihm_model_list.model_id in the
          * IHM_MODEL_LIST category.
          */
-        model_id: int$6,
+        model_id: int$7,
         /**
          * The uncertainty in the crosslinking experimental data;
          * May be approximated to the false positive rate.
          */
-        psi: float$5,
+        psi: float$6,
         /**
          * The uncertainty in the position of residue 1 in the crosslink
          * arising due to the multi-scale nature of the model represention.
          */
-        sigma_1: float$5,
+        sigma_1: float$6,
         /**
          * The uncertainty in the position of residue 2 in the crosslink
          * arising due to the multi-scale nature of the model represention.
          */
-        sigma_2: float$5,
+        sigma_2: float$6,
     },
     /**
      * Data items in the IHM_2DEM_CLASS_AVERAGE_RESTRAINT category records the
@@ -28382,43 +28382,43 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the 2dem class average.
          */
-        id: int$6,
+        id: int$7,
         /**
          * Identifier to the 2dem class average dataset.
          * This data item is a pointer to the _ihm_dataset_list.id in the
          * IHM_DATASET_LIST category.
          */
-        dataset_list_id: int$6,
+        dataset_list_id: int$7,
         /**
          * The number of raw micrographs used to obtain the class average.
          */
-        number_raw_micrographs: int$6,
+        number_raw_micrographs: int$7,
         /**
          * Pixel size width of the 2dem class average image.
          * While fitting the model to the image, _ihm_2dem_class_average_restraint.pixel_size_width
          * is used along with _ihm_2dem_class_average_restraint.pixel_size_height to scale the image.
          */
-        pixel_size_width: float$5,
+        pixel_size_width: float$6,
         /**
          * Pixel size height of the 2dem class average image.
          * While fitting the model to the image, _ihm_2dem_class_average_restraint.pixel_size_height
          * is used along with _ihm_2dem_class_average_restraint.pixel_size_width to scale the image.
          */
-        pixel_size_height: float$5,
+        pixel_size_height: float$6,
         /**
          * Resolution of the 2dem class average.
          */
-        image_resolution: float$5,
+        image_resolution: float$6,
         /**
          * A flag that indicates whether or not the 2DEM class average image is segmented i.e.,
          * whether the whole image is used or only a portion of it is used (by masking
          * or by other means) as restraint in the modeling.
          */
-        image_segment_flag: Aliased$3(lstr$2),
+        image_segment_flag: Aliased$4(lstr$3),
         /**
          * Number of 2D projections of the model used in the fitting.
          */
-        number_of_projections: int$6,
+        number_of_projections: int$7,
         /**
          * An indicator to whether the whole assembly that is modeled is fit into the image
          * or if only a subset of the structural assembly is fit into the image.
@@ -28428,11 +28428,11 @@ var mmCIF_Schema = {
          * The default value for this data item is "1" indicating that the entire assembly
          * being modeled is fit into the EM data.
          */
-        struct_assembly_id: int$6,
+        struct_assembly_id: int$7,
         /**
          * Details of how the 2DEM restraint is applied in the modeling algorithm.
          */
-        details: str$8,
+        details: str$9,
     },
     /**
      * Data items in the IHM_2DEM_CLASS_AVERAGE_FITTING category records the
@@ -28456,31 +28456,31 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the 2dem class average fitting data.
          */
-        id: int$6,
+        id: int$7,
         /**
          * Identifier to the 2dem class average restraint.
          * This data item is a pointer to the _ihm_2dem_class_average_restraint.id in the
          * IHM_2DEM_CLASS_AVERAGE_RESTRAINT category.
          */
-        restraint_id: int$6,
+        restraint_id: int$7,
         /**
          * The model number corresponding to the 2DEM fitting result presented.
          * This data item is a pointer to _ihm_model_list.model_id in the
          * IHM_MODEL_LIST category.
          */
-        model_id: int$6,
+        model_id: int$7,
         /**
          * The cross correlation coefficient corresponding to the model to image fitting.
          */
-        cross_correlation_coefficient: float$5,
+        cross_correlation_coefficient: float$6,
         /**
          * Data item  of the rotation matrix used in the fitting of the model to the image.
          */
-        rot_matrix: Matrix$2(3, 3),
+        rot_matrix: Matrix$3(3, 3),
         /**
          * Data item  of the tranlation vector used in the fitting of the model to the image.
          */
-        tr_vector: Vector$1(3),
+        tr_vector: Vector$2(3),
     },
     /**
      * Data items in the IHM_3DEM_RESTRAINT category records the
@@ -28491,19 +28491,19 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the 3DEM restraint description.
          */
-        id: int$6,
+        id: int$7,
         /**
          * Identifier to the 3DEM map used.
          * This data item is a pointer to the _ihm_dataset_list.id in the
          * IHM_DATASET_LIST category.
          */
-        dataset_list_id: int$6,
+        dataset_list_id: int$7,
         /**
          * The model number corresponding to the 3DEM fitting result presented.
          * This data item is a pointer to _ihm_model_list.model_id in the
          * IHM_MODEL_LIST category.
          */
-        model_id: int$6,
+        model_id: int$7,
         /**
          * An indicator to whether the whole assembly that is modeled is fit into the 3DEM map
          * or if only a subset of the structural assembly is fit into the map.
@@ -28513,22 +28513,22 @@ var mmCIF_Schema = {
          * The default value for this data item is "1" indicating that the entire assembly
          * being modeled is fit into the EM map.
          */
-        struct_assembly_id: int$6,
+        struct_assembly_id: int$7,
         /**
          * Method used to fit the model to the 3DEM map.
          */
-        fitting_method: str$8,
+        fitting_method: str$9,
         /**
          * In case of Gaussian mixture models, the number of gaussians
          * is a parameter used to covert the 3DEM maps and models into
          * GMMs. This captures the level of granularity used in
          * representing the maps and/or models as 3D Gaussians.
          */
-        number_of_gaussians: int$6,
+        number_of_gaussians: int$7,
         /**
          * The cross correlation coefficient corresponding to the model to map fitting.
          */
-        cross_correlation_coefficient: float$5,
+        cross_correlation_coefficient: float$6,
     },
     /**
      * Data items in the IHM_SAS_RESTRAINT category records the
@@ -28539,19 +28539,19 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the SAS restraint description.
          */
-        id: int$6,
+        id: int$7,
         /**
          * Identifier to the SAS data used.
          * This data item is a pointer to the _ihm_dataset_list.id in the
          * IHM_DATASET_LIST category.
          */
-        dataset_list_id: int$6,
+        dataset_list_id: int$7,
         /**
          * The model number corresponding to the SAS fitting result presented.
          * This data item is a pointer to _ihm_model_list.model_id in the
          * IHM_MODEL_LIST category.
          */
-        model_id: int$6,
+        model_id: int$7,
         /**
          * An indicator to whether the whole assembly that is modeled is fit into the SAS data
          * or if only a subset of the structural assembly is fit into the data.
@@ -28561,37 +28561,37 @@ var mmCIF_Schema = {
          * The default value for this data item is "1" indicating that the entire assembly
          * being modeled is fit into the SAS data.
          */
-        struct_assembly_id: int$6,
+        struct_assembly_id: int$7,
         /**
          * A flag that indicates whether or not the SAS profile is segmented i.e.,
          * whether the whole SAS profile is used or only a portion of it is used
          * (by masking or by other means) as restraint in the modeling.
          */
-        profile_segment_flag: Aliased$3(lstr$2),
+        profile_segment_flag: Aliased$4(lstr$3),
         /**
          * The type of atoms in the model fit to the SAS data.
          */
-        fitting_atom_type: str$8,
+        fitting_atom_type: str$9,
         /**
          * The method used for fitting the model to the SAS data.
          */
-        fitting_method: str$8,
+        fitting_method: str$9,
         /**
          * An indicator to single or multiple state fitting.
          */
-        fitting_state: Aliased$3(str$8),
+        fitting_state: Aliased$4(str$9),
         /**
          * Radius of gyration obtained from the SAS profile, if used as input restraint.
          */
-        radius_of_gyration: float$5,
+        radius_of_gyration: float$6,
         /**
          * The chi value resulting from fitting the model to the SAS data.
          */
-        chi_value: float$5,
+        chi_value: float$6,
         /**
          * Additional details regarding the SAS restraint used.
          */
-        details: str$8,
+        details: str$9,
     },
     /**
      * Data items in the IHM_STARTING_MODEL_COORD category records the coordinates
@@ -28602,71 +28602,71 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for this coordinate position.
          */
-        ordinal_id: int$6,
+        ordinal_id: int$7,
         /**
          * The identifier for the starting structural model.
          * This data item is a pointer to _ihm_starting_model_details.starting_model_id
          * in the IHM_STARTING_MODEL_DETAILS category.
          */
-        starting_model_id: str$8,
+        starting_model_id: str$9,
         /**
          * The group of atoms to which the atom site in the starting model belongs. This data
          * item is provided for compatibility with the original Protein Data Bank format,
          * and only for that purpose.
          */
-        group_PDB: Aliased$3(str$8),
+        group_PDB: Aliased$4(str$9),
         /**
          * The serial number for this coordinate position.
          */
-        id: int$6,
+        id: int$7,
         /**
          * The atom type symbol(element symbol) corresponding to this coordinate position.
          */
-        type_symbol: str$8,
+        type_symbol: str$9,
         /**
          * The entity identifier corresponding to this coordinate position.
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * The atom identifier/name corresponding to this coordinate position.
          * This data item is a pointer to _chem_comp_atom.atom_id in the
          * CHEM_COMP_ATOM category.
          */
-        atom_id: str$8,
+        atom_id: str$9,
         /**
          * The component identifier corresponding to this coordinate position.
          * This data item is a pointer to _chem_comp.id in the
          * CHEM_COMP category.
          */
-        comp_id: str$8,
+        comp_id: str$9,
         /**
          * The sequence index corresponding this to coordinate position.
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id: int$6,
+        seq_id: int$7,
         /**
          * The asym/strand id corresponding to this coordinate position.
          *
          * This data item is a pointer to _struct_asym.id in the STRUCT_ASYM category.
          */
-        asym_id: str$8,
+        asym_id: str$9,
         /**
          * The Cartesian X component corresponding to this coordinate position.
          */
-        Cartn_x: float$5,
+        Cartn_x: float$6,
         /**
          * The Cartesian Y component corresponding to this coordinate position.
          */
-        Cartn_y: float$5,
+        Cartn_y: float$6,
         /**
          * The Cartesian Z component corresponding to this coordinate position.
          */
-        Cartn_z: float$5,
+        Cartn_z: float$6,
         /**
          * The isotropic temperature factor corresponding to this coordinate position.
          */
-        B_iso_or_equiv: float$5,
+        B_iso_or_equiv: float$6,
     },
     /**
      * Data items in the IHM_SPHERE_OBJ_SITE category records the details
@@ -28676,54 +28676,54 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for this pseudo atom / sphere object.
          */
-        id: int$6,
+        id: int$7,
         /**
          * The entity identifier corresponding to this sphere object.
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * The leading sequence index corresponding to this sphere object.
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id_begin: int$6,
+        seq_id_begin: int$7,
         /**
          * The trailing sequence index corresponding to this sphere object.
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id_end: int$6,
+        seq_id_end: int$7,
         /**
          * An asym/strand identifier corresponding to this sphere object.
          * This data item is a pointer to _struct_asym.id in the STRUCT_ASYM category.
          */
-        asym_id: str$8,
+        asym_id: str$9,
         /**
          * The Cartesian X component corresponding to this sphere object.
          */
-        Cartn_x: float$5,
+        Cartn_x: float$6,
         /**
          * The Cartesian Y component corresponding to this sphere object.
          */
-        Cartn_y: float$5,
+        Cartn_y: float$6,
         /**
          * The Cartesian Z component corresponding to this sphere object.
          */
-        Cartn_z: float$5,
+        Cartn_z: float$6,
         /**
          * The radius associated with the primitive sphere object at this position.
          */
-        object_radius: float$5,
+        object_radius: float$6,
         /**
          * The Root Mean Square Fluctuation (RMSF) observed in the primitive
          * sphere object at this position.
          */
-        rmsf: float$5,
+        rmsf: float$6,
         /**
          * The model id corresponding to the sphere object.
          * This data item is a pointer to _ihm_model_list.model_id
          * in the IHM_MODEL_LIST category.
          */
-        model_id: int$6,
+        model_id: int$7,
     },
     /**
      * Data items in the IHM_GAUSSIAN_OBJ_SITE category records the details
@@ -28733,53 +28733,53 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for this gaussian object in the model.
          */
-        id: int$6,
+        id: int$7,
         /**
          * The entity identifier corresponding to this gaussian object.
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * The leading sequence index corresponding to this gaussian object.
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id_begin: int$6,
+        seq_id_begin: int$7,
         /**
          * The trailing sequence index corresponding to this gaussian object.
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id_end: int$6,
+        seq_id_end: int$7,
         /**
          * An asym/strand identifier corresponding to this gaussian object.
          * This data item is a pointer to _struct_asym.id in the STRUCT_ASYM category.
          */
-        asym_id: str$8,
+        asym_id: str$9,
         /**
          * The mean Cartesian X component corresponding to this gaussian object.
          */
-        mean_Cartn_x: float$5,
+        mean_Cartn_x: float$6,
         /**
          * The mean Cartesian Y component corresponding to this gaussian object.
          */
-        mean_Cartn_y: float$5,
+        mean_Cartn_y: float$6,
         /**
          * The mean Cartesian Z component corresponding to this gaussian object.
          */
-        mean_Cartn_z: float$5,
+        mean_Cartn_z: float$6,
         /**
          * The weight of the gaussian object.
          */
-        weight: float$5,
+        weight: float$6,
         /**
          * Data item  of the covariance matrix representing the Gaussian object.
          */
-        covariance_matrix: Matrix$2(3, 3),
+        covariance_matrix: Matrix$3(3, 3),
         /**
          * The model id corresponding to the gaussian object.
          * This data item is a pointer to _ihm_model_list.model_id
          * in the IHM_MODEL_LIST category.
          */
-        model_id: int$6,
+        model_id: int$7,
     },
     /**
      * Data items in the IHM_GAUSSIAN_OBJ_ENSEMBLE category records the details
@@ -28789,53 +28789,53 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for this gaussian object.
          */
-        id: int$6,
+        id: int$7,
         /**
          * The entity identifier corresponding to this gaussian object.
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * The leading sequence index corresponding to this gaussian object.
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id_begin: int$6,
+        seq_id_begin: int$7,
         /**
          * The trailing sequence index corresponding to this gaussian object.
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id_end: int$6,
+        seq_id_end: int$7,
         /**
          * An asym/strand identifier corresponding to this gaussian object.
          * This data item is a pointer to _struct_asym.id in the STRUCT_ASYM category.
          */
-        asym_id: str$8,
+        asym_id: str$9,
         /**
          * The mean Cartesian X component corresponding to this gaussian object.
          */
-        mean_Cartn_x: float$5,
+        mean_Cartn_x: float$6,
         /**
          * The mean Cartesian Y component corresponding to this gaussian object.
          */
-        mean_Cartn_y: float$5,
+        mean_Cartn_y: float$6,
         /**
          * The mean Cartesian Z component corresponding to this gaussian object.
          */
-        mean_Cartn_z: float$5,
+        mean_Cartn_z: float$6,
         /**
          * The weight of the gaussian object.
          */
-        weight: float$5,
+        weight: float$6,
         /**
          * Data item  of the covariance matrix representing the Gaussian object.
          */
-        covariance_matrix: Matrix$2(3, 3),
+        covariance_matrix: Matrix$3(3, 3),
         /**
          * The ensemble id corresponding to the gaussian object.
          * This data item is a pointer to _ihm_ensemble_info.ensemble_id
          * in the IHM_ENSEMBLE_INFO category.
          */
-        ensemble_id: int$6,
+        ensemble_id: int$7,
     },
     /**
      * IHM_FEATURE_LIST is the high level category that provides defintions
@@ -28845,15 +28845,15 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the feature.
          */
-        feature_id: int$6,
+        feature_id: int$7,
         /**
          * The type of feature.
          */
-        feature_type: Aliased$3(str$8),
+        feature_type: Aliased$4(str$9),
         /**
          * The type of entity.
          */
-        entity_type: Aliased$3(str$8),
+        entity_type: Aliased$4(str$9),
     },
     /**
      * Data items in the IHM_POLY_RESIDUE_FEATURE category provides the defintions
@@ -28864,45 +28864,45 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the category.
          */
-        ordinal_id: int$6,
+        ordinal_id: int$7,
         /**
          * An identifier for the selected residue / residue range feature.
          * This data item is a pointer to _ihm_feature_list.feature_id in the
          * IHM_FEATURE_LIST category.
          */
-        feature_id: int$6,
+        feature_id: int$7,
         /**
          * The entity identifier for residue / residue range.
          * This data item is a pointer to _entity_poly_seq.entity_id in the
          * ENTITY_POLY_SEQ category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * An asym/strand identifier for the residue / residue range, if applicable.
          * This data item is a pointer to _struct_asym.id in the
          * STRUCT_ASYM category.
          */
-        asym_id: str$8,
+        asym_id: str$9,
         /**
          * The component identifier of the beginning residue / residue range.
          * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
          */
-        comp_id_begin: str$8,
+        comp_id_begin: str$9,
         /**
          * The component identifier of the ending residue / residue range.
          * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
          */
-        comp_id_end: str$8,
+        comp_id_end: str$9,
         /**
          * The sequence index of the beginning residue / residue range.
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id_begin: int$6,
+        seq_id_begin: int$7,
         /**
          * The sequence index of the ending residue / residue range.
          * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
          */
-        seq_id_end: int$6,
+        seq_id_end: int$7,
     },
     /**
      * Data items in the IHM_DERIVED_DISTANCE_RESTRAINT category records the
@@ -28913,45 +28913,45 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the derived distance restraint.
          */
-        id: int$6,
+        id: int$7,
         /**
          * An identifier to group the distance restraints.
          * This can be the same as the _ihm_derived_distance_restraint.id in case
          * the some of the restraints are not grouped.
          */
-        group_id: int$6,
+        group_id: int$7,
         /**
          * The feature identifier for the first partner in the distance restraint.
          * This data item is a pointer to _ihm_feature_list.feature_id in the
          * IHM_FEATURE_LIST category.
          */
-        feature_id_1: int$6,
+        feature_id_1: int$7,
         /**
          * The feature identifier for the second partner in the distance restraint.
          * This data item is a pointer to _ihm_feature_list.feature_id in the
          * IHM_FEATURE_LIST category.
          */
-        feature_id_2: int$6,
+        feature_id_2: int$7,
         /**
          * If a group of atoms or residues are restrained, this data item defines
          * the conditionality based on which the restraint is applied in the modeling.
          */
-        group_conditionality: Aliased$3(str$8),
+        group_conditionality: Aliased$4(str$9),
         /**
          * The fraction of randomly excluded distance restraints during modeling.
          * In HADDOCK, this is used along with ambiguous interface restraints (AIRs)
          * to account for uncertainties in AIRs.
          */
-        random_exclusion_fraction: float$5,
+        random_exclusion_fraction: float$6,
         /**
          * The upper limit to the distance threshold applied to this distance restraint
          * in the integrative modeling task.
          */
-        distance_upper_limit: float$5,
+        distance_upper_limit: float$6,
         /**
          * The type of distance restraint applied.
          */
-        restraint_type: Aliased$3(str$8),
+        restraint_type: Aliased$4(str$9),
         /**
          * Identifier to the input data from which the distance restraint is derived.
          * This data item is a pointer to the _ihm_dataset_list.id in the
@@ -28961,7 +28961,7 @@ var mmCIF_Schema = {
          * from multiple experiments, the reference to the _ihm_dataset_list.id is
          * handled in the IHM_INTERFACE_RESIDUE_FEATURE category rather than here.
          */
-        dataset_list_id: int$6,
+        dataset_list_id: int$7,
     },
     /**
      * Data items in the MA_MODEL_LIST category record the
@@ -28971,11 +28971,11 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the model / model group combination.
          */
-        ordinal_id: int$6,
+        ordinal_id: int$7,
         /**
          * A unique identifier for the structural model being deposited.
          */
-        model_id: int$6,
+        model_id: int$7,
         /**
          * An identifier to group structural models into collections or sets.
          * A cluster of models and its representative can either be grouped together
@@ -28989,24 +28989,24 @@ var mmCIF_Schema = {
          * If the models do not need to be grouped into collections, then the
          * _ma_model_list.model_group_id is the same as _ma_model_list.model_id.
          */
-        model_group_id: int$6,
+        model_group_id: int$7,
         /**
          * A decsriptive name for the model.
          */
-        model_name: str$8,
+        model_name: str$9,
         /**
          * A decsriptive name for the model group.
          */
-        model_group_name: str$8,
+        model_group_name: str$9,
         /**
          * The type of model.
          */
-        model_type: Aliased$3(str$8),
+        model_type: Aliased$4(str$9),
         /**
          * The data_id identifier. This data item is a pointer to
          * _ma_data.id in the MA_DATA category.
          */
-        data_id: int$6,
+        data_id: int$7,
     },
     /**
      * Data items in the MA_TARGET_ENTITY category record details about
@@ -29018,16 +29018,16 @@ var mmCIF_Schema = {
          * A unique identifier for the distinct molecular entity of the target.
          * This data item is a pointer to _entity.id in the ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * The data_id identifier. This data item is a pointer to
          * _ma_data.id in the MA_DATA category.
          */
-        data_id: int$6,
+        data_id: int$7,
         /**
          * The origin of the target entity.
          */
-        origin: Aliased$3(str$8),
+        origin: Aliased$4(str$9),
     },
     /**
      * Data items in the MA_TARGET_ENTITY_INSTANCE category record details about
@@ -29037,17 +29037,17 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the instance of the entity.
          */
-        asym_id: str$8,
+        asym_id: str$9,
         /**
          * A unique identifier for the distinct molecular entity of the target.
          * This data item is a pointer to _ma_target_entity.entity_id in the
          * MA_TARGET_ENTITY category.
          */
-        entity_id: str$8,
+        entity_id: str$9,
         /**
          * Additional details about the entity instance.
          */
-        details: str$8,
+        details: str$9,
     },
     /**
      * Data items in the MA_TARGET_REF_DB_DETAILS category record details about
@@ -29057,47 +29057,47 @@ var mmCIF_Schema = {
         /**
          * An identifier for the target entity.
          */
-        target_entity_id: str$8,
+        target_entity_id: str$9,
         /**
          * The name of the database containing reference information about
          * this entity or biological unit.
          */
-        db_name: Aliased$3(str$8),
+        db_name: Aliased$4(str$9),
         /**
          * The code for this entity or biological unit or for a closely
          * related entity or biological unit in the named database.
          * This can include the version number.
          */
-        db_code: str$8,
+        db_code: str$9,
         /**
          * Accession code assigned by the reference database.
          */
-        db_accession: str$8,
+        db_accession: str$9,
         /**
          * Database code assigned by the reference database for a sequence isoform.   An isoform sequence is an
          * alternative protein sequence that can be generated from the same gene by a single or by a combination of
          * biological events such as: alternative promoter usage, alternative splicing, alternative initiation
          * and ribosomal frameshifting.
          */
-        seq_db_isoform: str$8,
+        seq_db_isoform: str$9,
         /**
          * Beginning index in the chemical sequence from the
          * reference database.
          */
-        seq_db_align_begin: str$8,
+        seq_db_align_begin: str$9,
         /**
          * Ending index in the chemical sequence from the
          * reference database.
          */
-        seq_db_align_end: str$8,
+        seq_db_align_end: str$9,
         /**
          * Taxonomy identifier provided by NCBI.
          */
-        ncbi_taxonomy_id: str$8,
+        ncbi_taxonomy_id: str$9,
         /**
          * Scientific name of the organism.
          */
-        organism_scientific: str$8,
+        organism_scientific: str$9,
     },
     /**
      * Data items in the MA_DATA category capture the different kinds of
@@ -29108,19 +29108,19 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the data.
          */
-        id: int$6,
+        id: int$7,
         /**
          * The type of data held in the dataset.
          */
-        content_type: Aliased$3(str$8),
+        content_type: Aliased$4(str$9),
         /**
          * Details for other content types.
          */
-        content_type_other_details: str$8,
+        content_type_other_details: str$9,
         /**
          * An author-given name for the content held in the dataset.
          */
-        name: str$8,
+        name: str$9,
     },
     /**
      * Data items in the MA_SOFTWARE_GROUP category describes the
@@ -29131,19 +29131,19 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the category.
          */
-        ordinal_id: int$6,
+        ordinal_id: int$7,
         /**
          * An identifier for the group entry.
          * If data does not need to be grouped, then _ma_software_group.group_id
          * is the same as _ma_software_group.software_id.
          */
-        group_id: int$6,
+        group_id: int$7,
         /**
          * The identifier for the software.
          * This data item is a pointer to _software.pdbx_ordinal
          * in the SOFTWARE category.
          */
-        software_id: int$6,
+        software_id: int$7,
     },
     /**
      * Data items in the MA_QA_METRIC category record the
@@ -29153,25 +29153,25 @@ var mmCIF_Schema = {
         /**
          * An identifier for the QA metric.
          */
-        id: int$6,
+        id: int$7,
         /**
          * Name of the QA metric.
          */
-        name: str$8,
+        name: str$9,
         /**
          * The type of QA metric.
          */
-        type: Aliased$3(str$8),
+        type: Aliased$4(str$9),
         /**
          * The mode of calculation of the QA metric.
          */
-        mode: Aliased$3(str$8),
+        mode: Aliased$4(str$9),
         /**
          * Identifier to the set of software used to calculate the QA metric.
          * This data item is a pointer to the _ma_software_group.group_id in the
          * MA_SOFTWARE_GROUP category.
          */
-        software_group_id: int$6,
+        software_group_id: int$7,
     },
     /**
      * Data items in the MA_QA_METRIC_GLOBAL category captures the
@@ -29181,23 +29181,23 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the category.
          */
-        ordinal_id: int$6,
+        ordinal_id: int$7,
         /**
          * The identifier for the structural model, for which global QA metric is provided.
          * This data item is a pointer to _ma_model_list.model_id
          * in the MA_MODEL_LIST category.
          */
-        model_id: int$6,
+        model_id: int$7,
         /**
          * The identifier for the QA metric.
          * This data item is a pointer to _ma_qa_metric.id in the
          * MA_QA_METRIC category.
          */
-        metric_id: int$6,
+        metric_id: int$7,
         /**
          * The value of the global QA metric.
          */
-        metric_value: float$5,
+        metric_value: float$6,
     },
     /**
      * Data items in the MA_QA_METRIC_LOCAL category captures the
@@ -29207,44 +29207,44 @@ var mmCIF_Schema = {
         /**
          * A unique identifier for the category.
          */
-        ordinal_id: int$6,
+        ordinal_id: int$7,
         /**
          * The identifier for the structural model, for which local QA metric is provided.
          * This data item is a pointer to _ma_model_list.model_id
          * in the MA_MODEL_LIST category.
          */
-        model_id: int$6,
+        model_id: int$7,
         /**
          * The identifier for the asym id of the residue in the
          * structural model, for which local QA metric is provided.
          * This data item is a pointer to _atom_site.label_asym_id
          * in the ATOM_SITE category.
          */
-        label_asym_id: str$8,
+        label_asym_id: str$9,
         /**
          * The identifier for the sequence index of the residue
          * in the structural model, for which local QA metric is provided.
          * This data item is a pointer to _atom_site.label_seq_id
          * in the ATOM_SITE category.
          */
-        label_seq_id: int$6,
+        label_seq_id: int$7,
         /**
          * The component identifier for the residue in the
          * structural model, for which local QA metric is provided.
          * This data item is a pointer to _atom_site.label_comp_id
          * in the ATOM_SITE category.
          */
-        label_comp_id: str$8,
+        label_comp_id: str$9,
         /**
          * The identifier for the QA metric.
          * This data item is a pointer to _ma_qa_metric.id in the
          * MA_QA_METRIC category.
          */
-        metric_id: int$6,
+        metric_id: int$7,
         /**
          * The value of the local QA metric.
          */
-        metric_value: float$5,
+        metric_value: float$6,
     },
 };
 
@@ -29255,14 +29255,14 @@ var mmCIF_Schema = {
  *
  * @author molstar/ciftools package
  */
-var Schema$5 = Column.Schema;
-var str$7 = Schema$5.str;
-var float$4 = Schema$5.float;
-var List = Schema$5.List;
-var lstr$1 = Schema$5.lstr;
-var Aliased$2 = Schema$5.Aliased;
-var int$5 = Schema$5.int;
-var coord = Schema$5.coord;
+var Schema$6 = Column.Schema;
+var str$8 = Schema$6.str;
+var float$5 = Schema$6.float;
+var List$1 = Schema$6.List;
+var lstr$2 = Schema$6.lstr;
+var Aliased$3 = Schema$6.Aliased;
+var int$6 = Schema$6.int;
+var coord$1 = Schema$6.coord;
 var CCD_Schema = {
     /**
      * Data items in the CHEM_COMP category give details about each
@@ -29294,11 +29294,11 @@ var CCD_Schema = {
          * are listed purely in alphabetic order of their symbol. This
          * is the 'Hill' system used by Chemical Abstracts.
          */
-        formula: str$7,
+        formula: str$8,
         /**
          * Formula mass in daltons of the chemical component.
          */
-        formula_weight: float$4,
+        formula_weight: float$5,
         /**
          * The value of _chem_comp.id must uniquely identify each item in
          * the CHEM_COMP list.
@@ -29309,7 +29309,7 @@ var CCD_Schema = {
          * For nucleic acid polymer entities, this is the one-letter code
          * for the base.
          */
-        id: str$7,
+        id: str$8,
         /**
          * The identifier for the parent component of the nonstandard
          * component. May be be a comma separated list if this component
@@ -29318,11 +29318,11 @@ var CCD_Schema = {
          * Items in this indirectly point to _chem_comp.id in
          * the CHEM_COMP category.
          */
-        mon_nstd_parent_comp_id: List(',', function (x) { return x; }),
+        mon_nstd_parent_comp_id: List$1(',', function (x) { return x; }),
         /**
          * The full name of the component.
          */
-        name: str$7,
+        name: str$8,
         /**
          * For standard polymer components, the one-letter code for
          * the component.   For non-standard polymer components, the
@@ -29332,7 +29332,7 @@ var CCD_Schema = {
          * Components that derived from multiple parents components
          * are described by a sequence of one-letter-codes.
          */
-        one_letter_code: str$7,
+        one_letter_code: str$8,
         /**
          * For standard polymer components, the common three-letter code for
          * the component.   Non-standard polymer components and non-polymer
@@ -29342,22 +29342,22 @@ var CCD_Schema = {
          * be given as 'UNK'.  Ambiguous ions are assigned the code 'UNX'.
          * Ambiguous non-polymer components are assigned the code 'UNL'.
          */
-        three_letter_code: str$7,
+        three_letter_code: str$8,
         /**
          * For standard polymer components, the type of the monomer.
          * Note that monomers that will form polymers are of three types:
          * linking monomers, monomers with some type of N-terminal (or 5')
          * cap and monomers with some type of C-terminal (or 3') cap.
          */
-        type: Aliased$2(lstr$1),
+        type: Aliased$3(lstr$2),
         /**
          * Synonym list for the component.
          */
-        pdbx_synonyms: List(';', function (x) { return x; }),
+        pdbx_synonyms: List$1(';', function (x) { return x; }),
         /**
          * A preliminary classification used by PDB.
          */
-        pdbx_type: str$7,
+        pdbx_type: str$8,
         /**
          * A preliminary classification used by PDB to indicate
          * that the chemistry of this component while described
@@ -29365,63 +29365,63 @@ var CCD_Schema = {
          * tools may not be able to process this component
          * definition.
          */
-        pdbx_ambiguous_flag: str$7,
+        pdbx_ambiguous_flag: str$8,
         /**
          * Identifies the _chem_comp.id of the component that
          * has replaced this component.
          */
-        pdbx_replaced_by: str$7,
+        pdbx_replaced_by: str$8,
         /**
          * Identifies the _chem_comp.id's of the components
          * which have been replaced by this component.
          * Multiple id codes should be separated by commas.
          */
-        pdbx_replaces: str$7,
+        pdbx_replaces: str$8,
         /**
          * The net integer charge assigned to this component. This is the
          * formal charge assignment normally found in chemical diagrams.
          */
-        pdbx_formal_charge: int$5,
+        pdbx_formal_charge: int$6,
         /**
          * This data item provides additional details about the model coordinates
          * in the component definition.
          */
-        pdbx_model_coordinates_details: str$7,
+        pdbx_model_coordinates_details: str$8,
         /**
          * This data item identifies the PDB database code from which the heavy
          * atom model coordinates were obtained.
          */
-        pdbx_model_coordinates_db_code: str$7,
+        pdbx_model_coordinates_db_code: str$8,
         /**
          * This data item identifies the source of the ideal coordinates in the
          * component definition.
          */
-        pdbx_ideal_coordinates_details: str$7,
+        pdbx_ideal_coordinates_details: str$8,
         /**
          * This data item identifies if ideal coordinates are missing in this definition.
          */
-        pdbx_ideal_coordinates_missing_flag: Aliased$2(lstr$1),
+        pdbx_ideal_coordinates_missing_flag: Aliased$3(lstr$2),
         /**
          * This data item identifies if model coordinates are missing in this definition.
          */
-        pdbx_model_coordinates_missing_flag: Aliased$2(lstr$1),
+        pdbx_model_coordinates_missing_flag: Aliased$3(lstr$2),
         /**
          * Date component was added to database.
          */
-        pdbx_initial_date: str$7,
+        pdbx_initial_date: str$8,
         /**
          * Date component was last modified.
          */
-        pdbx_modified_date: str$7,
+        pdbx_modified_date: str$8,
         /**
          * This data item holds the current release status for the component.
          */
-        pdbx_release_status: Aliased$2(str$7),
+        pdbx_release_status: Aliased$3(str$8),
         /**
          * This data item identifies the deposition site that processed
          * this chemical component defintion.
          */
-        pdbx_processing_site: Aliased$2(str$7),
+        pdbx_processing_site: Aliased$3(str$8),
     },
     /**
      * Data items in the CHEM_COMP_ATOM category record details about
@@ -29437,7 +29437,7 @@ var CCD_Schema = {
          * used in cases where alternative nomenclatures exist for labelling
          * atoms in a group.
          */
-        alt_atom_id: str$7,
+        alt_atom_id: str$8,
         /**
          * The value of _chem_comp_atom.atom_id must uniquely identify
          * each atom in each monomer in the CHEM_COMP_ATOM list.
@@ -29449,12 +29449,12 @@ var CCD_Schema = {
          * Note that this item need not be a number; it can be any unique
          * identifier.
          */
-        atom_id: str$7,
+        atom_id: str$8,
         /**
          * The net integer charge assigned to this atom. This is the
          * formal charge assignment normally found in chemical diagrams.
          */
-        charge: int$5,
+        charge: int$6,
         /**
          * The x component of the coordinates for this atom in this
          * component specified as orthogonal angstroms. The choice of
@@ -29465,7 +29465,7 @@ var CCD_Schema = {
          * structure refinement, not to atom sites in the ATOM_SITE
          * list.
          */
-        model_Cartn_x: coord,
+        model_Cartn_x: coord$1,
         /**
          * The y component of the coordinates for this atom in this
          * component specified as orthogonal angstroms. The choice of
@@ -29476,7 +29476,7 @@ var CCD_Schema = {
          * structure refinement, not to atom sites in the ATOM_SITE
          * list.
          */
-        model_Cartn_y: coord,
+        model_Cartn_y: coord$1,
         /**
          * The z component of the coordinates for this atom in this
          * component specified as orthogonal angstroms. The choice of
@@ -29487,53 +29487,53 @@ var CCD_Schema = {
          * structure refinement, not to atom sites in the ATOM_SITE
          * list.
          */
-        model_Cartn_z: coord,
+        model_Cartn_z: coord$1,
         /**
          * This data item is a pointer to _chem_comp.id in the CHEM_COMP
          * category.
          */
-        comp_id: str$7,
+        comp_id: str$8,
         /**
          * The code used to identify the atom species representing
          * this atom type. Normally this code is the element
          * symbol.
          */
-        type_symbol: str$7,
+        type_symbol: str$8,
         /**
          * Atom name alignment offset in PDB atom field.
          */
-        pdbx_align: int$5,
+        pdbx_align: int$6,
         /**
          * Ordinal index for the component atom list.
          */
-        pdbx_ordinal: int$5,
+        pdbx_ordinal: int$6,
         /**
          * An alternative x component of the coordinates for this atom in this
          * component specified as orthogonal angstroms.
          */
-        pdbx_model_Cartn_x_ideal: coord,
+        pdbx_model_Cartn_x_ideal: coord$1,
         /**
          * An alternative y component of the coordinates for this atom in this
          * component specified as orthogonal angstroms.
          */
-        pdbx_model_Cartn_y_ideal: coord,
+        pdbx_model_Cartn_y_ideal: coord$1,
         /**
          * An alternative z component of the coordinates for this atom in this
          * component specified as orthogonal angstroms.
          */
-        pdbx_model_Cartn_z_ideal: coord,
+        pdbx_model_Cartn_z_ideal: coord$1,
         /**
          * The chiral configuration of the atom that is a chiral center.
          */
-        pdbx_stereo_config: Aliased$2(lstr$1),
+        pdbx_stereo_config: Aliased$3(lstr$2),
         /**
          * A flag indicating an aromatic atom.
          */
-        pdbx_aromatic_flag: Aliased$2(lstr$1),
+        pdbx_aromatic_flag: Aliased$3(lstr$2),
         /**
          * A flag indicating a leaving atom.
          */
-        pdbx_leaving_atom_flag: Aliased$2(lstr$1),
+        pdbx_leaving_atom_flag: Aliased$3(lstr$2),
     },
     /**
      * Data items in the CHEM_COMP_BOND category record details about
@@ -29548,37 +29548,37 @@ var CCD_Schema = {
          * This data item is a pointer to _chem_comp_atom.atom_id in the
          * CHEM_COMP_ATOM category.
          */
-        atom_id_1: str$7,
+        atom_id_1: str$8,
         /**
          * The ID of the second of the two atoms that define the bond.
          *
          * This data item is a pointer to _chem_comp_atom.atom_id in the
          * CHEM_COMP_ATOM category.
          */
-        atom_id_2: str$7,
+        atom_id_2: str$8,
         /**
          * This data item is a pointer to _chem_comp.id in the CHEM_COMP
          * category.
          */
-        comp_id: str$7,
+        comp_id: str$8,
         /**
          * The value that should be taken as the target for the chemical
          * bond associated with the specified atoms, expressed as a bond
          * order.
          */
-        value_order: Aliased$2(lstr$1),
+        value_order: Aliased$3(lstr$2),
         /**
          * Ordinal index for the component bond list.
          */
-        pdbx_ordinal: int$5,
+        pdbx_ordinal: int$6,
         /**
          * Stereochemical configuration across a double bond.
          */
-        pdbx_stereo_config: Aliased$2(lstr$1),
+        pdbx_stereo_config: Aliased$3(lstr$2),
         /**
          * A flag indicating an aromatic bond.
          */
-        pdbx_aromatic_flag: Aliased$2(lstr$1),
+        pdbx_aromatic_flag: Aliased$3(lstr$2),
     },
     /**
      * Data items in the CHEM_COMP_DESCRIPTOR category provide
@@ -29589,26 +29589,26 @@ var CCD_Schema = {
          * This data item is a pointer to _chem_comp.id in the CHEM_COMP
          * category.
          */
-        comp_id: str$7,
+        comp_id: str$8,
         /**
          * This data item contains the descriptor value for this
          * component.
          */
-        descriptor: str$7,
+        descriptor: str$8,
         /**
          * This data item contains the descriptor type.
          */
-        type: Aliased$2(lstr$1),
+        type: Aliased$3(lstr$2),
         /**
          * This data item contains the name of the program
          * or library used to compute the descriptor.
          */
-        program: str$7,
+        program: str$8,
         /**
          * This data item contains the version of the program
          * or library used to compute the descriptor.
          */
-        program_version: str$7,
+        program_version: str$8,
     },
     /**
      * Data items in the CHEM_COMP_IDENTIFIER category provide
@@ -29619,26 +29619,26 @@ var CCD_Schema = {
          * This data item is a pointer to _chem_comp.id in the CHEM_COMP
          * category.
          */
-        comp_id: str$7,
+        comp_id: str$8,
         /**
          * This data item contains the identifier value for this
          * component.
          */
-        identifier: str$7,
+        identifier: str$8,
         /**
          * This data item contains the identifier type.
          */
-        type: Aliased$2(str$7),
+        type: Aliased$3(str$8),
         /**
          * This data item contains the name of the program
          * or library used to compute the identifier.
          */
-        program: str$7,
+        program: str$8,
         /**
          * This data item contains the version of the program
          * or library used to compute the identifier.
          */
-        program_version: str$7,
+        program_version: str$8,
     },
 };
 
@@ -29649,12 +29649,12 @@ var CCD_Schema = {
  *
  * @author molstar/ciftools package
  */
-var Schema$4 = Column.Schema;
-var str$6 = Schema$4.str;
-var float$3 = Schema$4.float;
-var lstr = Schema$4.lstr;
-var Aliased$1 = Schema$4.Aliased;
-var int$4 = Schema$4.int;
+var Schema$5 = Column.Schema;
+var str$7 = Schema$5.str;
+var float$4 = Schema$5.float;
+var lstr$1 = Schema$5.lstr;
+var Aliased$2 = Schema$5.Aliased;
+var int$5 = Schema$5.int;
 var BIRD_Schema = {
     /**
      * Data items in the PDBX_REFERENCE_MOLECULE category record
@@ -29670,11 +29670,11 @@ var BIRD_Schema = {
          *
          * The ID has the template form PRD_dddddd (e.g. PRD_000001)
          */
-        prd_id: str$6,
+        prd_id: str$7,
         /**
          * Formula mass in daltons of the entity.
          */
-        formula_weight: float$3,
+        formula_weight: float$4,
         /**
          * The formula for the reference entity. Formulae are written
          * according to the rules:
@@ -29694,62 +29694,62 @@ var BIRD_Schema = {
          * purely in alphabetic order of their symbol. This is the
          * 'Hill' system used by Chemical Abstracts.
          */
-        formula: str$6,
+        formula: str$7,
         /**
          * Defines the structural classification of the entity.
          */
-        type: Aliased$1(lstr),
+        type: Aliased$2(lstr$1),
         /**
          * Evidence for the assignment of _pdbx_reference_molecule.type
          */
-        type_evidence_code: str$6,
+        type_evidence_code: str$7,
         /**
          * Broadly defines the function of the entity.
          */
-        class: Aliased$1(lstr),
+        class: Aliased$2(lstr$1),
         /**
          * Evidence for the assignment of _pdbx_reference_molecule.class
          */
-        class_evidence_code: str$6,
+        class_evidence_code: str$7,
         /**
          * A name of the entity.
          */
-        name: str$6,
+        name: str$7,
         /**
          * Defines how this entity is represented in PDB data files.
          */
-        represent_as: Aliased$1(lstr),
+        represent_as: Aliased$2(lstr$1),
         /**
          * For entities represented as single molecules, the identifier
          * corresponding to the chemical definition for the molecule.
          */
-        chem_comp_id: str$6,
+        chem_comp_id: str$7,
         /**
          * Special details about this molecule.
          */
-        compound_details: str$6,
+        compound_details: str$7,
         /**
          * Description of this molecule.
          */
-        description: str$6,
+        description: str$7,
         /**
          * The PDB accession code for the entry containing a representative example of this molecule.
          */
-        representative_PDB_id_code: str$6,
+        representative_PDB_id_code: str$7,
         /**
          * Defines the current PDB release status for this molecule definition.
          */
-        release_status: Aliased$1(lstr),
+        release_status: Aliased$2(lstr$1),
         /**
          * Assigns the identifier for the reference molecule which have been replaced
          * by this reference molecule.
          * Multiple molecule identifier codes should be separated by commas.
          */
-        replaces: str$6,
+        replaces: str$7,
         /**
          * Assigns the identifier of the reference molecule that has replaced this molecule.
          */
-        replaced_by: str$6,
+        replaced_by: str$7,
     },
     /**
      * Data items in the PDBX_REFERENCE_ENTITY_LIST category record
@@ -29760,24 +29760,24 @@ var BIRD_Schema = {
          * The value of _pdbx_reference_entity_list.prd_id is a reference
          * _pdbx_reference_molecule.prd_id in the PDBX_REFERENCE_MOLECULE category.
          */
-        prd_id: str$6,
+        prd_id: str$7,
         /**
          * The value of _pdbx_reference_entity_list.ref_entity_id is a unique identifier
          * the a constituent entity within this reference molecule.
          */
-        ref_entity_id: str$6,
+        ref_entity_id: str$7,
         /**
          * Defines the polymer characteristic of the entity.
          */
-        type: Aliased$1(lstr),
+        type: Aliased$2(lstr$1),
         /**
          * Additional details about this entity.
          */
-        details: str$6,
+        details: str$7,
         /**
          * The component number of this entity within the molecule.
          */
-        component_id: int$4,
+        component_id: int$5,
     },
     /**
      * Data items in the PDBX_REFERENCE_ENTITY_NONPOLY category record
@@ -29788,21 +29788,21 @@ var BIRD_Schema = {
          * The value of _pdbx_reference_entity_nonpoly.prd_id is a reference
          * _pdbx_reference_entity_list.prd_id in the PDBX_REFERENCE_ENTITY_LIST category.
          */
-        prd_id: str$6,
+        prd_id: str$7,
         /**
          * The value of _pdbx_reference_entity_nonpoly.ref_entity_id is a reference
          * to _pdbx_reference_entity_list.ref_entity_id in PDBX_REFERENCE_ENTITY_LIST category.
          */
-        ref_entity_id: str$6,
+        ref_entity_id: str$7,
         /**
          * A name of the non-polymer entity.
          */
-        name: str$6,
+        name: str$7,
         /**
          * For non-polymer entities, the identifier corresponding
          * to the chemical definition for the molecule.
          */
-        chem_comp_id: str$6,
+        chem_comp_id: str$7,
     },
     /**
      * Data items in the PDBX_REFERENCE_ENTITY_LINK category give details about
@@ -29813,17 +29813,17 @@ var BIRD_Schema = {
          * The value of _pdbx_reference_entity_link.link_id uniquely identifies
          * linkages between entities with a molecule.
          */
-        link_id: int$4,
+        link_id: int$5,
         /**
          * The value of _pdbx_reference_entity_link.prd_id is a reference
          * _pdbx_reference_entity_list.prd_id in the PDBX_REFERENCE_ENTITY_LIST category.
          */
-        prd_id: str$6,
+        prd_id: str$7,
         /**
          * A description of special aspects of a linkage between
          * chemical components in the structure.
          */
-        details: str$6,
+        details: str$7,
         /**
          * The reference entity id of the first of the two entities joined by the
          * linkage.
@@ -29831,7 +29831,7 @@ var BIRD_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_list.ref_entity_id
          * in the PDBX_REFERENCE_ENTITY_LIST category.
          */
-        ref_entity_id_1: str$6,
+        ref_entity_id_1: str$7,
         /**
          * The reference entity id of the second of the two entities joined by the
          * linkage.
@@ -29839,7 +29839,7 @@ var BIRD_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_list.ref_entity_id
          * in the PDBX_REFERENCE_ENTITY_LIST category.
          */
-        ref_entity_id_2: str$6,
+        ref_entity_id_2: str$7,
         /**
          * For a polymer entity, the sequence number in the first of
          * the two entities containing the linkage.
@@ -29847,7 +29847,7 @@ var BIRD_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_poly_seq.num
          * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
          */
-        entity_seq_num_1: int$4,
+        entity_seq_num_1: int$5,
         /**
          * For a polymer entity, the sequence number in the second of
          * the two entities containing the linkage.
@@ -29855,7 +29855,7 @@ var BIRD_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_poly_seq.num
          * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
          */
-        entity_seq_num_2: int$4,
+        entity_seq_num_2: int$5,
         /**
          * The component identifier in the first of the two entities containing the linkage.
          *
@@ -29866,7 +29866,7 @@ var BIRD_Schema = {
          * _pdbx_reference_entity_nonpoly.chem_comp_id in the
          * PDBX_REFERENCE_ENTITY_NONPOLY category.
          */
-        comp_id_1: str$6,
+        comp_id_1: str$7,
         /**
          * The component identifier in the second of the two entities containing the linkage.
          *
@@ -29877,31 +29877,31 @@ var BIRD_Schema = {
          * _pdbx_reference_entity_nonpoly.chem_comp_id in the
          * PDBX_REFERENCE_ENTITY_NONPOLY category.
          */
-        comp_id_2: str$6,
+        comp_id_2: str$7,
         /**
          * The atom identifier/name in the first of the two entities containing the linkage.
          */
-        atom_id_1: str$6,
+        atom_id_1: str$7,
         /**
          * The atom identifier/name in the second of the two entities containing the linkage.
          */
-        atom_id_2: str$6,
+        atom_id_2: str$7,
         /**
          * The bond order target for the chemical linkage.
          */
-        value_order: Aliased$1(lstr),
+        value_order: Aliased$2(lstr$1),
         /**
          * The entity component identifier for the first of two entities containing the linkage.
          */
-        component_1: int$4,
+        component_1: int$5,
         /**
          * The entity component identifier for the second of two entities containing the linkage.
          */
-        component_2: int$4,
+        component_2: int$5,
         /**
          * A code indicating the entity types involved in the linkage.
          */
-        link_class: Aliased$1(str$6),
+        link_class: Aliased$2(str$7),
     },
     /**
      * Data items in the PDBX_REFERENCE_ENTITY_POLY_LINK category give details about
@@ -29913,23 +29913,23 @@ var BIRD_Schema = {
          * The value of _pdbx_reference_entity_poly_link.link_id uniquely identifies
          * a linkage within a polymer entity.
          */
-        link_id: int$4,
+        link_id: int$5,
         /**
          * The value of _pdbx_reference_entity_poly_link.prd_id is a reference
          * _pdbx_reference_entity_list.prd_id in the PDBX_REFERENCE_ENTITY_POLY category.
          */
-        prd_id: str$6,
+        prd_id: str$7,
         /**
          * The reference entity id of the polymer entity containing the linkage.
          *
          * This data item is a pointer to _pdbx_reference_entity_poly.ref_entity_id
          * in the PDBX_REFERENCE_ENTITY_POLY category.
          */
-        ref_entity_id: str$6,
+        ref_entity_id: str$7,
         /**
          * The entity component identifier entity containing the linkage.
          */
-        component_id: int$4,
+        component_id: int$5,
         /**
          * For a polymer entity, the sequence number in the first of
          * the two components making the linkage.
@@ -29937,7 +29937,7 @@ var BIRD_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_poly_seq.num
          * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
          */
-        entity_seq_num_1: int$4,
+        entity_seq_num_1: int$5,
         /**
          * For a polymer entity, the sequence number in the second of
          * the two components making the linkage.
@@ -29945,7 +29945,7 @@ var BIRD_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_poly_seq.num
          * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
          */
-        entity_seq_num_2: int$4,
+        entity_seq_num_2: int$5,
         /**
          * The component identifier in the first of the two components making the
          * linkage.
@@ -29953,7 +29953,7 @@ var BIRD_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_poly_seq.mon_id
          * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
          */
-        comp_id_1: str$6,
+        comp_id_1: str$7,
         /**
          * The component identifier in the second of the two components making the
          * linkage.
@@ -29961,21 +29961,21 @@ var BIRD_Schema = {
          * This data item is a pointer to _pdbx_reference_entity_poly_seq.mon_id
          * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
          */
-        comp_id_2: str$6,
+        comp_id_2: str$7,
         /**
          * The atom identifier/name in the first of the two components making
          * the linkage.
          */
-        atom_id_1: str$6,
+        atom_id_1: str$7,
         /**
          * The atom identifier/name in the second of the two components making
          * the linkage.
          */
-        atom_id_2: str$6,
+        atom_id_2: str$7,
         /**
          * The bond order target for the non-standard linkage.
          */
-        value_order: Aliased$1(lstr),
+        value_order: Aliased$2(lstr$1),
     },
     /**
      * Data items in the PDBX_REFERENCE_ENTITY_POLY category record details about
@@ -29987,24 +29987,24 @@ var BIRD_Schema = {
          * The value of _pdbx_reference_entity_poly.prd_id is a reference
          * _pdbx_reference_entity_list.prd_id in the  PDBX_REFERENCE_ENTITY_LIST category.
          */
-        prd_id: str$6,
+        prd_id: str$7,
         /**
          * The value of _pdbx_reference_entity_poly.ref_entity_id is a reference
          * to _pdbx_reference_entity_list.ref_entity_id in PDBX_REFERENCE_ENTITY_LIST category.
          */
-        ref_entity_id: str$6,
+        ref_entity_id: str$7,
         /**
          * The type of the polymer.
          */
-        type: Aliased$1(str$6),
+        type: Aliased$2(str$7),
         /**
          * The database code for this source information
          */
-        db_code: str$6,
+        db_code: str$7,
         /**
          * The database name for this source information
          */
-        db_name: str$6,
+        db_name: str$7,
     },
     /**
      * Data items in the PDBX_REFERENCE_ENTITY_POLY_SEQ category specify the sequence
@@ -30015,20 +30015,20 @@ var BIRD_Schema = {
          * The value of _pdbx_reference_entity_poly_seq.prd_id is a reference
          * _pdbx_reference_entity_poly.prd_id in the  PDBX_REFERENCE_ENTITY_POLY category.
          */
-        prd_id: str$6,
+        prd_id: str$7,
         /**
          * The value of _pdbx_reference_entity_poly_seq.ref_entity_id is a reference
          * to _pdbx_reference_entity_poly.ref_entity_id in PDBX_REFERENCE_ENTITY_POLY category.
          */
-        ref_entity_id: str$6,
+        ref_entity_id: str$7,
         /**
          * This data item is the chemical component identifier of monomer.
          */
-        mon_id: str$6,
+        mon_id: str$7,
         /**
          * This data item is the chemical component identifier for the parent component corresponding to this monomer.
          */
-        parent_mon_id: str$6,
+        parent_mon_id: str$7,
         /**
          * The value of _pdbx_reference_entity_poly_seq.num must uniquely and sequentially
          * identify a record in the PDBX_REFERENCE_ENTITY_POLY_SEQ list.
@@ -30036,15 +30036,15 @@ var BIRD_Schema = {
          * This value is conforms to author numbering conventions and does not map directly
          * to the numbering conventions used for _entity_poly_seq.num.
          */
-        num: int$4,
+        num: int$5,
         /**
          * A flag to indicate that this monomer is observed in the instance example.
          */
-        observed: Aliased$1(lstr),
+        observed: Aliased$2(lstr$1),
         /**
          * A flag to indicate that sequence heterogeneity at this monomer position.
          */
-        hetero: Aliased$1(lstr),
+        hetero: Aliased$2(lstr$1),
     },
     /**
      * Additional features associated with the reference entity.
@@ -30054,24 +30054,24 @@ var BIRD_Schema = {
          * The value of _pdbx_reference_entity_sequence.prd_id is a reference
          * _pdbx_reference_entity_list.prd_id in the  PDBX_REFERENCE_ENTITY_LIST category.
          */
-        prd_id: str$6,
+        prd_id: str$7,
         /**
          * The value of _pdbx_reference_entity_sequence.ref_entity_id is a reference
          * to _pdbx_reference_entity_list.ref_entity_id in PDBX_REFERENCE_ENTITY_LIST category.
          */
-        ref_entity_id: str$6,
+        ref_entity_id: str$7,
         /**
          * The monomer type for the sequence.
          */
-        type: Aliased$1(str$6),
+        type: Aliased$2(str$7),
         /**
          * A flag to indicate a non-ribosomal entity.
          */
-        NRP_flag: Aliased$1(str$6),
+        NRP_flag: Aliased$2(str$7),
         /**
          * The one-letter-code sequence for this entity.  Non-standard monomers are represented as 'X'.
          */
-        one_letter_codes: str$6,
+        one_letter_codes: str$7,
     },
     /**
      * Data items in the PDBX_REFERENCE_ENTITY_SRC_NAT category record
@@ -30082,33 +30082,33 @@ var BIRD_Schema = {
          * The value of _pdbx_reference_entity_src_nat.prd_id is a reference
          * _pdbx_reference_entity_list.prd_id in the  PDBX_REFERENCE_ENTITY_LIST category.
          */
-        prd_id: str$6,
+        prd_id: str$7,
         /**
          * The value of _pdbx_reference_entity_src_nat.ref_entity_id is a reference
          * to _pdbx_reference_entity_list.ref_entity_id in PDBX_REFERENCE_ENTITY_LIST category.
          */
-        ref_entity_id: str$6,
+        ref_entity_id: str$7,
         /**
          * The value of _pdbx_reference_entity_src_nat.ordinal distinguishes
          * source details for this entity.
          */
-        ordinal: int$4,
+        ordinal: int$5,
         /**
          * The scientific name of the organism from which the entity was isolated.
          */
-        organism_scientific: str$6,
+        organism_scientific: str$7,
         /**
          * The NCBI TaxId of the organism from which the entity was isolated.
          */
-        taxid: str$6,
+        taxid: str$7,
         /**
          * The database code for this source information
          */
-        db_code: str$6,
+        db_code: str$7,
         /**
          * The database name for this source information
          */
-        db_name: str$6,
+        db_name: str$7,
     },
     /**
      * Data items in the PDBX_PRD_AUDIT category records
@@ -30119,19 +30119,19 @@ var BIRD_Schema = {
          * This data item is a pointer to _pdbx_reference_molecule.prd_id in the
          * pdbx_reference_molecule category.
          */
-        prd_id: str$6,
+        prd_id: str$7,
         /**
          * The date associated with this audit record.
          */
-        date: str$6,
+        date: str$7,
         /**
          * An identifier for the wwPDB site creating or modifying the molecule.
          */
-        processing_site: Aliased$1(str$6),
+        processing_site: Aliased$2(str$7),
         /**
          * The action associated with this audit record.
          */
-        action_type: Aliased$1(str$6),
+        action_type: Aliased$2(str$7),
     },
 };
 
@@ -30140,47 +30140,47 @@ var BIRD_Schema = {
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var Schema$3 = Column.Schema;
-var str$5 = Schema$3.str;
-var float$2 = Schema$3.float;
+var Schema$4 = Column.Schema;
+var str$6 = Schema$4.str;
+var float$3 = Schema$4.float;
 var datablock = {
-    id: str$5,
-    description: str$5
+    id: str$6,
+    description: str$6
 };
 var dictionary = {
-    title: str$5,
-    datablock_id: str$5,
-    version: str$5
+    title: str$6,
+    datablock_id: str$6,
+    version: str$6
 };
 var dictionary_history = {
-    version: str$5,
-    update: str$5,
-    revision: str$5
+    version: str$6,
+    update: str$6,
+    revision: str$6
 };
 var sub_category = {
-    id: str$5,
-    description: str$5
+    id: str$6,
+    description: str$6
 };
 var category_group_list = {
-    id: str$5,
-    parent_id: str$5,
-    description: str$5
+    id: str$6,
+    parent_id: str$6,
+    description: str$6
 };
 var item_type_list = {
-    code: str$5,
-    primitive_code: str$5,
-    construct: str$5,
-    detail: str$5
+    code: str$6,
+    primitive_code: str$6,
+    construct: str$6,
+    detail: str$6
 };
 var item_units_list = {
-    code: str$5,
-    detail: str$5
+    code: str$6,
+    detail: str$6
 };
 var item_units_conversion = {
-    from_code: str$5,
-    to_code: str$5,
-    operator: str$5,
-    factor: float$2
+    from_code: str$6,
+    to_code: str$6,
+    operator: str$6,
+    factor: float$3
 };
 // TODO save frame dic schema
 var dic_Schema = {
@@ -30199,54 +30199,54 @@ var dic_Schema = {
  *
  * @author David Sehnal <david.sehnal@gmail.com>
  */
-var Schema$2 = Column.Schema;
-var str$4 = Schema$2.str;
-var int$3 = Schema$2.int;
-var float$1 = Schema$2.float;
-var Aliased = Schema$2.Aliased;
-var Vector = Schema$2.Vector;
+var Schema$3 = Column.Schema;
+var str$5 = Schema$3.str;
+var int$4 = Schema$3.int;
+var float$2 = Schema$3.float;
+var Aliased$1 = Schema$3.Aliased;
+var Vector$1 = Schema$3.Vector;
 ({
     density_server_result: {
-        'server_version': str$4,
-        'datetime_utc': str$4,
-        'guid': str$4,
-        'is_empty': Aliased(str$4),
-        'has_error': Aliased(str$4),
-        'error': str$4,
-        'query_source_id': str$4,
-        'query_type': Aliased(str$4),
-        'query_box_type': Aliased(str$4),
-        'query_box_a': Vector(3),
-        'query_box_b': Vector(3)
+        'server_version': str$5,
+        'datetime_utc': str$5,
+        'guid': str$5,
+        'is_empty': Aliased$1(str$5),
+        'has_error': Aliased$1(str$5),
+        'error': str$5,
+        'query_source_id': str$5,
+        'query_type': Aliased$1(str$5),
+        'query_box_type': Aliased$1(str$5),
+        'query_box_a': Vector$1(3),
+        'query_box_b': Vector$1(3)
     }
 });
 var DensityServer_Data_Schema = {
     volume_data_3d_info: {
-        'name': str$4,
+        'name': str$5,
         // zero indexed axis order of the data
-        'axis_order': Vector(3, int$3),
+        'axis_order': Vector$1(3, int$4),
         // Origin in fractional coords
-        'origin': Vector(3),
+        'origin': Vector$1(3),
         // Dimension in fractional coords
-        'dimensions': Vector(3),
-        'sample_rate': int$3,
+        'dimensions': Vector$1(3),
+        'sample_rate': int$4,
         // number of samples along each axis
-        'sample_count': Vector(3, int$3),
-        'spacegroup_number': int$3,
-        'spacegroup_cell_size': Vector(3),
+        'sample_count': Vector$1(3, int$4),
+        'spacegroup_number': int$4,
+        'spacegroup_cell_size': Vector$1(3),
         // angles in degrees
-        'spacegroup_cell_angles': Vector(3),
-        'mean_source': float$1,
-        'mean_sampled': float$1,
-        'sigma_source': float$1,
-        'sigma_sampled': float$1,
-        'min_source': float$1,
-        'min_sampled': float$1,
-        'max_source': float$1,
-        'max_sampled': float$1
+        'spacegroup_cell_angles': Vector$1(3),
+        'mean_source': float$2,
+        'mean_sampled': float$2,
+        'sigma_source': float$2,
+        'sigma_sampled': float$2,
+        'min_source': float$2,
+        'min_sampled': float$2,
+        'max_source': float$2,
+        'max_sampled': float$2
     },
     volume_data_3d: {
-        values: float$1
+        values: float$2
     }
 };
 
@@ -30257,11 +30257,11 @@ var DensityServer_Data_Schema = {
  *
  * @author molstar/ciftools package
  */
-var Schema$1 = Column.Schema;
-var float = Schema$1.float;
-var int$2 = Schema$1.int;
-var str$3 = Schema$1.str;
-var Matrix$1 = Schema$1.Matrix;
+var Schema$2 = Column.Schema;
+var float$1 = Schema$2.float;
+var int$3 = Schema$2.int;
+var str$4 = Schema$2.str;
+var Matrix$2 = Schema$2.Matrix;
 var CifCore_Schema = {
     /**
      * The CATEGORY of data items used to describe the parameters of
@@ -30271,37 +30271,37 @@ var CifCore_Schema = {
         /**
          * The angle between the bounding cell axes.
          */
-        angle_alpha: float,
+        angle_alpha: float$1,
         /**
          * The angle between the bounding cell axes.
          */
-        angle_beta: float,
+        angle_beta: float$1,
         /**
          * The angle between the bounding cell axes.
          */
-        angle_gamma: float,
+        angle_gamma: float$1,
         /**
          * The number of the formula units in the unit cell as specified
          * by _chemical_formula.structural, _chemical_formula.moiety or
          * _chemical_formula.sum.
          */
-        formula_units_z: int$2,
+        formula_units_z: int$3,
         /**
          * The length of each cell axis.
          */
-        length_a: float,
+        length_a: float$1,
         /**
          * The length of each cell axis.
          */
-        length_b: float,
+        length_b: float$1,
         /**
          * The length of each cell axis.
          */
-        length_c: float,
+        length_c: float$1,
         /**
          * Volume of the crystal unit cell.
          */
-        volume: float,
+        volume: float$1,
     },
     /**
      * The CATEGORY of data items which describe the composition and
@@ -30312,15 +30312,15 @@ var CifCore_Schema = {
         /**
          * The temperature at which a crystalline solid changes to a liquid.
          */
-        melting_point: float,
+        melting_point: float$1,
         /**
          * Trivial name by which the compound is commonly known.
          */
-        name_common: str$3,
+        name_common: str$4,
         /**
          * IUPAC or Chemical Abstracts full name of compound.
          */
-        name_systematic: str$3,
+        name_systematic: str$4,
     },
     /**
      * The CATEGORY of data items which specify the composition and chemical
@@ -30384,19 +30384,19 @@ var CifCore_Schema = {
          * count) by a space. Pre- or post-multipliers may be used for
          * individual moieties.
          */
-        moiety: str$3,
+        moiety: str$4,
         /**
          * Chemical formulae in which all discrete bonded residues and ions are
          * summed over the constituent elements, following the ordering given
          * in rule 5 of the CATEGORY description. Parentheses normally not used.
          */
-        sum: str$3,
+        sum: str$4,
         /**
          * Mass corresponding to the formulae _chemical_formula.structural,
          * *_IUPAC, *_moiety or *_sum and, together with the Z value and cell
          * parameters yield the density given as _exptl_crystal.density_diffrn.
          */
-        weight: float,
+        weight: float$1,
     },
     /**
      * The CATEGORY of data items used to specify space group
@@ -30428,7 +30428,7 @@ var CifCore_Schema = {
          * Note that rhombohedral space groups belong to the
          * trigonal system.
          */
-        crystal_system: str$3,
+        crystal_system: str$4,
         /**
          * The number as assigned in International Tables for Crystallography
          * Vol. A, specifying the proper affine class (i.e. the orientation
@@ -30436,7 +30436,7 @@ var CifCore_Schema = {
          * group type) to which the space group belongs. This number defines
          * the space group type but not the coordinate system expressed.
          */
-        it_number: int$2,
+        it_number: int$3,
         /**
          * The full international Hermann-Mauguin space-group symbol as
          * defined in Section 2.2.3 and given as the second item of the
@@ -30467,7 +30467,7 @@ var CifCore_Schema = {
          * Space-group symmetry, edited by Th. Hahn, 5th ed.
          * Dordrecht: Kluwer Academic Publishers.
          */
-        'name_h-m_full': str$3,
+        'name_h-m_full': str$4,
     },
     /**
      * The CATEGORY of data items used to describe symmetry equivalent sites
@@ -30501,7 +30501,7 @@ var CifCore_Schema = {
          * symmetry operations required to generate all the atoms in
          * the unit cell defined by the setting used.
          */
-        operation_xyz: str$3,
+        operation_xyz: str$4,
     },
     /**
      * The CATEGORY of data items used to specify the geometry bonds in the
@@ -30512,22 +30512,22 @@ var CifCore_Schema = {
          * This label is a unique identifier for a particular site in the
          * asymmetric unit of the crystal unit cell.
          */
-        atom_site_label_1: str$3,
+        atom_site_label_1: str$4,
         /**
          * This label is a unique identifier for a particular site in the
          * asymmetric unit of the crystal unit cell.
          */
-        atom_site_label_2: str$3,
+        atom_site_label_2: str$4,
         /**
          * Intramolecular bond distance between the sites identified
          * by _geom_bond.id
          */
-        distance: float,
+        distance: float$1,
         /**
          * This code signals whether the angle is referred to in a
          * publication or should be placed in a table of significant angles.
          */
-        publ_flag: str$3,
+        publ_flag: str$4,
         /**
          * The set of data items which specify the symmetry operation codes
          * which must be applied to the atom sites involved in the geometry angle.
@@ -30550,7 +30550,7 @@ var CifCore_Schema = {
          * q = 5 + y
          * r = 5 + z
          */
-        site_symmetry_1: str$3,
+        site_symmetry_1: str$4,
         /**
          * The set of data items which specify the symmetry operation codes
          * which must be applied to the atom sites involved in the geometry angle.
@@ -30573,11 +30573,11 @@ var CifCore_Schema = {
          * q = 5 + y
          * r = 5 + z
          */
-        site_symmetry_2: str$3,
+        site_symmetry_2: str$4,
         /**
          * Bond valence calculated from the bond distance.
          */
-        valence: float,
+        valence: float$1,
     },
     /**
      * The CATEGORY of data items used to record details about the
@@ -30604,7 +30604,7 @@ var CifCore_Schema = {
          * specifications of the International DOI Foundation
          * (see http://www.doi.org).
          */
-        block_doi: str$3,
+        block_doi: str$4,
     },
     /**
      * The CATEGORY of data items recording database deposition. These data items
@@ -30615,35 +30615,35 @@ var CifCore_Schema = {
         /**
          * Code assigned by the Crystallography Open Database (COD).
          */
-        cod: str$3,
+        cod: str$4,
         /**
          * Code assigned by the Cambridge Structural Database.
          */
-        csd: str$3,
+        csd: str$4,
         /**
          * Deposition numbers assigned by the Cambridge Crystallographic
          * Data Centre (CCDC) to files containing structural information
          * archived by the CCDC.
          */
-        depnum_ccdc_archive: str$3,
+        depnum_ccdc_archive: str$4,
         /**
          * Deposition numbers assigned by the Fachinformationszentrum
          * Karlsruhe (FIZ) to files containing structural information
          * archived by the Cambridge Crystallographic Data Centre (CCDC).
          */
-        depnum_ccdc_fiz: str$3,
+        depnum_ccdc_fiz: str$4,
         /**
          * Code assigned by the Inorganic Crystal Structure Database.
          */
-        icsd: str$3,
+        icsd: str$4,
         /**
          * Code assigned in the Metals Data File.
          */
-        mdf: str$3,
+        mdf: str$4,
         /**
          * Code assigned by the NBS (NIST) Crystal Data Database.
          */
-        nbs: str$3,
+        nbs: str$4,
     },
     /**
      * The CATEGORY of data items used to describe atom site information
@@ -30653,13 +30653,13 @@ var CifCore_Schema = {
         /**
          * Code for type of atomic displacement parameters used for the site.
          */
-        adp_type: str$3,
+        adp_type: str$4,
         /**
          * A standard code to signal if the site coordinates have been
          * determined from the intensities or calculated from the geometry
          * of surrounding sites, or have been assigned dummy coordinates.
          */
-        calc_flag: str$3,
+        calc_flag: str$4,
         /**
          * A code which identifies a cluster of atoms that show long range
          * positional disorder but are locally ordered. Within each such
@@ -30668,7 +30668,7 @@ var CifCore_Schema = {
          * needed if there is more than one cluster of disordered atoms
          * showing independent local order.
          */
-        disorder_assembly: str$3,
+        disorder_assembly: str$4,
         /**
          * A code that identifies a group of positionally disordered atom
          * sites that are locally simultaneously occupied. Atoms that are
@@ -30679,19 +30679,19 @@ var CifCore_Schema = {
          * different groups are not. A minus prefix (e.g. "-1") is used to
          * indicate sites disordered about a special position.
          */
-        disorder_group: str$3,
+        disorder_group: str$4,
         /**
          * Atom site coordinates as fractions of the cell length values.
          */
-        fract_x: float,
+        fract_x: float$1,
         /**
          * Atom site coordinates as fractions of the cell length values.
          */
-        fract_y: float,
+        fract_y: float$1,
         /**
          * Atom site coordinates as fractions of the cell length values.
          */
-        fract_z: float,
+        fract_z: float$1,
         /**
          * This label is a unique identifier for a particular site in the
          * asymmetric unit of the crystal unit cell. It is made up of
@@ -30711,7 +30711,7 @@ var CifCore_Schema = {
          * acceptable and represents the components C, 233, '', and ggg.
          * Each label may have a different number of components.
          */
-        label: str$3,
+        label: str$4,
         /**
          * The fraction of the atom type present at this site.
          * The sum of the occupancies of all the atom types at this site
@@ -30720,7 +30720,7 @@ var CifCore_Schema = {
          * -3u =< x =< 1 + 3u. The _enumeration.range of 0.0:1.0 is thus
          * correctly interpreted as meaning (0.0 - 3u) =< x =< (1.0 + 3u).
          */
-        occupancy: float,
+        occupancy: float$1,
         /**
          * A concatenated series of single-letter codes which indicate the
          * refinement restraints or constraints applied to this site. This
@@ -30729,7 +30729,7 @@ var CifCore_Schema = {
          * retained in this dictionary only to provide compatibility with
          * legacy CIFs.
          */
-        refinement_flags: str$3,
+        refinement_flags: str$4,
         /**
          * The number of different sites that are generated by the
          * application of the space-group symmetry to the coordinates
@@ -30739,14 +30739,14 @@ var CifCore_Schema = {
          * position divided by the order of the site symmetry given in
          * _atom_site.site_symmetry_order.
          */
-        site_symmetry_multiplicity: int$2,
+        site_symmetry_multiplicity: int$3,
         /**
          * A code to identify the atom specie(s) occupying this site.
          * This code must match a corresponding _atom_type.symbol. The
          * specification of this code is optional if component_0 of the
          * _atom_site.label is used for this purpose. See _atom_type.symbol.
          */
-        type_symbol: str$3,
+        type_symbol: str$4,
         /**
          * Isotropic atomic displacement parameter, or equivalent isotropic
          * atomic  displacement parameter, U(equiv), in angstroms squared,
@@ -30758,7 +30758,7 @@ var CifCore_Schema = {
          * a* = the reciprocal-space cell lengths
          * Ref: Fischer, R. X. & Tillmanns, E. (1988). Acta Cryst. C44, 775-776.
          */
-        u_iso_or_equiv: float,
+        u_iso_or_equiv: float$1,
     },
     /**
      * The CATEGORY of data items used to describe the anisotropic
@@ -30771,7 +30771,7 @@ var CifCore_Schema = {
          * _atom_site.label of the associated atom in the atom coordinate
          * list and conform with the same rules described in _atom_site.label.
          */
-        label: str$3,
+        label: str$4,
         /**
          * These are the standard anisotropic atomic displacement
          * components in angstroms squared which appear in the
@@ -30784,7 +30784,7 @@ var CifCore_Schema = {
          *
          * The unique elements of the real symmetric matrix are entered by row.
          */
-        u_11: float,
+        u_11: float$1,
         /**
          * These are the standard anisotropic atomic displacement
          * components in angstroms squared which appear in the
@@ -30797,7 +30797,7 @@ var CifCore_Schema = {
          *
          * The unique elements of the real symmetric matrix are entered by row.
          */
-        u: Matrix$1(3, 3),
+        u: Matrix$2(3, 3),
         /**
          * These are the standard anisotropic atomic displacement
          * components in angstroms squared which appear in the
@@ -30810,7 +30810,7 @@ var CifCore_Schema = {
          *
          * The unique elements of the real symmetric matrix are entered by row.
          */
-        u_12: float,
+        u_12: float$1,
         /**
          * These are the standard anisotropic atomic displacement
          * components in angstroms squared which appear in the
@@ -30823,7 +30823,7 @@ var CifCore_Schema = {
          *
          * The unique elements of the real symmetric matrix are entered by row.
          */
-        u_13: float,
+        u_13: float$1,
         /**
          * These are the standard anisotropic atomic displacement
          * components in angstroms squared which appear in the
@@ -30836,7 +30836,7 @@ var CifCore_Schema = {
          *
          * The unique elements of the real symmetric matrix are entered by row.
          */
-        u_22: float,
+        u_22: float$1,
         /**
          * These are the standard anisotropic atomic displacement
          * components in angstroms squared which appear in the
@@ -30849,7 +30849,7 @@ var CifCore_Schema = {
          *
          * The unique elements of the real symmetric matrix are entered by row.
          */
-        u_23: float,
+        u_23: float$1,
         /**
          * These are the standard anisotropic atomic displacement
          * components in angstroms squared which appear in the
@@ -30862,7 +30862,7 @@ var CifCore_Schema = {
          *
          * The unique elements of the real symmetric matrix are entered by row.
          */
-        u_33: float,
+        u_33: float$1,
     },
     /**
      * The CATEGORY of data items used to describe atomic type information
@@ -30875,7 +30875,7 @@ var CifCore_Schema = {
          * a single atom  species. For disordered or nonstoichiometric
          * structures it will describe a combination of atom species.
          */
-        description: str$3,
+        description: str$4,
         /**
          * The identity of the atom specie(s) representing this atom type.
          * Normally this code is the element symbol followed by the charge
@@ -30883,7 +30883,7 @@ var CifCore_Schema = {
          * an underline or a blank, with the proviso that digits designate an
          * oxidation state and must be followed by a + or - character.
          */
-        symbol: str$3,
+        symbol: str$4,
     },
     /**
      * The CATEGORY of data items used to describe atomic scattering
@@ -30894,16 +30894,16 @@ var CifCore_Schema = {
          * The imaginary component of the anomalous dispersion scattering factors
          * for this atom type and radiation by _diffrn_radiation_wavelength.value
          */
-        dispersion_imag: float,
+        dispersion_imag: float$1,
         /**
          * The real component of the anomalous dispersion scattering factors
          * for this atom type and radiation by _diffrn_radiation_wavelength.value
          */
-        dispersion_real: float,
+        dispersion_real: float$1,
         /**
          * Reference to source of scattering factors used for this atom type.
          */
-        source: str$3,
+        source: str$4,
     },
 };
 var CifCore_Aliases = {
@@ -31000,16 +31000,16 @@ var CifCore_Aliases = {
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var Schema = Column.Schema;
-var int$1 = Schema.int;
+var Schema$1 = Column.Schema;
+var int$2 = Schema$1.int;
 var Segmentation_Data_Schema = {
     volume_data_3d_info: DensityServer_Data_Schema.volume_data_3d_info,
     segmentation_data_table: {
-        set_id: int$1,
-        segment_id: int$1,
+        set_id: int$2,
+        segment_id: int$2,
     },
     segmentation_data_3d: {
-        values: int$1
+        values: int$2
     }
 };
 
@@ -31026,7 +31026,7 @@ var CIF = {
     toDatabaseCollection: toDatabaseCollection,
     toDatabase: toDatabase,
     schema: {
-        mmCIF: function (frame) { return toDatabase(mmCIF_Schema, frame); },
+        mmCIF: function (frame) { return toDatabase(mmCIF_Schema$1, frame); },
         CCD: function (frame) { return toDatabase(CCD_Schema, frame); },
         BIRD: function (frame) { return toDatabase(BIRD_Schema, frame); },
         dic: function (frame) { return toDatabase(dic_Schema, frame); },
@@ -37258,7 +37258,7 @@ function Axes3D() {
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var Matrix;
+var Matrix$1;
 (function (Matrix) {
     function create(cols, rows, ctor) {
         if (ctor === void 0) { ctor = Float32Array; }
@@ -37358,7 +37358,7 @@ var Matrix;
         return mat;
     }
     Matrix.subRows = subRows;
-})(Matrix || (Matrix = {}));
+})(Matrix$1 || (Matrix$1 = {}));
 
 /**
  * Copyright (c) 2018 mol* contributors, licensed under MIT, See LICENSE file for more info.
@@ -37596,11 +37596,11 @@ function svd(A, W, U, V) {
         m = n;
         n = i;
     }
-    var amt = Matrix.create(m, m);
-    var wmt = Matrix.create(1, n);
-    var vmt = Matrix.create(n, n);
+    var amt = Matrix$1.create(m, m);
+    var wmt = Matrix$1.create(1, n);
+    var vmt = Matrix$1.create(n, n);
     if (at === 0) {
-        Matrix.transpose(amt, A);
+        Matrix$1.transpose(amt, A);
     }
     else {
         for (i = 0; i < _n * _m; i++) {
@@ -37621,15 +37621,15 @@ function svd(A, W, U, V) {
     }
     if (at === 0) {
         if (U)
-            Matrix.transpose(U, amt);
+            Matrix$1.transpose(U, amt);
         if (V)
-            Matrix.transpose(V, vmt);
+            Matrix$1.transpose(V, vmt);
     }
     else {
         if (U)
-            Matrix.transpose(U, vmt);
+            Matrix$1.transpose(U, vmt);
         if (V)
-            Matrix.transpose(V, amt);
+            Matrix$1.transpose(V, amt);
     }
 }
 
@@ -37650,18 +37650,18 @@ var PrincipalAxes;
         if (positions.length === 3) {
             return Axes3D.create(Vec3.fromArray(Vec3(), positions, 0), Vec3.create(1, 0, 0), Vec3.create(0, 1, 0), Vec3.create(0, 0, 1));
         }
-        var points = Matrix.fromArray(positions, 3, positions.length / 3);
+        var points = Matrix$1.fromArray(positions, 3, positions.length / 3);
         var n = points.rows;
         var n3 = n / 3;
-        var A = Matrix.create(3, 3);
-        var W = Matrix.create(1, 3);
-        var U = Matrix.create(3, 3);
-        var V = Matrix.create(3, 3);
+        var A = Matrix$1.create(3, 3);
+        var W = Matrix$1.create(1, 3);
+        var U = Matrix$1.create(3, 3);
+        var V = Matrix$1.create(3, 3);
         // calculate
-        var mean = Matrix.meanRows(points);
-        var pointsM = Matrix.subRows(Matrix.clone(points), mean);
-        var pointsT = Matrix.transpose(Matrix.create(n, 3), pointsM);
-        Matrix.multiplyABt(A, pointsT, pointsT);
+        var mean = Matrix$1.meanRows(points);
+        var pointsM = Matrix$1.subRows(Matrix$1.clone(points), mean);
+        var pointsT = Matrix$1.transpose(Matrix$1.create(n, 3), pointsM);
+        Matrix$1.multiplyABt(A, pointsT, pointsT);
         svd(A, W, U, V);
         // origin
         var origin = Vec3.create(mean[0], mean[1], mean[2]);
@@ -43318,16 +43318,16 @@ var ColorThemeCategory = {
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor$n = Color(0xCCCCCC);
+var DefaultColor$o = Color(0xCCCCCC);
 var Description$A = 'Gives everything the same, uniform color.';
 var UniformColorThemeParams = {
-    value: ParamDefinition.Color(DefaultColor$n),
+    value: ParamDefinition.Color(DefaultColor$o),
 };
 function getUniformColorThemeParams(ctx) {
     return UniformColorThemeParams; // TODO return copy
 }
 function UniformColorTheme(ctx, props) {
-    var color = defaults(props.value, DefaultColor$n);
+    var color = defaults(props.value, DefaultColor$o);
     return {
         factory: UniformColorTheme,
         granularity: 'uniform',
@@ -48472,7 +48472,7 @@ var ShapeGroupSizeThemeProvider = {
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor$m = Color(0xCCCCCC);
+var DefaultColor$n = Color(0xCCCCCC);
 var Description$x = 'Assigns colors as defined by the shape object.';
 var ShapeGroupColorThemeParams = {};
 function getShapeGroupColorThemeParams(ctx) {
@@ -48486,7 +48486,7 @@ function ShapeGroupColorTheme(ctx, props) {
             if (ShapeGroup.isLocation(location)) {
                 return location.shape.getColor(location.group, location.instance);
             }
-            return DefaultColor$m;
+            return DefaultColor$n;
         },
         props: props,
         description: Description$x
@@ -49042,7 +49042,7 @@ function getMesh(ctx, vertex, face, groupIds, mesh) {
         });
     });
 }
-var int = Column.Schema.int;
+var int$1 = Column.Schema.int;
 function getGrouping(vertex, props) {
     var grouping = props.grouping;
     var rowCount = vertex.rowCount;
@@ -49060,20 +49060,20 @@ function getColoring(vertex, material, props) {
     var rowCount = vertex.rowCount;
     var red, green, blue;
     if (coloring.name === 'vertex') {
-        red = vertex.getProperty(coloring.params.red) || Column.ofConst(127, rowCount, int);
-        green = vertex.getProperty(coloring.params.green) || Column.ofConst(127, rowCount, int);
-        blue = vertex.getProperty(coloring.params.blue) || Column.ofConst(127, rowCount, int);
+        red = vertex.getProperty(coloring.params.red) || Column.ofConst(127, rowCount, int$1);
+        green = vertex.getProperty(coloring.params.green) || Column.ofConst(127, rowCount, int$1);
+        blue = vertex.getProperty(coloring.params.blue) || Column.ofConst(127, rowCount, int$1);
     }
     else if (coloring.name === 'material') {
-        red = (material && material.getProperty(coloring.params.red)) || Column.ofConst(127, rowCount, int);
-        green = (material && material.getProperty(coloring.params.green)) || Column.ofConst(127, rowCount, int);
-        blue = (material && material.getProperty(coloring.params.blue)) || Column.ofConst(127, rowCount, int);
+        red = (material && material.getProperty(coloring.params.red)) || Column.ofConst(127, rowCount, int$1);
+        green = (material && material.getProperty(coloring.params.green)) || Column.ofConst(127, rowCount, int$1);
+        blue = (material && material.getProperty(coloring.params.blue)) || Column.ofConst(127, rowCount, int$1);
     }
     else {
         var _a = Color.toRgb(coloring.params.color), r = _a[0], g = _a[1], b = _a[2];
-        red = Column.ofConst(r, rowCount, int);
-        green = Column.ofConst(g, rowCount, int);
-        blue = Column.ofConst(b, rowCount, int);
+        red = Column.ofConst(r, rowCount, int$1);
+        green = Column.ofConst(g, rowCount, int$1);
+        blue = Column.ofConst(b, rowCount, int$1);
     }
     return { kind: coloring.name, red: red, green: green, blue: blue };
 }
@@ -50604,20 +50604,20 @@ var ResidueHydrophobicity = {
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
 ({
-    label_comp_id: mmCIF_Schema.atom_site.label_comp_id,
-    label_seq_id: mmCIF_Schema.atom_site.label_seq_id,
-    pdbx_PDB_ins_code: mmCIF_Schema.atom_site.pdbx_PDB_ins_code,
-    label_asym_id: mmCIF_Schema.atom_site.label_asym_id,
-    label_entity_id: mmCIF_Schema.atom_site.label_entity_id,
-    auth_comp_id: mmCIF_Schema.atom_site.auth_atom_id,
-    auth_seq_id: mmCIF_Schema.atom_site.auth_seq_id,
-    auth_asym_id: mmCIF_Schema.atom_site.auth_asym_id
+    label_comp_id: mmCIF_Schema$1.atom_site.label_comp_id,
+    label_seq_id: mmCIF_Schema$1.atom_site.label_seq_id,
+    pdbx_PDB_ins_code: mmCIF_Schema$1.atom_site.pdbx_PDB_ins_code,
+    label_asym_id: mmCIF_Schema$1.atom_site.label_asym_id,
+    label_entity_id: mmCIF_Schema$1.atom_site.label_entity_id,
+    auth_comp_id: mmCIF_Schema$1.atom_site.auth_atom_id,
+    auth_seq_id: mmCIF_Schema$1.atom_site.auth_seq_id,
+    auth_asym_id: mmCIF_Schema$1.atom_site.auth_asym_id
 });
-__assign(__assign({}, mmCIF_Schema.chem_comp_bond), { 
+__assign(__assign({}, mmCIF_Schema$1.chem_comp_bond), { 
     /** Indicates if the bond entry was taken from the protonation variant dictionary */
     molstar_protonation_variant: Column.Schema.Str() });
 /** Has `type` extended with 'ION' and 'LIPID' */
-var mmCIF_chemComp_schema = __assign(__assign({}, mmCIF_Schema.chem_comp), { type: Column.Schema.Aliased(Column.Schema.str) });
+var mmCIF_chemComp_schema = __assign(__assign({}, mmCIF_Schema$1.chem_comp), { type: Column.Schema.Aliased(Column.Schema.str) });
 
 /**
  * Copyright (c) 2017-2022 mol* contributors, licensed under MIT, See LICENSE file for more info.
@@ -50665,23 +50665,23 @@ function getNormalizedAtomSite(atom_site) {
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
 var BasicSchema = {
-    entry: mmCIF_Schema.entry,
-    struct: mmCIF_Schema.struct,
-    struct_asym: mmCIF_Schema.struct_asym,
-    ihm_model_list: mmCIF_Schema.ihm_model_list,
-    ihm_model_group: mmCIF_Schema.ihm_model_group,
-    ihm_model_group_link: mmCIF_Schema.ihm_model_group_link,
-    entity: mmCIF_Schema.entity,
-    entity_poly: mmCIF_Schema.entity_poly,
-    entity_poly_seq: mmCIF_Schema.entity_poly_seq,
-    pdbx_entity_branch: mmCIF_Schema.pdbx_entity_branch,
+    entry: mmCIF_Schema$1.entry,
+    struct: mmCIF_Schema$1.struct,
+    struct_asym: mmCIF_Schema$1.struct_asym,
+    ihm_model_list: mmCIF_Schema$1.ihm_model_list,
+    ihm_model_group: mmCIF_Schema$1.ihm_model_group,
+    ihm_model_group_link: mmCIF_Schema$1.ihm_model_group_link,
+    entity: mmCIF_Schema$1.entity,
+    entity_poly: mmCIF_Schema$1.entity_poly,
+    entity_poly_seq: mmCIF_Schema$1.entity_poly_seq,
+    pdbx_entity_branch: mmCIF_Schema$1.pdbx_entity_branch,
     chem_comp: mmCIF_chemComp_schema,
-    pdbx_chem_comp_identifier: mmCIF_Schema.pdbx_chem_comp_identifier,
-    atom_site: mmCIF_Schema.atom_site,
-    ihm_sphere_obj_site: mmCIF_Schema.ihm_sphere_obj_site,
-    ihm_gaussian_obj_site: mmCIF_Schema.ihm_gaussian_obj_site,
-    pdbx_unobs_or_zero_occ_residues: mmCIF_Schema.pdbx_unobs_or_zero_occ_residues,
-    pdbx_molecule: mmCIF_Schema.pdbx_molecule,
+    pdbx_chem_comp_identifier: mmCIF_Schema$1.pdbx_chem_comp_identifier,
+    atom_site: mmCIF_Schema$1.atom_site,
+    ihm_sphere_obj_site: mmCIF_Schema$1.ihm_sphere_obj_site,
+    ihm_gaussian_obj_site: mmCIF_Schema$1.ihm_gaussian_obj_site,
+    pdbx_unobs_or_zero_occ_residues: mmCIF_Schema$1.pdbx_unobs_or_zero_occ_residues,
+    pdbx_molecule: mmCIF_Schema$1.pdbx_molecule,
 };
 function createBasic(data, normalize) {
     if (normalize === void 0) { normalize = false; }
@@ -52304,7 +52304,7 @@ var math = {
     log10: unaryOp(Type.Num),
     atan2: binRel(Type.Num, Type.Num)
 };
-var str$2 = {
+var str$3 = {
     '@header': 'Strings',
     concat: binOp(Type.Str),
     match: symbol(Arguments.Dictionary({ 0: Argument(Types$1.Regex), 1: Argument(Type.Str) }), Type.Bool)
@@ -52337,7 +52337,7 @@ var core = {
     ctrl: ctrl,
     rel: rel,
     math: math,
-    str: str$2,
+    str: str$3,
     list: list$1,
     set: set,
     flags: flags
@@ -54245,7 +54245,7 @@ var ComponentBond;
     };
     ComponentBond.Provider = FormatPropertyProvider.create(ComponentBond.Descriptor);
     function chemCompBondFromTable(model, table) {
-        return Table.pick(table, mmCIF_Schema.chem_comp_bond, function (i) {
+        return Table.pick(table, mmCIF_Schema$1.chem_comp_bond, function (i) {
             return model.properties.chemicalComponentMap.has(table.comp_id.value(i));
         });
     }
@@ -58212,38 +58212,38 @@ var AtomsSchema = {
      * The chemical element of this atom site.
      * For mmCIF files, this points to atom_type.symbol in the ATOM_TYPE category.
      */
-    type_symbol: Column.Schema.Aliased(mmCIF_Schema.atom_site.type_symbol),
+    type_symbol: Column.Schema.Aliased(mmCIF_Schema$1.atom_site.type_symbol),
     /**
      * A component of the identifier for this atom site.
      * This is a standardized name for the atom within its residue.
      * For mmCIF files, this points to chem_comp_atom.atom_id in the CHEM_COMP_ATOM category.
      */
-    label_atom_id: mmCIF_Schema.atom_site.label_atom_id,
+    label_atom_id: mmCIF_Schema$1.atom_site.label_atom_id,
     /**
      * An alternative identifier for label_atom_id that may be provided by an author
      * in order to match the identification used in the publication that describes the structure.
      */
-    auth_atom_id: mmCIF_Schema.atom_site.auth_atom_id,
+    auth_atom_id: mmCIF_Schema$1.atom_site.auth_atom_id,
     /**
      * A component of the identifier for this atom site.
      * Identifies an alternative conformation for this atom site.
      */
-    label_alt_id: mmCIF_Schema.atom_site.label_alt_id,
+    label_alt_id: mmCIF_Schema$1.atom_site.label_alt_id,
     /**
      * A component of the identifier for this atom site.
      * For mmCIF files, this points to chem_comp.id in the CHEM_COMP category.
      */
-    label_comp_id: mmCIF_Schema.atom_site.label_comp_id,
+    label_comp_id: mmCIF_Schema$1.atom_site.label_comp_id,
     /**
      * An alternative identifier for atom_site.label_comp_id that may be provided by an author
      * in order to match the identification used in the publication that describes the structure.
      */
-    auth_comp_id: mmCIF_Schema.atom_site.auth_comp_id,
+    auth_comp_id: mmCIF_Schema$1.atom_site.auth_comp_id,
     /**
      * The net integer charge assigned to this atom.
      * This is the formal charge assignment normally found in chemical diagrams.
      */
-    pdbx_formal_charge: mmCIF_Schema.atom_site.pdbx_formal_charge,
+    pdbx_formal_charge: mmCIF_Schema$1.atom_site.pdbx_formal_charge,
     // id, occupancy and B_iso_or_equiv are part of conformation
 };
 var ResiduesSchema = {
@@ -58251,20 +58251,20 @@ var ResiduesSchema = {
      * The group of atoms to which the atom site belongs. This data item is provided for
      * compatibility with the original Protein Data Bank format, and only for that purpose.
      */
-    group_PDB: mmCIF_Schema.atom_site.group_PDB,
+    group_PDB: mmCIF_Schema$1.atom_site.group_PDB,
     /**
      * For mmCIF files, this points to entity_poly_seq.num in the ENTITY_POLY_SEQ category.
      */
-    label_seq_id: mmCIF_Schema.atom_site.label_seq_id,
+    label_seq_id: mmCIF_Schema$1.atom_site.label_seq_id,
     /**
      * An alternative identifier for atom_site.label_seq_id that may be provided by an author
      * in order to match the identification used in the publication that describes the structure.
      */
-    auth_seq_id: mmCIF_Schema.atom_site.auth_seq_id,
+    auth_seq_id: mmCIF_Schema$1.atom_site.auth_seq_id,
     /**
      * PDB insertion code.
      */
-    pdbx_PDB_ins_code: mmCIF_Schema.atom_site.pdbx_PDB_ins_code,
+    pdbx_PDB_ins_code: mmCIF_Schema$1.atom_site.pdbx_PDB_ins_code,
     // comp_id is part of atoms because of microheterogeneity
 };
 var ChainsSchema = {
@@ -58272,16 +58272,16 @@ var ChainsSchema = {
      * A component of the identifier for this atom site.
      * For mmCIF files, this points to struct_asym.id in the STRUCT_ASYM category.
      */
-    label_asym_id: mmCIF_Schema.atom_site.label_asym_id,
+    label_asym_id: mmCIF_Schema$1.atom_site.label_asym_id,
     /**
      * An alternative identifier for atomsite.label_asym_id that may be provided by an author
      * in order to match the identification used in the publication that describes the structure.
      */
-    auth_asym_id: mmCIF_Schema.atom_site.auth_asym_id,
+    auth_asym_id: mmCIF_Schema$1.atom_site.auth_asym_id,
     /**
      * For mmCIF files, this points to _entity.id in the ENTITY category.
      */
-    label_entity_id: mmCIF_Schema.atom_site.label_entity_id
+    label_entity_id: mmCIF_Schema$1.atom_site.label_entity_id
 };
 var AtomicIndex;
 (function (AtomicIndex) {
@@ -65086,7 +65086,7 @@ function getNcsOperators(struct_ncs_oper) {
     if (struct_ncs_oper._rowCount === 0)
         return void 0;
     var id = struct_ncs_oper.id, matrix = struct_ncs_oper.matrix, vector = struct_ncs_oper.vector;
-    var matrixSpace = mmCIF_Schema.struct_ncs_oper.matrix.space, vectorSpace = mmCIF_Schema.struct_ncs_oper.vector.space;
+    var matrixSpace = mmCIF_Schema$1.struct_ncs_oper.matrix.space, vectorSpace = mmCIF_Schema$1.struct_ncs_oper.vector.space;
     var opers = [];
     for (var i = 0; i < struct_ncs_oper._rowCount; i++) {
         var m = Tensor.toMat3(Mat3(), matrixSpace, matrix.value(i));
@@ -65108,8 +65108,8 @@ function getNcsOperators(struct_ncs_oper) {
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
 var Anisotrop = {
-    U: mmCIF_Schema.atom_site_anisotrop.U,
-    U_esd: mmCIF_Schema.atom_site_anisotrop.U_esd
+    U: mmCIF_Schema$1.atom_site_anisotrop.U,
+    U_esd: mmCIF_Schema$1.atom_site_anisotrop.U_esd
 };
 var AtomSiteAnisotrop;
 (function (AtomSiteAnisotrop) {
@@ -69846,7 +69846,7 @@ function resnameExpr(resnameList) {
 var B$g = MolScriptBuilder;
 var reFloat$2 = /[-+]?[0-9]*\.?[0-9]+/;
 var rePosInt$1 = /[0-9]+/;
-function str$1(x) { return x; }
+function str$2(x) { return x; }
 var structureDict = {
     none: 'none',
     turn: 'turn',
@@ -69900,14 +69900,14 @@ var properties$2 = {
     altloc: {
         '@desc': 'PDB alternate location identifier',
         '@examples': ['altloc = A'],
-        regex: /[a-zA-Z0-9]/, map: str$1,
+        regex: /[a-zA-Z0-9]/, map: str$2,
         level: 'atom-test', property: B$g.ammp('label_alt_id')
     },
     altname: {
         '@desc': 'an alternative name given to atoms by some file readers (for example, P2N)',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[a-zA-Z0-9]/, map: str$1,
+        regex: /[a-zA-Z0-9]/, map: str$2,
         level: 'atom-test'
     },
     atomID: {
@@ -69986,7 +69986,7 @@ var properties$2 = {
         '@desc': 'crystallographic unit cell, expressed either in lattice integer notation (111-999) or as a coordinate in ijk space, where {1 1 1} is the same as 555. ANDing two cells, for example select cell=555 and cell=556, selects the atoms on the common face. (Note: in the specifc case of CELL, only "=" is allowed as a comparator.)',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     configuration: {
@@ -69999,21 +69999,21 @@ var properties$2 = {
     chain: {
         '@desc': 'protein chain. For newer CIF files allowing multicharacter chain specifications, use quotations marks: select chain="AA". For these multicharacter desigations, case is not checked unless the CIF file has lower-case chain designations.',
         '@examples': ['chain = A', 'chain = "AA"'],
-        regex: /[a-zA-Z0-9]+/, map: str$1,
+        regex: /[a-zA-Z0-9]+/, map: str$2,
         level: 'chain-test', property: B$g.ammp('auth_asym_id')
     },
     chainNo: {
         '@desc': 'chain number; sequentially counted from 1 for each model; chainNo == 0 means"no chain" or PDB chain identifier indicated as a blank (Jmol 14.0).',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     color: {
         '@desc': 'the atom color',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     covalentRadius: {
@@ -70021,14 +70021,14 @@ var properties$2 = {
         '@examples': [''],
         abbr: ['covalent'],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     cs: {
         '@desc': 'chemical shift calculated using computational results that include magnetic shielding tensors.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     element: {
@@ -70047,21 +70047,21 @@ var properties$2 = {
         '@desc': 'Based on Carlos M. Duarte, Leven M. Wadley, and Anna Marie Pyle, RNA structure comparison, motif search and discovery using a reduced representation of RNA conformational space, Nucleic Acids Research, 2003, Vol. 31, No. 16 4755-4761. The parameter eta is the C4\'[i-1]-P[i]-C4\'[i]-P[i+1] dihedral angle; theta is the P[i]-C4\'[i]-P[i+1]-C4\'[i+1] dihedral angle. Both are measured on a 0-360 degree scale because they are commonly near 180 degrees. Using the commands plot PROPERTIES eta theta resno; select visible;wireframe only one can create these authors\' "RNA worm" graph.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     theta: {
         '@desc': 'Based on Carlos M. Duarte, Leven M. Wadley, and Anna Marie Pyle, RNA structure comparison, motif search and discovery using a reduced representation of RNA conformational space, Nucleic Acids Research, 2003, Vol. 31, No. 16 4755-4761. The parameter eta is the C4\'[i-1]-P[i]-C4\'[i]-P[i+1] dihedral angle; theta is the P[i]-C4\'[i]-P[i+1]-C4\'[i+1] dihedral angle. Both are measured on a 0-360 degree scale because they are commonly near 180 degrees. Using the commands plot PROPERTIES eta theta resno; select visible;wireframe only one can create these authors\' "RNA worm" graph.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     file: {
         '@desc': 'file number containing this atom',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     formalCharge: {
@@ -70074,116 +70074,116 @@ var properties$2 = {
         '@desc': 'format (label) of the atom.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     fXyz: {
         '@desc': 'fractional XYZ coordinates',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     fX: {
         '@desc': 'fractional X coordinate',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     fY: {
         '@desc': 'fractional Y coordinate',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     fZ: {
         '@desc': 'fractional Z coordinate',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     fuxyz: {
         '@desc': 'fractional XYZ coordinates in the unitcell coordinate system',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     fux: {
         '@desc': 'fractional X coordinate in the unitcell coordinate system',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     fuy: {
         '@desc': 'fractional Y coordinate in the unitcell coordinate system',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     fuz: {
         '@desc': 'fractional Z coordinate in the unit cell coordinate system',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     group: {
         '@desc': '3-letter residue code',
         '@examples': ['group = ALA'],
-        regex: /[a-zA-Z0-9]{1,3}/, map: str$1,
+        regex: /[a-zA-Z0-9]{1,3}/, map: str$2,
         level: 'residue-test', property: B$g.ammp('label_comp_id')
     },
     group1: {
         '@desc': 'single-letter residue code (amino acids only)',
         '@examples': ['group1 = G'],
-        regex: /[a-zA-Z]/, map: str$1,
+        regex: /[a-zA-Z]/, map: str$2,
         level: 'residue-test', property: B$g.ammp('label_comp_id')
     },
     groupID: {
         '@desc': 'group ID number: A unique ID for each amino acid or nucleic acid residue in a PDB file. 0  noGroup 1-5  ALA, ARG, ASN, ASP, CYS 6-10  GLN, GLU, GLY, HIS, ILE 11-15  LEU, LYS, MET, PHE, PRO 16-20  SER, THR, TRP, TYR, VAL 21-23  ASX, GLX, UNK 24-29  A, +A, G, +G, I, +I 30-35  C, +C, T, +T, U, +U Additional unique numbers are assigned arbitrarily by Jmol and cannot be used reproducibly.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     groupindex: {
         '@desc': 'overall group index',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     hydrophobicity: {
         '@desc': 'Aminoacid residue scale of hydrophobicity based on Rose, G. D., Geselowitz, A. R., Lesser, G. J., Lee, R. H., and Zehfus, M. H. (1985). Hydrophobicity of amino acid residues in globular proteins, Science, 229(4716):834-838.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     identify: {
         '@desc': 'for a PDB/mmCIF file, a label such as [ILE]7^1:A.CD1%A/3 #47, which includes the group ([ILE]), residue number with optional insertion code (7^1), chain (:A), atom name (CD1), alternate location if present (%A), PDB model number (/3, for NMR models when one file is loaded; /file.model such as /2.3 if more than one file is loaded), and atom number (#47). For non-PDB data, the information is shorter -- for example, H15/2.1 #6, indicating atom name (H15), full file.model number (/2.1), and atom number (#6). If only a single model is loaded, %[identify] does not include the model number.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     insertion: {
         '@desc': 'protein residue insertion code',
         '@examples': ['insertion=A'],
-        regex: /[a-zA-Z0-9]/, map: str$1,
+        regex: /[a-zA-Z0-9]/, map: str$2,
         level: 'atom-test', property: B$g.ammp('pdbx_PDB_ins_code')
     },
     label: {
         '@desc': 'current atom label (same as format)',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     mass: {
@@ -70196,49 +70196,49 @@ var properties$2 = {
         '@desc': 'model number',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     modelindex: {
         '@desc': 'a unique number for each model, starting with 0 and spanning all models in all files',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     modO: {
         '@desc': 'currently calculated occupancy from modulation (0 to 100; NaN if atom has no occupancy modulation)',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     modXYZ: {
         '@desc': 'currently calculated displacement modulation (for incommensurately modulated structures). Also modX, modY, modZ for individual components. For atoms without modultion, {xx}.modXYZ is -1 and {xx}.modX is NaN, and in a label %[modXYZ] and %[modX] are blank.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     molecule: {
         '@desc': 'molecule number',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     monomer: {
         '@desc': 'monomer number (group number) in a polymer (usually a chain), starting with 1, or 0 if not part of a biopolymer -- that is, not a connected carbohydrate, amino acid, or nucleic acid (Jmol 14.3.15)',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     ms: {
         '@desc': 'magnetic shielding calculated from file-loaded tensors.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     occupancy: {
@@ -70258,42 +70258,42 @@ var properties$2 = {
         '@desc': 'protein group PHI angle for atom\'s residue',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     polymer: {
         '@desc': 'sequential polymer number in a model, starting with 1.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     polymerLength: {
         '@desc': 'polymer length',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     property_xx: {
         '@desc': 'a property created using the DATA command',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     psi: {
         '@desc': 'protein group PSI angle for the atom\'s residue',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     radius: {
         '@desc': 'currently displayed radius -- In SELECT command comparisons ("select radius=n"), integer n implies Rasmol units 1/250 Angstroms; in all other cases or when a decimal number is used, the units are Angstroms.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     resno: {
@@ -70306,96 +70306,96 @@ var properties$2 = {
         '@desc': '1.0 if atom is selected; 0.0 if not',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     sequence: {
         '@desc': 'PDB one-character sequence code, as a string of characters, with "?" indicated where single-character codes are not available',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     seqcode: {
         '@desc': 'PDB residue number, including insertion code (for example, 234^2; "seqcode" option added in Jmol 14.3.16)',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     seqid: {
         '@desc': '(mmCIF only) the value from _atom_site.label_seq_id; a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category specifying the sequence of monomers in a polymer. Allowance is made for the possibility of microheterogeneity in a sample by allowing a given sequence number to be correlated with more than one monomer id. (Jmol 14.2.3)',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     shape: {
         '@desc': 'hybridization geometry such as "tetrahedral"',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     site: {
         '@desc': 'crystallographic site number',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     spacefill: {
         '@desc': 'currently displayed radius',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     straightness: {
         '@desc': 'quaternion-derived straightness (second derivative of the quaternion describing the orientation of the residue. This quantity will have different values depending upon the setting of quaternionFrame as "A" (alpha-carbon/phosphorus atom only), "C" (alpha-carbon/pyrimidine or purine base based), "P" (carbonyl-carbon peptide plane/phosphorus tetrahedron based), or "N" (amide-nitrogen based). The default is alpha-carbon based, which corresponds closely to the following combination of Ramachandran angles involving three consecutive residues i-1, i, and i+1: -psii-1 - phii + psii + phii+1.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     strucno: {
         '@desc': 'a unique number for each helix, sheet, or turn in a model, starting with 1.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     structure: {
         '@desc': 'The value of this parameter depends upon the context. Used with select structure=x, x can be either the quoted keyword "none", "turn", "sheet", "helix", "dna", "rna", or "carbohydrate" or a respective number 0-6. In the context {*}.structure, the return value is a number; in the context label %[structure], the return is one of the six keywords.',
         '@examples': ['structure="helix"', 'structure=3'],
-        regex: /none|turn|sheet|helix|dna|rna|carbohydrate|[0-6]/i, map: str$1,
+        regex: /none|turn|sheet|helix|dna|rna|carbohydrate|[0-6]/i, map: str$2,
         level: 'residue-test', property: 'structure'
     },
     substructure: {
         '@desc': 'like structure, the value of this parameter depends upon the context. Used with select substructure=x, x can be either the quoted keyword "none", "turn", "sheet", "helix", "dna", "rna", "carbohydrate", "helix310", "helixalpha", or "helixpi", or the respective number 0-9. In the context {*}.substructure, the return value is a number; in the context label %[substructure], the return is one of the nine keywords.',
         '@examples': ['substructure = "alphahelix"', 'substructure =9'],
-        regex: /none|turn|sheet|helix|dna|rna|carbohydrate|helix310|helixalpha|helixpi|[0-9]/i, map: str$1,
+        regex: /none|turn|sheet|helix|dna|rna|carbohydrate|helix310|helixalpha|helixpi|[0-9]/i, map: str$2,
         level: 'residue-test', property: 'structure'
     },
     surfacedistance: {
         '@desc': 'A value related to the distance of an atom to a nominal molecular surface. 0 indicates at the surface. Positive numbers are minimum distances in Angstroms from the given atom to the surface.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     symop: {
         '@desc': 'the first symmetry operation code that generated this atom by Jmol; an integer starting with 1. See also symmetry, below. This operator is only present if the file contains space group information and the file was loaded using the {i, j, k} option so as to generate symmetry-based atoms. To select only the original atoms prior to application of symmetry, you can either use "SYMOP=n", where n is the symmetry operator corresponding to "x,y,z", or you can specify instead simply "NOT symmetry" the way you might specify "NOT hydrogen". Note that atoms in special positions will have multiple operator matches. These atoms can be selected using the keyword SPECIALPOSITION. The special form select SYMOP=nijk selects a specific translation of atoms from the given crystallographic symmetry operation. Comparators <, <=, >, >=, and != can be used and only apply to the ijk part of the designation. The ijk are relative, not absolute. Thus, symop=2555 selects for atoms that have been transformed by symop=2 but not subjected to any further translation. select symop=1555 is identical to select not symmetry. All other ijk are relative to these selections for 555. If the model was loaded using load "filename.cif" {444 666 1}, where the 1 indicates that all symmetry-generated atoms are to be packed within cell 555 and then translated to fill the other 26 specified cells, then select symop=3555 is nearly the same as select symop=3 and cell=555. (The difference being that cell=555 selects for all atoms that are on any edge of the cell, while symop=3555 does not.) However, the situation is different if instead the model was loaded using load "filename.cif" {444 666 0}, where the 0 indicates that symmetry-generated atoms are to be placed exactly where their symmetry operator would put them (x,-y,z being different then from x, 1-y, z). In that case, select symop=3555 is for all atoms that have been generated using symmetry operation 3 but have not had any additional translations applied to the x,y,z expression found in the CIF file. If, for example, symmetry operation 3 is -x,-y,-z, then load "filename.cif" {444 666 0} will place an atom originally at {1/2, 1/2, 1/2} at positions {-1/2, -1/2, -1/2} (symop=3555) and {-3/2, -3/2, -3/2} (symop=3444) and 24 other sites.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     symmetry: {
         '@desc': 'as "symmetry" or in a label as lower-case "o" gives list of crystallographic symmetry operators generating this atom with lattice designations,such as 3555; upper-case "%O" in a label gives a list without the lattice designations. See also symop, above.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     temperature: {
@@ -70408,35 +70408,35 @@ var properties$2 = {
         '@desc': 'unit cell XYZ coordinates',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     uX: {
         '@desc': 'unit cell X coordinate normalized to [0,1)',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     uY: {
         '@desc': 'unit cell Y coordinate normalized to [0,1)',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     uZ: {
         '@desc': 'unit cell Z coordinate normalized to [0,1)',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     valence: {
         '@desc': 'the valence of an atom (sum of bonds, where double bond counts as 2 and triple bond counts as 3',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     vanderwaals: {
@@ -70449,49 +70449,49 @@ var properties$2 = {
         '@desc': 'vibration vector scale',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     volume: {
         '@desc': 'approximate van der Waals volume for this atom. Note, {*}.volume gives an average; use {*}.volume.sum to get total volume.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     vXyz: {
         '@desc': 'vibration vector, or individual components as %vx %vy %vz. For atoms without vibration vectors, {xx}.vXyz is -1; in a label, %[vxyz] is blank.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     vX: {
         '@desc': 'vibration vector X coordinate; for atoms without vibration vector, {xx}.vX is NaN (same for vY and vZ)',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     vY: {
         '@desc': 'vibration vector Y coordinate',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     vZ: {
         '@desc': 'vibration vector Z coordinate',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
     xyz: {
         '@desc': 'Cartesian XYZ coordinates; select xyz > 1.0 selects atoms more than one Angstrom from the origin.',
         '@examples': [''],
         isUnsupported: true,
-        regex: /[0-9\s{}-]+/, map: str$1,
+        regex: /[0-9\s{}-]+/, map: str$2,
         level: 'atom-test'
     },
 };
@@ -72207,7 +72207,7 @@ var B$8 = MolScriptBuilder;
 var reFloat = /[-+]?[0-9]*\.?[0-9]+/;
 var rePosInt = /[+]?[0-9]+/;
 var reInt = /[-+]?[0-9]+/;
-function str(x) { return x; }
+function str$1(x) { return x; }
 var sstrucDict = {
     T: 'turn',
     E: 'sheet',
@@ -72231,7 +72231,7 @@ var properties = {
         '@desc': 'str    atom type',
         '@examples': ['type C3'],
         isUnsupported: true,
-        regex: /[a-zA-Z0-9]+/, map: str,
+        regex: /[a-zA-Z0-9]+/, map: str$1,
         level: 'atom-test'
     },
     index: {
@@ -72264,13 +72264,13 @@ var properties = {
     altloc: {
         '@desc': 'str  alternate location/conformation identifier',
         '@examples': ['altloc C'],
-        regex: /[a-zA-Z0-9]+/, map: str,
+        regex: /[a-zA-Z0-9]+/, map: str$1,
         level: 'atom-test', property: B$8.ammp('label_alt_id')
     },
     chain: {
         '@desc': 'str  the one-character chain identifier',
         '@examples': ['chain A'],
-        regex: /[a-zA-Z0-9]+/, map: str,
+        regex: /[a-zA-Z0-9]+/, map: str$1,
         level: 'residue-test', property: B$8.ammp('auth_asym_id')
     },
     residue: {
@@ -72308,7 +72308,7 @@ var properties = {
         '@desc': 'str  a sequence given by one letter names',
         '@examples': ['sequence PGATTACA'],
         isUnsupported: true,
-        regex: /[a-zA-Z0-9]+/, map: str,
+        regex: /[a-zA-Z0-9]+/, map: str$1,
         level: 'residue-test'
     },
     numbonds: {
@@ -72321,7 +72321,7 @@ var properties = {
     resname: {
         '@desc': 'str  residue name',
         '@examples': ['resname ALA'],
-        regex: /[a-zA-Z0-9]+/, map: str,
+        regex: /[a-zA-Z0-9]+/, map: str$1,
         level: 'residue-test', property: B$8.ammp('auth_comp_id')
     },
     resid: {
@@ -72334,7 +72334,7 @@ var properties = {
     segname: {
         '@desc': 'str  segment name',
         '@examples': ['segname B'],
-        regex: /[a-zA-Z0-9]+/, map: str,
+        regex: /[a-zA-Z0-9]+/, map: str$1,
         level: 'residue-test', property: B$8.ammp('label_asym_id')
     },
     x: {
@@ -72405,7 +72405,7 @@ var properties = {
         '@desc': 'str  translates Rasmol selection string to VMD',
         '@examples': ["rasmol 'all'"],
         isUnsupported: true,
-        regex: /[^']*/, map: str,
+        regex: /[^']*/, map: str$1,
         level: 'atom-test'
     },
     structure: {
@@ -80149,7 +80149,7 @@ var Volume$1 = /*#__PURE__*/Object.freeze({
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor$l = Color(0xCCCCCC);
+var DefaultColor$m = Color(0xCCCCCC);
 var Description$w = 'Assigns colors according to the Symbol Nomenclature for Glycans (SNFG).';
 var CarbohydrateSymbolColorThemeParams = {};
 function getCarbohydrateSymbolColorThemeParams(ctx) {
@@ -80161,9 +80161,9 @@ function CarbohydrateSymbolColorTheme(ctx, props) {
         var _a = ctx.structure.carbohydrates, elements_1 = _a.elements, getElementIndices_1 = _a.getElementIndices;
         var getColor_1 = function (unit, index) {
             if (!Unit.isAtomic(unit))
-                return DefaultColor$l;
+                return DefaultColor$m;
             var carbs = getElementIndices_1(unit, index);
-            return carbs.length > 0 ? elements_1[carbs[0]].component.color : DefaultColor$l;
+            return carbs.length > 0 ? elements_1[carbs[0]].component.color : DefaultColor$m;
         };
         color = function (location, isSecondary) {
             if (isSecondary) {
@@ -80177,11 +80177,11 @@ function CarbohydrateSymbolColorTheme(ctx, props) {
                     return getColor_1(location.aUnit, location.aUnit.elements[location.aIndex]);
                 }
             }
-            return DefaultColor$l;
+            return DefaultColor$m;
         };
     }
     else {
-        color = function () { return DefaultColor$l; };
+        color = function () { return DefaultColor$m; };
     }
     return {
         factory: CarbohydrateSymbolColorTheme,
@@ -80424,7 +80424,7 @@ function getPalette(count, props, labelOptions) {
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
 var DefaultList$8 = 'many-distinct';
-var DefaultColor$k = Color(0xFAFAFA);
+var DefaultColor$l = Color(0xFAFAFA);
 var Description$v = 'Gives every chain a color based on its `asym_id` value.';
 var ChainIdColorThemeParams = __assign({ asymId: ParamDefinition.Select('auth', ParamDefinition.arrayToOptions(['auth', 'label'])) }, getPaletteParams({ type: 'colors', colorList: DefaultList$8 }));
 function getChainIdColorThemeParams(ctx) {
@@ -80501,11 +80501,11 @@ function ChainIdColorTheme(ctx, props) {
                 var k = getAsymIdKey(l_1, props.asymId);
                 serial = asymIdSerialMap_1.get(k);
             }
-            return serial === undefined ? DefaultColor$k : palette_1.color(serial);
+            return serial === undefined ? DefaultColor$l : palette_1.color(serial);
         };
     }
     else {
-        color = function () { return DefaultColor$k; };
+        color = function () { return DefaultColor$l; };
     }
     return {
         factory: ChainIdColorTheme,
@@ -80531,7 +80531,7 @@ var ChainIdColorThemeProvider = {
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor$j = Color(0xCCCCCC);
+var DefaultColor$k = Color(0xCCCCCC);
 var Description$u = 'Gives every element (atom or coarse sphere/gaussian) a unique color based on the position (index) of the element in the list of elements in the structure.';
 var ElementIndexColorThemeParams = __assign({}, getPaletteParams({ type: 'colors', colorList: 'red-yellow-blue' }));
 function getElementIndexColorThemeParams(ctx) {
@@ -80564,11 +80564,11 @@ function ElementIndexColorTheme(ctx, props) {
                 var unitElementIndex = OrderedSet.findPredecessorIndex(units_1[unitIndex].elements, location.aUnit.elements[location.aIndex]);
                 return palette_1.color(cummulativeElementCount_1.get(unitIndex) + unitElementIndex);
             }
-            return DefaultColor$j;
+            return DefaultColor$k;
         };
     }
     else {
-        color = function () { return DefaultColor$j; };
+        color = function () { return DefaultColor$k; };
     }
     return {
         factory: ElementIndexColorTheme,
@@ -80609,7 +80609,7 @@ function getColorMapParams(map) {
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
 var DefaultList$7 = 'many-distinct';
-var DefaultColor$i = Color(0xCCCCCC);
+var DefaultColor$j = Color(0xCCCCCC);
 var Description$t = "Assigns a color based on the operator name of a transformed chain.";
 var OperatorNameColorThemeParams = __assign({}, getPaletteParams({ type: 'colors', colorList: DefaultList$7 }));
 function getOperatorNameColorThemeParams(ctx) {
@@ -80644,11 +80644,11 @@ function OperatorNameColorTheme(ctx, props) {
                 var name_3 = location.aUnit.conformation.operator.name;
                 serial = operatorNameSerialMap_1.get(name_3);
             }
-            return serial === undefined ? DefaultColor$i : palette_1.color(serial);
+            return serial === undefined ? DefaultColor$j : palette_1.color(serial);
         };
     }
     else {
-        color = function () { return DefaultColor$i; };
+        color = function () { return DefaultColor$j; };
     }
     return {
         factory: OperatorNameColorTheme,
@@ -80675,7 +80675,7 @@ var OperatorNameColorThemeProvider = {
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
 var DefaultList$6 = 'many-distinct';
-var DefaultColor$h = Color(0xFAFAFA);
+var DefaultColor$i = Color(0xFAFAFA);
 var Description$s = 'Gives every chain a color based on its `label_entity_id` value.';
 var EntityIdColorThemeParams = __assign({}, getPaletteParams({ type: 'colors', colorList: DefaultList$6 }));
 function getEntityIdColorThemeParams(ctx) {
@@ -80747,11 +80747,11 @@ function EntityIdColorTheme(ctx, props) {
                 var k = key(entityId, modelIndex);
                 serial = entityIdSerialMap_1.get(k);
             }
-            return serial === undefined ? DefaultColor$h : palette_1.color(serial);
+            return serial === undefined ? DefaultColor$i : palette_1.color(serial);
         };
     }
     else {
-        color = function () { return DefaultColor$h; };
+        color = function () { return DefaultColor$i; };
     }
     return {
         factory: EntityIdColorTheme,
@@ -80778,7 +80778,7 @@ var EntityIdColorThemeProvider = {
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
 var DefaultList$5 = 'dark-2';
-var DefaultColor$g = Color(0xFAFAFA);
+var DefaultColor$h = Color(0xFAFAFA);
 var Description$r = 'Gives ranges of a polymer chain a color based on the entity source it originates from (e.g. gene, plasmid, organism).';
 var EntitySourceColorThemeParams = __assign({}, getPaletteParams({ type: 'colors', colorList: DefaultList$5 }));
 function getEntitySourceColorThemeParams(ctx) {
@@ -80876,10 +80876,10 @@ function EntitySourceColorTheme(ctx, props) {
                 // minus 1 to convert seqId to array index
                 var src = seqToSrc[StructureProperties.residue.label_seq_id(location) - 1] - 1;
                 // check for -1 as not all sequence ids have a src given
-                return src === -1 ? DefaultColor$g : palette_1.color(src);
+                return src === -1 ? DefaultColor$h : palette_1.color(src);
             }
             else {
-                return DefaultColor$g;
+                return DefaultColor$h;
             }
         };
         color = function (location) {
@@ -80891,11 +80891,11 @@ function EntitySourceColorTheme(ctx, props) {
                 l_1.element = location.aUnit.elements[location.aIndex];
                 return getSrcColor_1(l_1);
             }
-            return DefaultColor$g;
+            return DefaultColor$h;
         };
     }
     else {
-        color = function () { return DefaultColor$g; };
+        color = function () { return DefaultColor$h; };
     }
     return {
         factory: EntitySourceColorTheme,
@@ -80922,7 +80922,7 @@ var EntitySourceColorThemeProvider = {
  * @author Jason Pattle <jpattle@exscientia.co.uk>
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor$f = Color(0xCCCCCC);
+var DefaultColor$g = Color(0xCCCCCC);
 var Description$q = 'Gives every model a unique color based on its index.';
 var ModelIndexColorThemeParams = __assign({}, getPaletteParams({ type: 'colors', colorList: 'many-distinct' }));
 function getModelIndexColorThemeParams(ctx) {
@@ -80944,11 +80944,11 @@ function ModelIndexColorTheme(ctx, props) {
             else if (Bond.isLocation(location)) {
                 return palette_1.color(Model$1.Index.get(location.aUnit.model).value || 0);
             }
-            return DefaultColor$f;
+            return DefaultColor$g;
         };
     }
     else {
-        color = function () { return DefaultColor$f; };
+        color = function () { return DefaultColor$g; };
     }
     return {
         factory: ModelIndexColorTheme,
@@ -80974,7 +80974,7 @@ var ModelIndexColorThemeProvider = {
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor$e = Color(0xCCCCCC);
+var DefaultColor$f = Color(0xCCCCCC);
 var Description$p = 'Gives every structure a unique color based on its index.';
 var StructureIndexColorThemeParams = __assign({}, getPaletteParams({ type: 'colors', colorList: 'many-distinct' }));
 function getStructureIndexColorThemeParams(ctx) {
@@ -80995,11 +80995,11 @@ function StructureIndexColorTheme(ctx, props) {
             else if (Bond.isLocation(location)) {
                 return palette_1.color(Structure$1.Index.get(location.aStructure).value || 0);
             }
-            return DefaultColor$e;
+            return DefaultColor$f;
         };
     }
     else {
-        color = function () { return DefaultColor$e; };
+        color = function () { return DefaultColor$f; };
     }
     return {
         factory: StructureIndexColorTheme,
@@ -81188,7 +81188,7 @@ var MoleculeTypeColorThemeProvider = {
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
 var DefaultList$4 = 'dark-2';
-var DefaultColor$d = Color(0xFAFAFA);
+var DefaultColor$e = Color(0xFAFAFA);
 var Description$m = 'Gives every polymer chain a color based on its `asym_id` value.';
 var PolymerIdColorThemeParams = __assign({}, getPaletteParams({ type: 'colors', colorList: DefaultList$4 }));
 function getPolymerIdColorThemeParams(ctx) {
@@ -81271,11 +81271,11 @@ function PolymerIdColorTheme(ctx, props) {
                 l_1.element = location.aUnit.elements[location.aIndex];
                 serial = polymerAsymIdSerialMap_1.get(asym_id(l_1));
             }
-            return serial === undefined ? DefaultColor$d : palette_1.color(serial);
+            return serial === undefined ? DefaultColor$e : palette_1.color(serial);
         };
     }
     else {
-        color = function () { return DefaultColor$d; };
+        color = function () { return DefaultColor$e; };
     }
     return {
         factory: PolymerIdColorTheme,
@@ -81302,7 +81302,7 @@ var PolymerIdColorThemeProvider = {
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
 var DefaultList$3 = 'dark-2';
-var DefaultColor$c = Color(0xCCCCCC);
+var DefaultColor$d = Color(0xCCCCCC);
 var Description$l = 'Gives every polymer chain instance a unique color based on the position (index) of the polymer in the list of polymers in the structure.';
 var PolymerIndexColorThemeParams = __assign({}, getPaletteParams({ type: 'colors', colorList: DefaultList$3 }));
 function getPolymerIndexColorThemeParams(ctx) {
@@ -81346,11 +81346,11 @@ function PolymerIndexColorTheme(ctx, props) {
             else if (Bond.isLocation(location)) {
                 color = unitIdColor_1.get(location.aUnit.id);
             }
-            return color !== undefined ? color : DefaultColor$c;
+            return color !== undefined ? color : DefaultColor$d;
         };
     }
     else {
-        color = function () { return DefaultColor$c; };
+        color = function () { return DefaultColor$d; };
     }
     return {
         factory: PolymerIndexColorTheme,
@@ -81616,7 +81616,7 @@ var SecondaryStructureColorThemeProvider = {
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor$b = Color(0xCCCCCC);
+var DefaultColor$c = Color(0xCCCCCC);
 var Description$i = 'Gives every polymer residue a color based on its `seq_id` value.';
 var SequenceIdColorThemeParams = {
     list: ParamDefinition.ColorList('turbo', { presetKind: 'scale' }),
@@ -81692,7 +81692,7 @@ function SequenceIdColorTheme(ctx, props) {
                 }
             }
         }
-        return DefaultColor$b;
+        return DefaultColor$c;
     };
     return {
         factory: SequenceIdColorTheme,
@@ -81720,7 +81720,7 @@ var SequenceIdColorThemeProvider = {
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
 var DefaultList$2 = 'dark-2';
-var DefaultColor$a = Color(0xCCCCCC);
+var DefaultColor$b = Color(0xCCCCCC);
 var Description$h = 'Gives every chain instance (single chain or collection of single elements) a unique color based on the position (index) of the chain in the list of chains in the structure.';
 var UnitIndexColorThemeParams = __assign({}, getPaletteParams({ type: 'colors', colorList: DefaultList$2 }));
 function getUnitIndexColorThemeParams(ctx) {
@@ -81751,11 +81751,11 @@ function UnitIndexColorTheme(ctx, props) {
             else if (Bond.isLocation(location)) {
                 return unitIdColor_1.get(location.aUnit.id);
             }
-            return DefaultColor$a;
+            return DefaultColor$b;
         };
     }
     else {
-        color = function () { return DefaultColor$a; };
+        color = function () { return DefaultColor$b; };
     }
     return {
         factory: UnitIndexColorTheme,
@@ -81996,7 +81996,7 @@ var HydrophobicityColorThemeProvider = {
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor$9 = Color(0xCCCCCC);
+var DefaultColor$a = Color(0xCCCCCC);
 var Description$d = 'Gives every model (frame) a unique color based on the index in its trajectory.';
 var TrajectoryIndexColorThemeParams = __assign({}, getPaletteParams({ type: 'colors', colorList: 'purples' }));
 function getTrajectoryIndexColorThemeParams(ctx) {
@@ -82027,11 +82027,11 @@ function TrajectoryIndexColorTheme(ctx, props) {
             else if (Bond.isLocation(location)) {
                 return modelColor_1.get(Model$1.TrajectoryInfo.get(location.aUnit.model).index);
             }
-            return DefaultColor$9;
+            return DefaultColor$a;
         };
     }
     else {
-        color = function () { return DefaultColor$9; };
+        color = function () { return DefaultColor$a; };
     }
     return {
         factory: TrajectoryIndexColorTheme,
@@ -82115,7 +82115,7 @@ var OccupancyColorThemeProvider = {
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
 var DefaultList$1 = 'dark-2';
-var DefaultColor$8 = Color(0xCCCCCC);
+var DefaultColor$9 = Color(0xCCCCCC);
 var Description$b = "Assigns a color based on the operator HKL value of a transformed chain.";
 var OperatorHklColorThemeParams = __assign({}, getPaletteParams({ type: 'colors', colorList: DefaultList$1 }));
 function getOperatorHklColorThemeParams(ctx) {
@@ -82186,11 +82186,11 @@ function OperatorHklColorTheme(ctx, props) {
                 var k = hklKey(location.aUnit.conformation.operator.hkl);
                 serial = map_1.get(k);
             }
-            return serial === undefined ? DefaultColor$8 : palette_1.color(serial);
+            return serial === undefined ? DefaultColor$9 : palette_1.color(serial);
         };
     }
     else {
-        color = function () { return DefaultColor$8; };
+        color = function () { return DefaultColor$9; };
     }
     return {
         factory: OperatorHklColorTheme,
@@ -82271,7 +82271,7 @@ var PartialChargeColorThemeProvider = {
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
 var DefaultList = 'many-distinct';
-var DefaultColor$7 = Color(0xFAFAFA);
+var DefaultColor$8 = Color(0xFAFAFA);
 var Description$9 = 'Gives every atom a color based on its `label_atom_id` value.';
 var AtomIdColorThemeParams = __assign({}, getPaletteParams({ type: 'colors', colorList: DefaultList }));
 function getAtomIdColorThemeParams(ctx) {
@@ -82313,11 +82313,11 @@ function AtomIdColorTheme(ctx, props) {
                 var id = StructureProperties.atom.label_atom_id(l_1);
                 serial = atomIdSerialMap_1.get(id);
             }
-            return serial === undefined ? DefaultColor$7 : palette_1.color(serial);
+            return serial === undefined ? DefaultColor$8 : palette_1.color(serial);
         };
     }
     else {
-        color = function () { return DefaultColor$7; };
+        color = function () { return DefaultColor$8; };
     }
     return {
         factory: AtomIdColorTheme,
@@ -82391,7 +82391,7 @@ var VolumeValueColorThemeProvider = {
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor$6 = Color(0xCCCCCC);
+var DefaultColor$7 = Color(0xCCCCCC);
 var Description$7 = 'Gives every volume segment a unique color.';
 var VolumeSegmentColorThemeParams = __assign({}, getPaletteParams({ type: 'colors', colorList: 'many-distinct' }));
 function getVolumeSegmentColorThemeParams(ctx) {
@@ -82410,11 +82410,11 @@ function VolumeSegmentColorTheme(ctx, props) {
             if (Volume$2.Segment.isLocation(location)) {
                 return palette_1.color(segments_1.indexOf(location.segment));
             }
-            return DefaultColor$6;
+            return DefaultColor$7;
         };
     }
     else {
-        color = function () { return DefaultColor$6; };
+        color = function () { return DefaultColor$7; };
     }
     return {
         factory: VolumeSegmentColorTheme,
@@ -90271,7 +90271,7 @@ var PluginStateSnapshotManager = /** @class */ (function (_super) {
     function PluginStateSnapshotManager(plugin) {
         var _this = _super.call(this, {
             current: void 0,
-            entries: List$2(),
+            entries: List$3(),
             isPlaying: false,
             nextSnapshotDelayInMs: PluginStateSnapshotManager.DefaultNextSnapshotDelayInMs
         }) || this;
@@ -90377,7 +90377,7 @@ var PluginStateSnapshotManager = /** @class */ (function (_super) {
                 _this.plugin.managers.asset.delete(e.image);
         });
         this.entryMap.clear();
-        this.updateState({ current: void 0, entries: List$2() });
+        this.updateState({ current: void 0, entries: List$3() });
         this.events.changed.next(void 0);
     };
     PluginStateSnapshotManager.prototype.setCurrent = function (id) {
@@ -90415,7 +90415,7 @@ var PluginStateSnapshotManager = /** @class */ (function (_super) {
                     case 0:
                         if (snapshot.version !== PLUGIN_VERSION) ;
                         this.clear();
-                        entries = List$2().asMutable();
+                        entries = List$3().asMutable();
                         for (_i = 0, _a = snapshot.entries; _i < _a.length; _i++) {
                             e = _a[_i];
                             this.entryMap.set(e.snapshot.id, e);
@@ -100327,7 +100327,7 @@ var AccessibleSurfaceAreaProvider = CustomStructureProperty.createProvider({
  * @author Sebastian Bittrich <sebastian.bittrich@rcsb.org>
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor$5 = Color(0xFAFAFA);
+var DefaultColor$6 = Color(0xFAFAFA);
 var Description$3 = 'Assigns a color based on the relative accessible surface area of a residue.';
 var AccessibleSurfaceAreaColorThemeParams = {
     list: ParamDefinition.ColorList('rainbow', { presetKind: 'scale' })
@@ -100350,7 +100350,7 @@ function AccessibleSurfaceAreaColorTheme(ctx, props) {
         var asa_1 = accessibleSurfaceArea.value;
         var getColor_1 = function (location) {
             var value = AccessibleSurfaceArea$1.getNormalizedValue(location, asa_1);
-            return value === -1 ? DefaultColor$5 : scale.color(value);
+            return value === -1 ? DefaultColor$6 : scale.color(value);
         };
         color = function (location) {
             if (Location.is(location) && Unit.isAtomic(location.unit)) {
@@ -100361,11 +100361,11 @@ function AccessibleSurfaceAreaColorTheme(ctx, props) {
                 l_1.element = location.aUnit.elements[location.aIndex];
                 return getColor_1(l_1);
             }
-            return DefaultColor$5;
+            return DefaultColor$6;
         };
     }
     else {
-        color = function () { return DefaultColor$5; };
+        color = function () { return DefaultColor$6; };
     }
     return {
         factory: AccessibleSurfaceAreaColorTheme,
@@ -103149,7 +103149,7 @@ var InteractionsProvider = CustomStructureProperty.createProvider({
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor$4 = Color(0xCCCCCC);
+var DefaultColor$5 = Color(0xCCCCCC);
 var Description$2 = 'Assigns colors according the interaction type of a link.';
 var InteractionTypeColors = ColorMap({
     HydrogenBond: 0x2B83BA,
@@ -103190,7 +103190,7 @@ function typeColor(type) {
         case InteractionType.WeakHydrogenBond:
             return InteractionTypeColors.WeakHydrogenBond;
         case InteractionType.Unknown:
-            return DefaultColor$4;
+            return DefaultColor$5;
     }
 }
 var InteractionTypeColorThemeParams = {};
@@ -103216,11 +103216,11 @@ function InteractionTypeColorTheme(ctx, props) {
                     return typeColor(contacts.edges[idx].props.type);
                 }
             }
-            return DefaultColor$4;
+            return DefaultColor$5;
         };
     }
     else {
-        color = function () { return DefaultColor$4; };
+        color = function () { return DefaultColor$5; };
     }
     return {
         factory: InteractionTypeColorTheme,
@@ -106157,7 +106157,7 @@ var ValenceModel = PluginBehavior.create({
  *
  * @author David Sehnal <david.sehnal@gmail.com>
  */
-var DefaultColor$3 = Color(0xFAFAFA);
+var DefaultColor$4 = Color(0xFAFAFA);
 var Description$1 = 'Assigns a color based on SIFTS mapping.';
 // same colors for same accessions
 var globalAccessionMap = new Map();
@@ -106186,7 +106186,7 @@ function SIFTSMappingColorTheme(ctx, props) {
         var getColor_1 = function (location) {
             var key = SIFTSMapping$1.getKey(location);
             if (!key)
-                return DefaultColor$3;
+                return DefaultColor$4;
             if (colorMap_1.has(key))
                 return colorMap_1.get(key);
             var color = palette_1.color(globalAccessionMap.get(key));
@@ -106202,11 +106202,11 @@ function SIFTSMappingColorTheme(ctx, props) {
                 l_1.element = location.aUnit.elements[location.aIndex];
                 return getColor_1(l_1);
             }
-            return DefaultColor$3;
+            return DefaultColor$4;
         };
     }
     else {
-        color = function () { return DefaultColor$3; };
+        color = function () { return DefaultColor$4; };
     }
     return {
         factory: SIFTSMappingColorTheme,
@@ -106748,7 +106748,7 @@ var CrossLinkRestraintRepresentationProvider = StructureRepresentationProvider({
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor$2 = Color(0xCCCCCC);
+var DefaultColor$3 = Color(0xCCCCCC);
 var Description = 'Colors cross-links by the deviation of the observed distance versus the modeled distance (e.g. modeled / `ihm_cross_link_restraint.distance_threshold`).';
 var CrossLinkColorThemeParams = {
     domain: ParamDefinition.Interval([0.5, 1.5], { step: 0.01 }),
@@ -106774,11 +106774,11 @@ function CrossLinkColorTheme(ctx, props) {
                     return scaleColor_1(CrossLinkRestraint$1.distance(pair) / pair.distanceThreshold);
                 }
             }
-            return DefaultColor$2;
+            return DefaultColor$3;
         };
     }
     else {
-        color = function () { return DefaultColor$2; };
+        color = function () { return DefaultColor$3; };
     }
     return {
         factory: CrossLinkColorTheme,
@@ -126951,7 +126951,7 @@ var PluginContext = /** @class */ (function () {
          */
         this.customState = Object.create(null);
         this.log = {
-            entries: List$2(),
+            entries: List$3(),
             entry: function (e) { return _this.events.log.next(e); },
             error: function (msg) { return _this.events.log.next(LogEntry.error(msg)); },
             message: function (msg) { return _this.events.log.next(LogEntry.message(msg)); },
@@ -127295,7 +127295,7 @@ var PluginContext = /** @class */ (function () {
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  * @author David Sehnal <david.sehnal@gmail.com>
  */
-var QualityAssessment;
+var QualityAssessment$1;
 (function (QualityAssessment) {
     var Empty = {
         value: {
@@ -127381,7 +127381,7 @@ var QualityAssessment;
             var _c = ctx.element, unit = _c.unit, element = _c.element;
             if (!Unit.isAtomic(unit))
                 return -1;
-            var qualityAssessment = QualityAssessmentProvider.get(unit.model).value;
+            var qualityAssessment = QualityAssessmentProvider$1.get(unit.model).value;
             return (_b = (_a = qualityAssessment === null || qualityAssessment === void 0 ? void 0 : qualityAssessment.pLDDT) === null || _a === void 0 ? void 0 : _a.get(unit.model.atomicHierarchy.residueAtomSegments.index[element])) !== null && _b !== void 0 ? _b : -1;
         }),
         qmean: QuerySymbolRuntime.Dynamic(CustomPropSymbol('ma', 'quality-assessment.qmean', Type.Num), function (ctx) {
@@ -127389,29 +127389,29 @@ var QualityAssessment;
             var _c = ctx.element, unit = _c.unit, element = _c.element;
             if (!Unit.isAtomic(unit))
                 return -1;
-            var qualityAssessment = QualityAssessmentProvider.get(unit.model).value;
+            var qualityAssessment = QualityAssessmentProvider$1.get(unit.model).value;
             return (_b = (_a = qualityAssessment === null || qualityAssessment === void 0 ? void 0 : qualityAssessment.qmean) === null || _a === void 0 ? void 0 : _a.get(unit.model.atomicHierarchy.residueAtomSegments.index[element])) !== null && _b !== void 0 ? _b : -1;
         }),
     };
-})(QualityAssessment || (QualityAssessment = {}));
-var QualityAssessmentParams = {};
-var QualityAssessmentProvider = CustomModelProperty.createProvider({
+})(QualityAssessment$1 || (QualityAssessment$1 = {}));
+var QualityAssessmentParams$1 = {};
+var QualityAssessmentProvider$1 = CustomModelProperty.createProvider({
     label: 'QualityAssessment',
     descriptor: CustomPropertyDescriptor({
         name: 'ma_quality_assessment',
-        symbols: QualityAssessment.symbols
+        symbols: QualityAssessment$1.symbols
     }),
     type: 'static',
-    defaultParams: QualityAssessmentParams,
-    getParams: function (data) { return QualityAssessmentParams; },
-    isApplicable: function (data) { return QualityAssessment.isApplicable(data); },
+    defaultParams: QualityAssessmentParams$1,
+    getParams: function (data) { return QualityAssessmentParams$1; },
+    isApplicable: function (data) { return QualityAssessment$1.isApplicable(data); },
     obtain: function (ctx, data, props) { return __awaiter(void 0, void 0, void 0, function () {
         var p;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    p = __assign(__assign({}, ParamDefinition.getDefaultValues(QualityAssessmentParams)), props);
-                    return [4 /*yield*/, QualityAssessment.obtain(ctx, data, p)];
+                    p = __assign(__assign({}, ParamDefinition.getDefaultValues(QualityAssessmentParams$1)), props);
+                    return [4 /*yield*/, QualityAssessment$1.obtain(ctx, data, p)];
                 case 1: return [2 /*return*/, _a.sent()];
             }
         });
@@ -127425,31 +127425,31 @@ var QualityAssessmentProvider = CustomModelProperty.createProvider({
  * @author Sebastian Bittrich <sebastian.bittrich@rcsb.org>
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor$1 = Color(0xaaaaaa);
-var ConfidenceColors = {
-    'No Score': DefaultColor$1,
+var DefaultColor$2 = Color(0xaaaaaa);
+var ConfidenceColors$1 = {
+    'No Score': DefaultColor$2,
     'Very Low': Color(0xff7d45),
     'Low': Color(0xffdb13),
     'Confident': Color(0x65cbf3),
     'Very High': Color(0x0053d6)
 };
-var ConfidenceColorLegend = TableLegend(Object.entries(ConfidenceColors));
+var ConfidenceColorLegend$1 = TableLegend(Object.entries(ConfidenceColors$1));
 function getPLDDTConfidenceColorThemeParams(ctx) {
     return {};
 }
 function PLDDTConfidenceColorTheme(ctx, props) {
-    var color = function () { return DefaultColor$1; };
+    var color = function () { return DefaultColor$2; };
     if (ctx.structure) {
         var l_1 = Location.create(ctx.structure.root);
         var getColor_1 = function (location) {
             var _a, _b;
             var unit = location.unit, element = location.element;
             if (!Unit.isAtomic(unit))
-                return DefaultColor$1;
-            var qualityAssessment = QualityAssessmentProvider.get(unit.model).value;
+                return DefaultColor$2;
+            var qualityAssessment = QualityAssessmentProvider$1.get(unit.model).value;
             var score = (_b = (_a = qualityAssessment === null || qualityAssessment === void 0 ? void 0 : qualityAssessment.pLDDT) === null || _a === void 0 ? void 0 : _a.get(unit.model.atomicHierarchy.residueAtomSegments.index[element])) !== null && _b !== void 0 ? _b : -1;
             if (score < 0) {
-                return DefaultColor$1;
+                return DefaultColor$2;
             }
             else if (score <= 50) {
                 return Color(0xff7d45);
@@ -127473,7 +127473,7 @@ function PLDDTConfidenceColorTheme(ctx, props) {
                 l_1.element = location.aUnit.elements[location.aIndex];
                 return getColor_1(l_1);
             }
-            return DefaultColor$1;
+            return DefaultColor$2;
         };
     }
     return {
@@ -127483,7 +127483,7 @@ function PLDDTConfidenceColorTheme(ctx, props) {
         color: color,
         props: props,
         description: 'Assigns residue colors according to the pLDDT Confidence score.',
-        legend: ConfidenceColorLegend
+        legend: ConfidenceColorLegend$1
     };
 }
 var PLDDTConfidenceColorThemeProvider = {
@@ -127493,7 +127493,7 @@ var PLDDTConfidenceColorThemeProvider = {
     factory: PLDDTConfidenceColorTheme,
     getParams: getPLDDTConfidenceColorThemeParams,
     defaultValues: ParamDefinition.getDefaultValues(getPLDDTConfidenceColorThemeParams()),
-    isApplicable: function (ctx) { var _a; return !!((_a = ctx.structure) === null || _a === void 0 ? void 0 : _a.models.some(function (m) { return QualityAssessment.isApplicable(m, 'pLDDT'); })); },
+    isApplicable: function (ctx) { var _a; return !!((_a = ctx.structure) === null || _a === void 0 ? void 0 : _a.models.some(function (m) { return QualityAssessment$1.isApplicable(m, 'pLDDT'); })); },
     ensureCustomProperties: {
         attach: function (ctx, data) { return __awaiter(void 0, void 0, void 0, function () {
             var _i, _a, m;
@@ -127506,7 +127506,7 @@ var PLDDTConfidenceColorThemeProvider = {
                     case 1:
                         if (!(_i < _a.length)) return [3 /*break*/, 4];
                         m = _a[_i];
-                        return [4 /*yield*/, QualityAssessmentProvider.attach(ctx, m, void 0, true)];
+                        return [4 /*yield*/, QualityAssessmentProvider$1.attach(ctx, m, void 0, true)];
                     case 2:
                         _b.sent();
                         _b.label = 3;
@@ -127523,7 +127523,7 @@ var PLDDTConfidenceColorThemeProvider = {
                 if (data.structure) {
                     for (_i = 0, _a = data.structure.models; _i < _a.length; _i++) {
                         m = _a[_i];
-                        QualityAssessmentProvider.ref(m, false);
+                        QualityAssessmentProvider$1.ref(m, false);
                     }
                 }
                 return [2 /*return*/];
@@ -127537,12 +127537,12 @@ var PLDDTConfidenceColorThemeProvider = {
  *
  * @author Alexander Rose <alexander.rose@weirdbyte.de>
  */
-var DefaultColor = Color(0xaaaaaa);
+var DefaultColor$1 = Color(0xaaaaaa);
 function getQmeanScoreColorThemeParams(ctx) {
     return {};
 }
 function QmeanScoreColorTheme(ctx, props) {
-    var color = function () { return DefaultColor; };
+    var color = function () { return DefaultColor$1; };
     var scale = ColorScale.create({
         domain: [0, 1],
         listOrName: [
@@ -127555,11 +127555,11 @@ function QmeanScoreColorTheme(ctx, props) {
             var _a, _b;
             var unit = location.unit, element = location.element;
             if (!Unit.isAtomic(unit))
-                return DefaultColor;
-            var qualityAssessment = QualityAssessmentProvider.get(unit.model).value;
+                return DefaultColor$1;
+            var qualityAssessment = QualityAssessmentProvider$1.get(unit.model).value;
             var score = (_b = (_a = qualityAssessment === null || qualityAssessment === void 0 ? void 0 : qualityAssessment.qmean) === null || _a === void 0 ? void 0 : _a.get(unit.model.atomicHierarchy.residueAtomSegments.index[element])) !== null && _b !== void 0 ? _b : -1;
             if (score < 0) {
-                return DefaultColor;
+                return DefaultColor$1;
             }
             else {
                 return scale.color(score);
@@ -127574,7 +127574,7 @@ function QmeanScoreColorTheme(ctx, props) {
                 l_1.element = location.aUnit.elements[location.aIndex];
                 return getColor_1(l_1);
             }
-            return DefaultColor;
+            return DefaultColor$1;
         };
     }
     return {
@@ -127594,7 +127594,7 @@ var QmeanScoreColorThemeProvider = {
     factory: QmeanScoreColorTheme,
     getParams: getQmeanScoreColorThemeParams,
     defaultValues: ParamDefinition.getDefaultValues(getQmeanScoreColorThemeParams()),
-    isApplicable: function (ctx) { var _a; return !!((_a = ctx.structure) === null || _a === void 0 ? void 0 : _a.models.some(function (m) { return QualityAssessment.isApplicable(m, 'qmean'); })); },
+    isApplicable: function (ctx) { var _a; return !!((_a = ctx.structure) === null || _a === void 0 ? void 0 : _a.models.some(function (m) { return QualityAssessment$1.isApplicable(m, 'qmean'); })); },
     ensureCustomProperties: {
         attach: function (ctx, data) { return __awaiter(void 0, void 0, void 0, function () {
             var _i, _a, m;
@@ -127607,7 +127607,7 @@ var QmeanScoreColorThemeProvider = {
                     case 1:
                         if (!(_i < _a.length)) return [3 /*break*/, 4];
                         m = _a[_i];
-                        return [4 /*yield*/, QualityAssessmentProvider.attach(ctx, m, void 0, true)];
+                        return [4 /*yield*/, QualityAssessmentProvider$1.attach(ctx, m, void 0, true)];
                     case 2:
                         _b.sent();
                         _b.label = 3;
@@ -127624,7 +127624,7 @@ var QmeanScoreColorThemeProvider = {
                 if (data.structure) {
                     for (_i = 0, _a = data.structure.models; _i < _a.length; _i++) {
                         m = _a[_i];
-                        QualityAssessmentProvider.ref(m, false);
+                        QualityAssessmentProvider$1.ref(m, false);
                     }
                 }
                 return [2 /*return*/];
@@ -127649,7 +127649,7 @@ var MAQualityAssessment = PluginBehavior.create({
         __extends(class_1, _super);
         function class_1() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.provider = QualityAssessmentProvider;
+            _this.provider = QualityAssessmentProvider$1;
             _this.labelProvider = {
                 label: function (loci) {
                     if (!_this.params.showTooltip)
@@ -127721,7 +127721,7 @@ function metricLabel(loci, name, label) {
         var scoreSeen_1 = new Set();
         var scoreSum_1 = 0;
         var _loop_1 = function (indices, unit) {
-            var metric = (_a = QualityAssessmentProvider.get(unit.model).value) === null || _a === void 0 ? void 0 : _a[name];
+            var metric = (_a = QualityAssessmentProvider$1.get(unit.model).value) === null || _a === void 0 ? void 0 : _a[name];
             if (!metric)
                 return "continue";
             var residueIndex = unit.model.atomicHierarchy.residueAtomSegments.index;
@@ -127764,7 +127764,7 @@ var confidentPLDDT = StructureSelectionQuery('Confident pLDDT (> 70)', MolScript
         MolScriptBuilder.struct.modifier.union([
             MolScriptBuilder.struct.generator.atomGroups({
                 'chain-test': MolScriptBuilder.core.rel.eq([MolScriptBuilder.ammp('objectPrimitive'), 'atomistic']),
-                'residue-test': MolScriptBuilder.core.rel.gr([QualityAssessment.symbols.pLDDT.symbol(), 70]),
+                'residue-test': MolScriptBuilder.core.rel.gr([QualityAssessment$1.symbols.pLDDT.symbol(), 70]),
             })
         ])
     ])
@@ -127781,7 +127781,7 @@ var confidentPLDDT = StructureSelectionQuery('Confident pLDDT (> 70)', MolScript
                 case 1:
                     if (!(_i < _a.length)) return [3 /*break*/, 4];
                     m = _a[_i];
-                    return [4 /*yield*/, QualityAssessmentProvider.attach(ctx, m, void 0, true)];
+                    return [4 /*yield*/, QualityAssessmentProvider$1.attach(ctx, m, void 0, true)];
                 case 2:
                     _b.sent();
                     _b.label = 3;
@@ -127801,7 +127801,7 @@ var QualityAssessmentPLDDTPreset = StructureRepresentationPresetProvider({
         description: 'Color structure based on pLDDT Confidence.'
     },
     isApplicable: function (a) {
-        return !!a.data.models.some(function (m) { return QualityAssessment.isApplicable(m, 'pLDDT'); });
+        return !!a.data.models.some(function (m) { return QualityAssessment$1.isApplicable(m, 'pLDDT'); });
     },
     params: function () { return StructureRepresentationPresetProvider.CommonParams; },
     apply: function (ref, params, plugin) {
@@ -127830,7 +127830,7 @@ var QualityAssessmentQmeanPreset = StructureRepresentationPresetProvider({
         description: 'Color structure based on QMEAN Score.'
     },
     isApplicable: function (a) {
-        return !!a.data.models.some(function (m) { return QualityAssessment.isApplicable(m, 'qmean'); });
+        return !!a.data.models.some(function (m) { return QualityAssessment$1.isApplicable(m, 'qmean'); });
     },
     params: function () { return StructureRepresentationPresetProvider.CommonParams; },
     apply: function (ref, params, plugin) {
@@ -127853,7 +127853,5634 @@ var QualityAssessmentQmeanPreset = StructureRepresentationPresetProvider({
     }
 });
 
+/**
+ * Copyright (c) 2017-2022 mol* contributors, licensed under MIT, See LICENSE file for more info.
+ *
+ * Code-generated 'mmCIF' schema file. Dictionary versions: mmCIF 5.399, IHM 1.27, MA 1.4.6.
+ *
+ * @author molstar/ciftools package
+ */
+var Schema = Column.Schema;
+const str = Schema.str;
+const int = Schema.int;
+const float = Schema.float;
+const coord = Schema.coord;
+const Aliased = Schema.Aliased;
+const Matrix = Schema.Matrix;
+const Vector = Schema.Vector;
+const lstr = Schema.lstr;
+const List = Schema.List;
+const mmCIF_Schema = {
+    /**
+     * Data items in the ATOM_SITE category record details about
+     * the atom sites in a macromolecular crystal structure, such as
+     * the positional coordinates, atomic displacement parameters,
+     * magnetic moments and directions.
+     *
+     * The data items for describing anisotropic atomic
+     * displacement factors are only used if the corresponding items
+     * are not given in the ATOM_SITE_ANISOTROP category.
+     *
+     * wwPDB recommends wwPDB-assigned residue number, residue ID,
+     * and chain ID, _atom_site.auth_seq_id _atom_site.auth_comp_id, and
+     * _atom_site.auth_asym_id, respectively, to be used for publication
+     * materials.
+     */
+    atom_site: {
+        /**
+         * An alternative identifier for _atom_site.label_asym_id that
+         * may be provided by an author in order to match the identification
+         * used in the publication that describes the structure.
+         */
+        auth_asym_id: str,
+        /**
+         * An alternative identifier for _atom_site.label_atom_id that
+         * may be provided by an author in order to match the identification
+         * used in the publication that describes the structure.
+         */
+        auth_atom_id: str,
+        /**
+         * An alternative identifier for _atom_site.label_comp_id that
+         * may be provided by an author in order to match the identification
+         * used in the publication that describes the structure.
+         */
+        auth_comp_id: str,
+        /**
+         * An alternative identifier for _atom_site.label_seq_id that
+         * may be provided by an author in order to match the identification
+         * used in the publication that describes the structure.
+         *
+         * Note that this is not necessarily a number, that the values do
+         * not have to be positive, and that the value does not have to
+         * correspond to the value of _atom_site.label_seq_id. The value
+         * of _atom_site.label_seq_id is required to be a sequential list
+         * of positive integers.
+         *
+         * The author may assign values to _atom_site.auth_seq_id in any
+         * desired way. For instance, the values may be used to relate
+         * this structure to a numbering scheme in a homologous structure,
+         * including sequence gaps or insertion codes. Alternatively, a
+         * scheme may be used for a truncated polymer that maintains the
+         * numbering scheme of the full length polymer. In all cases, the
+         * scheme used here must match the scheme used in the publication
+         * that describes the structure.
+         */
+        auth_seq_id: int,
+        /**
+         * Isotropic atomic displacement parameter, or equivalent isotropic
+         * atomic displacement parameter, B~eq~, calculated from the
+         * anisotropic displacement parameters.
+         *
+         * B~eq~ = (1/3) sum~i~[sum~j~(B^ij^ A~i~ A~j~ a*~i~ a*~j~)]
+         *
+         * A     = the real space cell lengths
+         * a*    = the reciprocal space cell lengths
+         * B^ij^ = 8 pi^2^ U^ij^
+         *
+         * Ref: Fischer, R. X. & Tillmanns, E. (1988). Acta Cryst. C44,
+         * 775-776.
+         *
+         * The IUCr Commission on Nomenclature recommends against the use
+         * of B for reporting atomic displacement parameters. U, being
+         * directly proportional to B, is preferred.
+         *
+         * Note -
+         *
+         * The particular type of ADP stored in this item is qualified
+         * by item _refine.pdbx_adp_type.
+         */
+        B_iso_or_equiv: float,
+        /**
+         * The x atom-site coordinate in angstroms specified according to
+         * a set of orthogonal Cartesian axes related to the cell axes as
+         * specified by the description given in
+         * _atom_sites.Cartn_transform_axes.
+         */
+        Cartn_x: coord,
+        /**
+         * The y atom-site coordinate in angstroms specified according to
+         * a set of orthogonal Cartesian axes related to the cell axes as
+         * specified by the description given in
+         * _atom_sites.Cartn_transform_axes.
+         */
+        Cartn_y: coord,
+        /**
+         * The z atom-site coordinate in angstroms specified according to
+         * a set of orthogonal Cartesian axes related to the cell axes as
+         * specified by the description given in
+         * _atom_sites.Cartn_transform_axes.
+         */
+        Cartn_z: coord,
+        /**
+         * The group of atoms to which the atom site belongs. This data
+         * item is provided for compatibility with the original Protein
+         * Data Bank format, and only for that purpose.
+         */
+        group_PDB: Aliased(str),
+        /**
+         * The value of _atom_site.id must uniquely identify a record in the
+         * ATOM_SITE list.
+         *
+         * Note that this item need not be a number; it can be any unique
+         * identifier.
+         *
+         * This data item was introduced to provide compatibility between
+         * small-molecule and macromolecular CIFs. In a small-molecule
+         * CIF, _atom_site_label is the identifier for the atom. In a
+         * macromolecular CIF, the atom identifier is the aggregate of
+         * _atom_site.label_alt_id, _atom_site.label_asym_id,
+         * _atom_site.label_atom_id, _atom_site.label_comp_id and
+         * _atom_site.label_seq_id. For the two types of files to be
+         * compatible, a formal identifier for the category had to be
+         * introduced that was independent of the different modes of
+         * identifying the atoms. For compatibility with older CIFs,
+         * _atom_site_label is aliased to _atom_site.id.
+         *
+         * In general, this aggregate identifier does not uniquely
+         * identify an atom site as for non-polymers _atom_site.label_seq_id
+         * is '.'.
+         */
+        id: int,
+        /**
+         * A place holder to indicate alternate conformation. The alternate conformation
+         * can be an entire polymer chain, or several residues or
+         * partial residue (several atoms within one residue). If
+         * an atom is provided in more than one position, then a
+         * non-blank alternate location indicator must be used for
+         * each of the atomic positions.
+         */
+        label_alt_id: str,
+        /**
+         * A component of the identifier for this atom site.
+         * For further details, see the definition of the STRUCT_ASYM
+         * category.
+         *
+         * This data item is a pointer to _struct_asym.id in the
+         * STRUCT_ASYM category.
+         */
+        label_asym_id: str,
+        /**
+         * A component of the identifier for this atom site.
+         *
+         * This data item is a pointer to _chem_comp_atom.atom_id in the
+         * CHEM_COMP_ATOM category.
+         */
+        label_atom_id: str,
+        /**
+         * A component of the identifier for this atom site.
+         *
+         * This data item is a pointer to _chem_comp.id in the CHEM_COMP
+         * category.
+         */
+        label_comp_id: str,
+        /**
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        label_entity_id: str,
+        /**
+         * This data item is a pointer to _entity_poly_seq.num in the
+         * ENTITY_POLY_SEQ category.
+         */
+        label_seq_id: int,
+        /**
+         * The fraction of the atom type present at this site.
+         * The sum of the occupancies of all the atom types at this site
+         * may not exceed 1.0 unless it is a dummy site.
+         */
+        occupancy: float,
+        /**
+         * This data item is a pointer to _atom_type.symbol in the
+         * ATOM_TYPE category.
+         */
+        type_symbol: str,
+        /**
+         * PDB insertion code.
+         */
+        pdbx_PDB_ins_code: str,
+        /**
+         * PDB model number.
+         */
+        pdbx_PDB_model_num: int,
+        /**
+         * The net integer charge assigned to this atom. This is the
+         * formal charge assignment normally found in chemical diagrams.
+         */
+        pdbx_formal_charge: int,
+        /**
+         * This data item is an ordinal which identifies distinct chemical components in the atom_site category, both
+         * polymeric and non-polymeric.
+         */
+        pdbx_label_index: int,
+        /**
+         * The name of additional external databases with residue level mapping.
+         */
+        pdbx_sifts_xref_db_name: str,
+        /**
+         * The accession code related to the additional external database entry.
+         */
+        pdbx_sifts_xref_db_acc: str,
+        /**
+         * The sequence position of the external database entry that corresponds
+         * to the residue mapping defined by the SIFTS process.
+         */
+        pdbx_sifts_xref_db_num: str,
+        /**
+         * Describes the residue type of the given UniProt match
+         */
+        pdbx_sifts_xref_db_res: str,
+        /**
+         * The model id corresponding to the atom site.
+         * This data item is a pointer to _ihm_model_list.model_id
+         * in the IHM_MODEL_LIST category.
+         */
+        ihm_model_id: int,
+    },
+    /**
+     * Data items in the ATOM_SITE_ANISOTROP category record details
+     * about anisotropic displacement parameters.
+     * If the ATOM_SITE_ANISOTROP category is used for storing these
+     * data, the corresponding ATOM_SITE data items are not used.
+     */
+    atom_site_anisotrop: {
+        /**
+         * This data item is a pointer to _atom_site.id in the ATOM_SITE
+         * category.
+         */
+        id: int,
+        /**
+         * This data item is a pointer to _atom_type.symbol in the
+         * ATOM_TYPE category.
+         */
+        type_symbol: str,
+        /**
+         * The elements of the standard anisotropic atomic
+         * displacement matrix U, which appears in the structure-factor
+         * term as:
+         *
+         * T = exp{-2 pi^2^ sum~i~[sum~j~(U^ij^ h~i~ h~j~ a*~i~ a*~j~)]}
+         *
+         * h  = the Miller indices
+         * a* = the reciprocal space cell lengths
+         *
+         * These matrix elements may appear with atomic coordinates
+         * in the ATOM_SITE category, or they may appear in the separate
+         * ATOM_SITE_ANISOTROP category, but they may not appear in both
+         * places. Similarly, anisotropic displacements may appear as
+         * either B's or U's, but not as both.
+         *
+         * The unique elements of the real symmetric matrix are
+         * entered by row.
+         */
+        U: Matrix(3, 3),
+        /**
+         * The standard uncertainty (estimated standard deviation)
+         * of _atom_site_anisotrop.U.
+         */
+        U_esd: Matrix(3, 3),
+        /**
+         * Pointer to _atom_site.auth_seq_id
+         */
+        pdbx_auth_seq_id: int,
+        /**
+         * Pointer to _atom_site.auth_asym_id
+         */
+        pdbx_auth_asym_id: str,
+        /**
+         * Pointer to _atom_site.auth_atom_id
+         */
+        pdbx_auth_atom_id: str,
+        /**
+         * Pointer to _atom_site.auth_comp_id
+         */
+        pdbx_auth_comp_id: str,
+        /**
+         * Pointer to _atom_site.label_seq_id
+         */
+        pdbx_label_seq_id: int,
+        /**
+         * Pointer to _atom_site.label_alt_id.
+         */
+        pdbx_label_alt_id: str,
+        /**
+         * Pointer to _atom_site.label_asym_id
+         */
+        pdbx_label_asym_id: str,
+        /**
+         * Pointer to _atom_site.label_atom_id
+         */
+        pdbx_label_atom_id: str,
+        /**
+         * Pointer to _atom_site.label_comp_id
+         */
+        pdbx_label_comp_id: str,
+        /**
+         * Pointer to _atom_site.pdbx_PDB_ins_code
+         */
+        pdbx_PDB_ins_code: str,
+    },
+    /**
+     * Data items in the ATOM_SITES category record details about
+     * the crystallographic cell and cell transformations, which are
+     * common to all atom sites.
+     */
+    atom_sites: {
+        /**
+         * This data item is a pointer to _entry.id in the ENTRY category.
+         */
+        entry_id: str,
+        /**
+         * The elements of the 3x3 matrix used to transform Cartesian
+         * coordinates in the ATOM_SITE category to fractional coordinates
+         * in the same category. The axial alignments of this
+         * transformation are described in _atom_sites.Cartn_transform_axes.
+         * The 3x1 translation is defined in
+         * _atom_sites.fract_transf_vector[].
+         *
+         * |x'|               |11 12 13| |x|              |1|
+         * |y'|~fractional~ = |21 22 23| |y|~Cartesian~ + |2|
+         * |z'|               |31 32 33| |z|              |3|
+         */
+        fract_transf_matrix: Matrix(3, 3),
+        /**
+         * The elements of the three-element vector used to transform
+         * Cartesian coordinates in the ATOM_SITE category to fractional
+         * coordinates in the same category. The axial alignments of this
+         * transformation are described in _atom_sites.Cartn_transform_axes.
+         * The 3x3 rotation is defined in
+         * _atom_sites.fract_transf_matrix[][].
+         *
+         * |x'|               |11 12 13| |x|              |1|
+         * |y'|~fractional~ = |21 22 23| |y|~Cartesian~ + |2|
+         * |z'|               |31 32 33| |z|              |3|
+         */
+        fract_transf_vector: Vector(3),
+    },
+    /**
+     * Data items in the AUDIT_AUTHOR category record details about
+     * the author(s) of the data block.
+     */
+    audit_author: {
+        /**
+         * The name of an author of this data block. If there are multiple
+         * authors, _audit_author.name is looped with _audit_author.address.
+         * The family name(s), followed by a comma and including any
+         * dynastic components, precedes the first name(s) or initial(s).
+         */
+        name: str,
+        /**
+         * This data item defines the order of the author's name in the
+         * list of audit authors.
+         */
+        pdbx_ordinal: int,
+        /**
+         * The Open Researcher and Contributor ID (ORCID).
+         */
+        identifier_ORCID: str,
+    },
+    /**
+     * Data items in the AUDIT_CONFORM category describe the
+     * dictionary versions against which the data names appearing in
+     * the current data block are conformant.
+     */
+    audit_conform: {
+        /**
+         * A file name or uniform resource locator (URL) for the
+         * dictionary to which the current data block conforms.
+         */
+        dict_location: str,
+        /**
+         * The string identifying the highest-level dictionary defining
+         * data names used in this file.
+         */
+        dict_name: str,
+        /**
+         * The version number of the dictionary to which the current
+         * data block conforms.
+         */
+        dict_version: str,
+    },
+    /**
+     * Data items in the CELL category record details about the
+     * crystallographic cell parameters.
+     */
+    cell: {
+        /**
+         * Unit-cell angle alpha of the reported structure in degrees.
+         */
+        angle_alpha: float,
+        /**
+         * Unit-cell angle beta of the reported structure in degrees.
+         */
+        angle_beta: float,
+        /**
+         * Unit-cell angle gamma of the reported structure in degrees.
+         */
+        angle_gamma: float,
+        /**
+         * This data item is a pointer to _entry.id in the ENTRY category.
+         */
+        entry_id: str,
+        /**
+         * Unit-cell length a corresponding to the structure reported in
+         * angstroms.
+         */
+        length_a: float,
+        /**
+         * Unit-cell length b corresponding to the structure reported in
+         * angstroms.
+         */
+        length_b: float,
+        /**
+         * Unit-cell length c corresponding to the structure reported in
+         * angstroms.
+         */
+        length_c: float,
+        /**
+         * The number of the polymeric chains in a unit cell. In the case
+         * of heteropolymers, Z is the number of occurrences of the most
+         * populous chain.
+         *
+         * This data item is provided for compatibility with the original
+         * Protein Data Bank format, and only for that purpose.
+         */
+        Z_PDB: int,
+        /**
+         * To further identify unique axis if necessary.  E.g., P 21 with
+         * an unique C axis will have 'C' in this field.
+         */
+        pdbx_unique_axis: str,
+    },
+    /**
+     * Data items in the CHEM_COMP category give details about each
+     * of the chemical components from which the relevant chemical
+     * structures can be constructed, such as name, mass or charge.
+     *
+     * The related categories CHEM_COMP_ATOM, CHEM_COMP_BOND,
+     * CHEM_COMP_ANGLE etc. describe the detailed geometry of these
+     * chemical components.
+     */
+    chem_comp: {
+        /**
+         * The formula for the chemical component. Formulae are written
+         * according to the following rules:
+         *
+         * (1) Only recognized element symbols may be used.
+         *
+         * (2) Each element symbol is followed by a 'count' number. A count
+         * of '1' may be omitted.
+         *
+         * (3) A space or parenthesis must separate each cluster of
+         * (element symbol + count), but in general parentheses are
+         * not used.
+         *
+         * (4) The order of elements depends on whether carbon is
+         * present or not. If carbon is present, the order should be:
+         * C, then H, then the other elements in alphabetical order
+         * of their symbol. If carbon is not present, the elements
+         * are listed purely in alphabetic order of their symbol. This
+         * is the 'Hill' system used by Chemical Abstracts.
+         */
+        formula: str,
+        /**
+         * Formula mass in daltons of the chemical component.
+         */
+        formula_weight: float,
+        /**
+         * The value of _chem_comp.id must uniquely identify each item in
+         * the CHEM_COMP list.
+         *
+         * For protein polymer entities, this is the three-letter code for
+         * the amino acid.
+         *
+         * For nucleic acid polymer entities, this is the one-letter code
+         * for the base.
+         */
+        id: str,
+        /**
+         * 'yes' indicates that this is a 'standard' monomer, 'no'
+         * indicates that it is 'nonstandard'. Nonstandard monomers
+         * should be described in more detail using the
+         * _chem_comp.mon_nstd_parent, _chem_comp.mon_nstd_class and
+         * _chem_comp.mon_nstd_details data items.
+         */
+        mon_nstd_flag: Aliased(lstr),
+        /**
+         * The full name of the component.
+         */
+        name: str,
+        /**
+         * For standard polymer components, the type of the monomer.
+         * Note that monomers that will form polymers are of three types:
+         * linking monomers, monomers with some type of N-terminal (or 5')
+         * cap and monomers with some type of C-terminal (or 3') cap.
+         */
+        type: Aliased(lstr),
+        /**
+         * Synonym list for the component.
+         */
+        pdbx_synonyms: List(';', x => x),
+    },
+    /**
+     * Data items in the CHEM_COMP_BOND category record details about
+     * the bonds between atoms in a chemical component. Target values
+     * may be specified as bond orders, as a distance between the two
+     * atoms, or both.
+     */
+    chem_comp_bond: {
+        /**
+         * The ID of the first of the two atoms that define the bond.
+         *
+         * This data item is a pointer to _chem_comp_atom.atom_id in the
+         * CHEM_COMP_ATOM category.
+         */
+        atom_id_1: str,
+        /**
+         * The ID of the second of the two atoms that define the bond.
+         *
+         * This data item is a pointer to _chem_comp_atom.atom_id in the
+         * CHEM_COMP_ATOM category.
+         */
+        atom_id_2: str,
+        /**
+         * This data item is a pointer to _chem_comp.id in the CHEM_COMP
+         * category.
+         */
+        comp_id: str,
+        /**
+         * The value that should be taken as the target for the chemical
+         * bond associated with the specified atoms, expressed as a bond
+         * order.
+         */
+        value_order: Aliased(lstr),
+        /**
+         * Ordinal index for the component bond list.
+         */
+        pdbx_ordinal: int,
+        /**
+         * Stereochemical configuration across a double bond.
+         */
+        pdbx_stereo_config: Aliased(lstr),
+        /**
+         * A flag indicating an aromatic bond.
+         */
+        pdbx_aromatic_flag: Aliased(lstr),
+    },
+    /**
+     * Data items in the CITATION category record details about the
+     * literature cited as being relevant to the contents of the data
+     * block.
+     */
+    citation: {
+        /**
+         * The name of the publisher of the citation; relevant
+         * for books or book chapters.
+         */
+        book_publisher: str,
+        /**
+         * The country/region of publication; relevant for books
+         * and book chapters.
+         */
+        country: str,
+        /**
+         * The value of _citation.id must uniquely identify a record in the
+         * CITATION list.
+         *
+         * The _citation.id 'primary' should be used to indicate the
+         * citation that the author(s) consider to be the most pertinent to
+         * the contents of the data block.
+         *
+         * Note that this item need not be a number; it can be any unique
+         * identifier.
+         */
+        id: str,
+        /**
+         * Abbreviated name of the cited journal as given in the
+         * Chemical Abstracts Service Source Index.
+         */
+        journal_abbrev: str,
+        /**
+         * The American Society for Testing and Materials (ASTM) code
+         * assigned to the journal cited (also referred to as the CODEN
+         * designator of the Chemical Abstracts Service); relevant for
+         * journal articles.
+         */
+        journal_id_ASTM: str,
+        /**
+         * The Cambridge Structural Database (CSD) code assigned to the
+         * journal cited; relevant for journal articles. This is also the
+         * system used at the Protein Data Bank (PDB).
+         */
+        journal_id_CSD: str,
+        /**
+         * The International Standard Serial Number (ISSN) code assigned to
+         * the journal cited; relevant for journal articles.
+         */
+        journal_id_ISSN: str,
+        /**
+         * Volume number of the journal cited; relevant for journal
+         * articles.
+         */
+        journal_volume: str,
+        /**
+         * The first page of the citation; relevant for journal
+         * articles, books and book chapters.
+         */
+        page_first: str,
+        /**
+         * The last page of the citation; relevant for journal
+         * articles, books and book chapters.
+         */
+        page_last: str,
+        /**
+         * The title of the citation; relevant for journal articles, books
+         * and book chapters.
+         */
+        title: str,
+        /**
+         * The year of the citation; relevant for journal articles, books
+         * and book chapters.
+         */
+        year: int,
+        /**
+         * Document Object Identifier used by doi.org to uniquely
+         * specify bibliographic entry.
+         */
+        pdbx_database_id_DOI: str,
+        /**
+         * Ascession number used by PubMed to categorize a specific
+         * bibliographic entry.
+         */
+        pdbx_database_id_PubMed: int,
+    },
+    /**
+     * Data items in the CITATION_AUTHOR category record details
+     * about the authors associated with the citations in the
+     * CITATION list.
+     */
+    citation_author: {
+        /**
+         * This data item is a pointer to _citation.id in the CITATION
+         * category.
+         */
+        citation_id: str,
+        /**
+         * Name of an author of the citation; relevant for journal
+         * articles, books and book chapters.
+         *
+         * The family name(s), followed by a comma and including any
+         * dynastic components, precedes the first name(s) or initial(s).
+         */
+        name: str,
+        /**
+         * This data item defines the order of the author's name in the
+         * list of authors of a citation.
+         */
+        ordinal: int,
+    },
+    /**
+     * Data items in the DATABASE_2 category record details about the
+     * database identifiers of the data block.
+     *
+     * These data items are assigned by database managers and should
+     * only appear in a data block if they originate from that source.
+     *
+     * The name of this category, DATABASE_2, arose because the
+     * category name DATABASE was already in use in the core CIF
+     * dictionary, but was used differently from the way it needed
+     * to be used in the mmCIF dictionary. Since CIF data names
+     * cannot be changed once they have been adopted, a new category
+     * had to be created.
+     */
+    database_2: {
+        /**
+         * An abbreviation that identifies the database.
+         */
+        database_id: Aliased(lstr),
+        /**
+         * The code assigned by the database identified in
+         * _database_2.database_id.
+         */
+        database_code: str,
+    },
+    /**
+     * Data items in the ENTITY category record details (such as
+     * chemical composition, name and source) about the molecular
+     * entities that are present in the crystallographic structure.
+     *
+     * Items in the various ENTITY subcategories provide a full
+     * chemical description of these molecular entities.
+     *
+     * Entities are of three types:  polymer, non-polymer and water.
+     * Note that the water category includes only water;  ordered
+     * solvent such as sulfate ion or acetone would be described as
+     * individual non-polymer entities.
+     *
+     * The ENTITY category is specific to macromolecular CIF
+     * applications and replaces the function of the CHEMICAL category
+     * in the CIF core.
+     *
+     * It is important to remember that the ENTITY data are not the
+     * result of the crystallographic experiment;  those results are
+     * represented by the ATOM_SITE data items. ENTITY data items
+     * describe the chemistry of the molecules under investigation
+     * and can most usefully be thought of as the ideal groups to which
+     * the structure is restrained or constrained during refinement.
+     *
+     * It is also important to remember that entities do not correspond
+     * directly to the enumeration of the contents of the asymmetric
+     * unit. Entities are described only once, even in those structures
+     * that contain multiple observations of an entity. The
+     * STRUCT_ASYM data items, which reference the entity list,
+     * describe and label the contents of the asymmetric unit.
+     */
+    entity: {
+        /**
+         * A description of special aspects of the entity.
+         */
+        details: str,
+        /**
+         * Formula mass in daltons of the entity.
+         */
+        formula_weight: float,
+        /**
+         * The value of _entity.id must uniquely identify a record in the
+         * ENTITY list.
+         *
+         * Note that this item need not be a number; it can be any unique
+         * identifier.
+         */
+        id: str,
+        /**
+         * The method by which the sample for the entity was produced.
+         * Entities isolated directly from natural sources (tissues, soil
+         * samples etc.) are expected to have further information in the
+         * ENTITY_SRC_NAT category. Entities isolated from genetically
+         * manipulated sources are expected to have further information in
+         * the ENTITY_SRC_GEN category.
+         */
+        src_method: Aliased(lstr),
+        /**
+         * Defines the type of the entity.
+         *
+         * Polymer entities are expected to have corresponding
+         * ENTITY_POLY and associated entries.
+         *
+         * Non-polymer entities are expected to have corresponding
+         * CHEM_COMP and associated entries.
+         *
+         * Water entities are not expected to have corresponding
+         * entries in the ENTITY category.
+         */
+        type: Aliased(lstr),
+        /**
+         * A description of the entity.
+         *
+         * Corresponds to the compound name in the PDB format.
+         */
+        pdbx_description: List(',', x => x),
+        /**
+         * A place holder for the number of molecules of the entity in
+         * the entry.
+         */
+        pdbx_number_of_molecules: int,
+        /**
+         * An identifier for the parent entity if this entity
+         * is part of a complex entity.  For instance a chimeric
+         * entity may be decomposed into several independent
+         * chemical entities where each component entity was
+         * obtained from a different source.
+         */
+        pdbx_parent_entity_id: str,
+        /**
+         * Details about any entity mutation(s).
+         */
+        pdbx_mutation: str,
+        /**
+         * Entity fragment description(s).
+         */
+        pdbx_fragment: str,
+        /**
+         * Enzyme Commission (EC) number(s)
+         */
+        pdbx_ec: List(',', x => x),
+    },
+    /**
+     * Data items in the ENTITY_POLY category record details about the
+     * polymer, such as the type of the polymer, the number of
+     * monomers and whether it has nonstandard features.
+     */
+    entity_poly: {
+        /**
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * A flag to indicate whether the polymer contains at least
+         * one monomer-to-monomer link different from that implied by
+         * _entity_poly.type.
+         */
+        nstd_linkage: Aliased(lstr),
+        /**
+         * A flag to indicate whether the polymer contains at least
+         * one monomer that is not considered standard.
+         */
+        nstd_monomer: Aliased(lstr),
+        /**
+         * The type of the polymer.
+         */
+        type: Aliased(str),
+        /**
+         * The PDB strand/chain id(s) corresponding to this polymer entity.
+         */
+        pdbx_strand_id: List(',', x => x),
+        /**
+         * Sequence of protein or nucleic acid polymer in standard one-letter
+         * codes of amino acids or nucleotides. Non-standard amino
+         * acids/nucleotides are represented by their Chemical
+         * Component Dictionary (CCD) codes in
+         * parenthesis. Deoxynucleotides are represented by the
+         * specially-assigned 2-letter CCD codes in parenthesis,
+         * with 'D' prefix added to their ribonucleotide
+         * counterparts. For hybrid polymer, each residue is
+         * represented by the code of its individual type. A
+         * cyclic polymer is represented in linear sequence from
+         * the chosen start to end.
+         *
+         * A for Alanine or Adenosine-5'-monophosphate
+         * C for Cysteine or Cytidine-5'-monophosphate
+         * D for Aspartic acid
+         * E for Glutamic acid
+         * F for Phenylalanine
+         * G for Glycine or Guanosine-5'-monophosphate
+         * H for Histidine
+         * I for Isoleucine or Inosinic Acid
+         * L for Leucine
+         * K for Lysine
+         * M for Methionine
+         * N for Asparagine  or Unknown ribonucleotide
+         * O for Pyrrolysine
+         * P for Proline
+         * Q for Glutamine
+         * R for Arginine
+         * S for Serine
+         * T for Threonine
+         * U for Selenocysteine or Uridine-5'-monophosphate
+         * V for Valine
+         * W for Tryptophan
+         * Y for Tyrosine
+         * (DA) for 2'-deoxyadenosine-5'-monophosphate
+         * (DC) for 2'-deoxycytidine-5'-monophosphate
+         * (DG) for 2'-deoxyguanosine-5'-monophosphate
+         * (DT) for Thymidine-5'-monophosphate
+         * (MSE) for Selenomethionine
+         * (SEP) for Phosphoserine
+         * (PTO) for Phosphothreonine
+         * (PTR) for Phosphotyrosine
+         * (PCA) for Pyroglutamic acid
+         * (UNK) for Unknown amino acid
+         * (ACE) for Acetylation cap
+         * (NH2) for Amidation cap
+         */
+        pdbx_seq_one_letter_code: str,
+        /**
+         * Canonical sequence of protein or nucleic acid polymer in standard
+         * one-letter codes of amino acids or nucleotides,
+         * corresponding to the sequence in
+         * _entity_poly.pdbx_seq_one_letter_code. Non-standard
+         * amino acids/nucleotides are represented by the codes of
+         * their parents if parent is specified in
+         * _chem_comp.mon_nstd_parent_comp_id, or by letter 'X' if
+         * parent is not specified. Deoxynucleotides are
+         * represented by their canonical one-letter codes of A,
+         * C, G, or T.
+         *
+         * For modifications with several parent amino acids,
+         * all corresponding parent amino acid codes will be listed
+         * (ex. chromophores).
+         */
+        pdbx_seq_one_letter_code_can: str,
+        /**
+         * For Structural Genomics entries, the sequence's target identifier registered at the TargetTrack database.
+         */
+        pdbx_target_identifier: str,
+    },
+    /**
+     * Data items in the ENTITY_POLY_SEQ category specify the sequence
+     * of monomers in a polymer. Allowance is made for the possibility
+     * of microheterogeneity in a sample by allowing a given sequence
+     * number to be correlated with more than one monomer ID. The
+     * corresponding ATOM_SITE entries should reflect this
+     * heterogeneity.
+     */
+    entity_poly_seq: {
+        /**
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * A flag to indicate whether this monomer in the polymer is
+         * heterogeneous in sequence.
+         */
+        hetero: Aliased(lstr),
+        /**
+         * This data item is a pointer to _chem_comp.id in the CHEM_COMP
+         * category.
+         */
+        mon_id: str,
+        /**
+         * The value of _entity_poly_seq.num must uniquely and sequentially
+         * identify a record in the ENTITY_POLY_SEQ list.
+         *
+         * Note that this item must be a number and that the sequence
+         * numbers must progress in increasing numerical order.
+         */
+        num: int,
+    },
+    /**
+     * There is only one item in the ENTRY category, _entry.id. This
+     * data item gives a name to this entry and is indirectly a key to
+     * the categories (such as CELL, GEOM, EXPTL) that describe
+     * information pertinent to the entire data block.
+     */
+    entry: {
+        /**
+         * The value of _entry.id identifies the data block.
+         *
+         * Note that this item need not be a number; it can be any unique
+         * identifier.
+         */
+        id: str,
+    },
+    /**
+     * Data items in the EXPTL category record details about the
+     * experimental work prior to the intensity measurements and
+     * details about the absorption-correction technique employed.
+     */
+    exptl: {
+        /**
+         * This data item is a pointer to _entry.id in the ENTRY category.
+         */
+        entry_id: str,
+        /**
+         * The method used in the experiment.
+         */
+        method: Aliased(str),
+    },
+    /**
+     * Data items in the SOFTWARE category record details about
+     * the software used in the structure analysis, which implies
+     * any software used in the generation of any data items
+     * associated with the structure determination and
+     * structure representation.
+     *
+     * These data items allow computer programs to be referenced
+     * in more detail than data items in the COMPUTING category do.
+     */
+    software: {
+        /**
+         * The classification of the program according to its
+         * major function.
+         */
+        classification: str,
+        /**
+         * The date the software was released.
+         */
+        date: str,
+        /**
+         * Description of the software.
+         */
+        description: str,
+        /**
+         * The name of the software.
+         */
+        name: str,
+        /**
+         * The classification of the software according to the most
+         * common types.
+         */
+        type: Aliased(lstr),
+        /**
+         * The version of the software.
+         */
+        version: str,
+        /**
+         * An ordinal index for this category
+         */
+        pdbx_ordinal: int,
+    },
+    /**
+     * Data items in the STRUCT category record details about the
+     * description of the crystallographic structure.
+     */
+    struct: {
+        /**
+         * This data item is a pointer to _entry.id in the ENTRY category.
+         */
+        entry_id: str,
+        /**
+         * A title for the data block. The author should attempt to convey
+         * the essence of the structure archived in the CIF in the title,
+         * and to distinguish this structural result from others.
+         */
+        title: str,
+        /**
+         * Indicates if the structure was determined using experimental, computational, or integrative methods
+         */
+        pdbx_structure_determination_methodology: Aliased(str),
+        /**
+         * An automatically generated descriptor for an NDB structure or
+         * the unstructured content of the PDB COMPND record.
+         */
+        pdbx_descriptor: str,
+    },
+    /**
+     * Data items in the STRUCT_ASYM category record details about the
+     * structural elements in the asymmetric unit.
+     */
+    struct_asym: {
+        /**
+         * A description of special aspects of this portion of the contents
+         * of the asymmetric unit.
+         */
+        details: str,
+        /**
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * The value of _struct_asym.id must uniquely identify a record in
+         * the STRUCT_ASYM list.
+         *
+         * Note that this item need not be a number; it can be any unique
+         * identifier.
+         */
+        id: str,
+        /**
+         * This data item indicates whether the structural elements are modified.
+         */
+        pdbx_modified: str,
+        /**
+         * A flag indicating that this entity was originally labeled
+         * with a blank PDB chain id.
+         */
+        pdbx_blank_PDB_chainid_flag: Aliased(str),
+    },
+    /**
+     * Data items in the STRUCT_CONF category record details about
+     * the backbone conformation of a segment of polymer.
+     *
+     * Data items in the STRUCT_CONF_TYPE category define the
+     * criteria used to identify the backbone conformations.
+     */
+    struct_conf: {
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment begins.
+         *
+         * This data item is a pointer to _atom_site.label_asym_id in the
+         * ATOM_SITE category.
+         */
+        beg_label_asym_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment begins.
+         *
+         * This data item is a pointer to _atom_site.label_comp_id in
+         * the ATOM_SITE category.
+         */
+        beg_label_comp_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment begins.
+         *
+         * This data item is a pointer to _atom_site.label_seq_id in the
+         * ATOM_SITE category.
+         */
+        beg_label_seq_id: int,
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment begins.
+         *
+         * This data item is a pointer to _atom_site.auth_asym_id in the
+         * ATOM_SITE category.
+         */
+        beg_auth_asym_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment begins.
+         *
+         * This data item is a pointer to _atom_site.auth_comp_id in
+         * the ATOM_SITE category.
+         */
+        beg_auth_comp_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment begins.
+         *
+         * This data item is a pointer to _atom_site.auth_seq_id in the
+         * ATOM_SITE category.
+         */
+        beg_auth_seq_id: int,
+        /**
+         * This data item is a pointer to _struct_conf_type.id in the
+         * STRUCT_CONF_TYPE category.
+         */
+        conf_type_id: Aliased(lstr),
+        /**
+         * A description of special aspects of the conformation assignment.
+         */
+        details: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment ends.
+         *
+         * This data item is a pointer to _atom_site.label_asym_id in the
+         * ATOM_SITE category.
+         */
+        end_label_asym_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment ends.
+         *
+         * This data item is a pointer to _atom_site.label_comp_id in the
+         * ATOM_SITE category.
+         */
+        end_label_comp_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment ends.
+         *
+         * This data item is a pointer to _atom_site.label_seq_id in the
+         * ATOM_SITE category.
+         */
+        end_label_seq_id: int,
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment ends.
+         *
+         * This data item is a pointer to _atom_site.auth_asym_id in the
+         * ATOM_SITE category.
+         */
+        end_auth_asym_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment ends.
+         *
+         * This data item is a pointer to _atom_site.auth_comp_id in the
+         * ATOM_SITE category.
+         */
+        end_auth_comp_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment ends.
+         *
+         * This data item is a pointer to _atom_site.auth_seq_id in the
+         * ATOM_SITE category.
+         */
+        end_auth_seq_id: int,
+        /**
+         * The value of _struct_conf.id must uniquely identify a record in
+         * the STRUCT_CONF list.
+         *
+         * Note that this item need not be a number; it can be any unique
+         * identifier.
+         */
+        id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment starts.
+         */
+        pdbx_beg_PDB_ins_code: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * conformation segment ends.
+         */
+        pdbx_end_PDB_ins_code: str,
+        /**
+         * This item is a place holder for the helix class used in the PDB
+         * HELIX record.
+         */
+        pdbx_PDB_helix_class: str,
+        /**
+         * A placeholder for the lengths of the helix of the PDB
+         * HELIX record.
+         */
+        pdbx_PDB_helix_length: int,
+        /**
+         * A placeholder for the helix identifier of the PDB
+         * HELIX record.
+         */
+        pdbx_PDB_helix_id: str,
+    },
+    /**
+     * Data items in the STRUCT_CONN category record details about
+     * the connections between portions of the structure. These can be
+     * hydrogen bonds, salt bridges, disulfide bridges and so on.
+     *
+     * The STRUCT_CONN_TYPE records define the criteria used to
+     * identify these connections.
+     */
+    struct_conn: {
+        /**
+         * This data item is a pointer to _struct_conn_type.id in the
+         * STRUCT_CONN_TYPE category.
+         */
+        conn_type_id: Aliased(lstr),
+        /**
+         * A description of special aspects of the connection.
+         */
+        details: str,
+        /**
+         * The value of _struct_conn.id must uniquely identify a record in
+         * the STRUCT_CONN list.
+         *
+         * Note that this item need not be a number; it can be any unique
+         * identifier.
+         */
+        id: str,
+        /**
+         * A component of the identifier for partner 1 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.label_asym_id in the
+         * ATOM_SITE category.
+         */
+        ptnr1_label_asym_id: str,
+        /**
+         * A component of the identifier for partner 1 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _chem_comp_atom.atom_id in the
+         * CHEM_COMP_ATOM category.
+         */
+        ptnr1_label_atom_id: str,
+        /**
+         * A component of the identifier for partner 1 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.label_comp_id in the
+         * ATOM_SITE category.
+         */
+        ptnr1_label_comp_id: str,
+        /**
+         * A component of the identifier for partner 1 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.label_seq_id in the
+         * ATOM_SITE category.
+         */
+        ptnr1_label_seq_id: int,
+        /**
+         * A component of the identifier for partner 1 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.auth_asym_id in the
+         * ATOM_SITE category.
+         */
+        ptnr1_auth_asym_id: str,
+        /**
+         * A component of the identifier for partner 1 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.auth_comp_id in the
+         * ATOM_SITE category.
+         */
+        ptnr1_auth_comp_id: str,
+        /**
+         * A component of the identifier for partner 1 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.auth_seq_id in the
+         * ATOM_SITE category.
+         */
+        ptnr1_auth_seq_id: int,
+        /**
+         * Describes the symmetry operation that should be applied to the
+         * atom set specified by _struct_conn.ptnr1_label* to generate the
+         * first partner in the structure connection.
+         */
+        ptnr1_symmetry: str,
+        /**
+         * A component of the identifier for partner 2 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.label_asym_id in the
+         * ATOM_SITE category.
+         */
+        ptnr2_label_asym_id: str,
+        /**
+         * A component of the identifier for partner 2 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _chem_comp_atom.atom_id in the
+         * CHEM_COMP_ATOM category.
+         */
+        ptnr2_label_atom_id: str,
+        /**
+         * A component of the identifier for partner 2 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.label_comp_id in the
+         * ATOM_SITE category.
+         */
+        ptnr2_label_comp_id: str,
+        /**
+         * A component of the identifier for partner 2 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.label_seq_id in the
+         * ATOM_SITE category.
+         */
+        ptnr2_label_seq_id: int,
+        /**
+         * A component of the identifier for partner 2 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.auth_asym_id in the
+         * ATOM_SITE category.
+         */
+        ptnr2_auth_asym_id: str,
+        /**
+         * A component of the identifier for partner 2 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.auth_comp_id in the
+         * ATOM_SITE category.
+         */
+        ptnr2_auth_comp_id: str,
+        /**
+         * A component of the identifier for partner 2 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.auth_seq_id in the
+         * ATOM_SITE category.
+         */
+        ptnr2_auth_seq_id: int,
+        /**
+         * Describes the symmetry operation that should be applied to the
+         * atom set specified by _struct_conn.ptnr2_label* to generate the
+         * second partner in the structure connection.
+         */
+        ptnr2_symmetry: str,
+        /**
+         * A component of the identifier for partner 1 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.pdbx_PDB_ins_code in the
+         * ATOM_SITE category.
+         */
+        pdbx_ptnr1_PDB_ins_code: str,
+        /**
+         * A component of the identifier for partner 1 of the
+         * structure connection. This data item is a pointer to
+         * _atom_site.label_alt_id in the ATOM_SITE category.
+         */
+        pdbx_ptnr1_label_alt_id: str,
+        /**
+         * A placeholder for the standard residue name found in
+         * the MODRES record of a PDB file.
+         */
+        pdbx_ptnr1_standard_comp_id: str,
+        /**
+         * A component of the identifier for partner 1 of the structure
+         * connection.
+         *
+         * This data item is a pointer to _atom_site.pdbx_PDB_ins_code in the
+         * ATOM_SITE category.
+         */
+        pdbx_ptnr2_PDB_ins_code: str,
+        /**
+         * A component of the identifier for partner 2 of the
+         * structure connection. This data item is a pointer to
+         * _atom_site.label_alt_id in the ATOM_SITE category.
+         */
+        pdbx_ptnr2_label_alt_id: str,
+        /**
+         * A component of the identifier for partner 3 of the
+         * structure connection. This data item is a pointer to
+         * _atom_site.pdbx_PDB_ins_code in the ATOM_SITE category.
+         */
+        pdbx_ptnr3_PDB_ins_code: str,
+        /**
+         * A component of the identifier for partner 3 of the
+         * structure connection. This data item is a pointer to
+         * _atom_site.label_alt_id in the ATOM_SITE category.
+         */
+        pdbx_ptnr3_label_alt_id: str,
+        /**
+         * A component of the identifier for partner 3 of the
+         * structure connection. This data item is a pointer to
+         * _atom_site.label_asym_id in the ATOM_SITE category.
+         */
+        pdbx_ptnr3_label_asym_id: str,
+        /**
+         * A component of the identifier for partner 3 of the
+         * structure connection. This data item is a pointer to
+         * _atom_site.label_atom_id in the ATOM_SITE category.
+         */
+        pdbx_ptnr3_label_atom_id: str,
+        /**
+         * A component of the identifier for partner 3 of the
+         * structure connection. This data item is a pointer to
+         * _atom_site.label_comp_id in the ATOM_SITE category.
+         */
+        pdbx_ptnr3_label_comp_id: str,
+        /**
+         * A component of the identifier for partner 1 of the
+         * structure connection. This data item is a pointer to
+         * _atom_site.label_seq_id in the ATOM_SITE category.
+         */
+        pdbx_ptnr3_label_seq_id: int,
+        /**
+         * A placeholder for the PDB id in the case the category
+         * is used to hold the information of the MODRES record of
+         * a PDB file.
+         */
+        pdbx_PDB_id: str,
+        /**
+         * Distance value for this contact.
+         */
+        pdbx_dist_value: float,
+        /**
+         * The chemical bond order associated with the specified atoms in
+         * this contact.
+         */
+        pdbx_value_order: Aliased(lstr),
+    },
+    /**
+     * Data items in the STRUCT_CONN_TYPE category record details
+     * about the criteria used to identify interactions between
+     * portions of the structure.
+     */
+    struct_conn_type: {
+        /**
+         * The criteria used to define the interaction.
+         */
+        criteria: str,
+        /**
+         * The chemical or structural type of the interaction.
+         */
+        id: Aliased(lstr),
+        /**
+         * A reference that specifies the criteria used to define the
+         * interaction.
+         */
+        reference: str,
+    },
+    /**
+     * Data items in the STRUCT_KEYWORDS category specify keywords
+     * that describe the chemical structure in this entry.
+     */
+    struct_keywords: {
+        /**
+         * This data item is a pointer to _entry.id in the ENTRY category.
+         */
+        entry_id: str,
+        /**
+         * Keywords describing this structure.
+         */
+        text: List(',', x => x),
+        /**
+         * Terms characterizing the macromolecular structure.
+         */
+        pdbx_keywords: str,
+    },
+    /**
+     * Data items in the STRUCT_MON_PROT_CIS category identify
+     * monomers that have been found to have the peptide bond in the cis
+     * conformation. The criterion used to select residues to be
+     * designated as containing cis peptide bonds is given in
+     * _struct_mon_details.prot_cis.
+     */
+    struct_mon_prot_cis: {
+        /**
+         * A component of the identifier for the monomer.
+         *
+         * This data item is a pointer to _atom_sites_alt.id in the
+         * ATOM_SITES_ALT category.
+         */
+        label_alt_id: str,
+        /**
+         * A component of the identifier for the monomer.
+         *
+         * This data item is a pointer to _atom_site.label_asym_id in the
+         * ATOM_SITE category.
+         */
+        label_asym_id: str,
+        /**
+         * A component of the identifier for the monomer.
+         *
+         * This data item is a pointer to _atom_site.label_comp_id in the
+         * ATOM_SITE category.
+         */
+        label_comp_id: str,
+        /**
+         * A component of the identifier for the monomer.
+         *
+         * This data item is a pointer to _atom_site.label_seq_id in the
+         * ATOM_SITE category.
+         */
+        label_seq_id: int,
+        /**
+         * A component of the identifier for the monomer.
+         *
+         * This data item is a pointer to _atom_site.auth_asym_id in the
+         * ATOM_SITE category.
+         */
+        auth_asym_id: str,
+        /**
+         * A component of the identifier for the monomer.
+         *
+         * This data item is a pointer to _atom_site.auth_comp_id in the
+         * ATOM_SITE category.
+         */
+        auth_comp_id: str,
+        /**
+         * A component of the identifier for the monomer.
+         *
+         * This data item is a pointer to _atom_site.auth_seq_id in the
+         * ATOM_SITE category.
+         */
+        auth_seq_id: int,
+        /**
+         * Pointer to _atom_site.auth_asym_id.
+         */
+        pdbx_auth_asym_id_2: str,
+        /**
+         * Pointer to _atom_site.auth_comp_id.
+         */
+        pdbx_auth_comp_id_2: str,
+        /**
+         * Pointer to _atom_site.auth_seq_id
+         */
+        pdbx_auth_seq_id_2: int,
+        /**
+         * Pointer to _atom_site.label_asym_id.
+         */
+        pdbx_label_asym_id_2: str,
+        /**
+         * Pointer to _atom_site.label_comp_id.
+         */
+        pdbx_label_comp_id_2: str,
+        /**
+         * Pointer to _atom_site.label_seq_id
+         */
+        pdbx_label_seq_id_2: int,
+        /**
+         * Pointer to _atom_site.pdbx_PDB_ins_code
+         */
+        pdbx_PDB_ins_code: str,
+        /**
+         * Pointer to _atom_site.pdbx_PDB_ins_code
+         */
+        pdbx_PDB_ins_code_2: str,
+        /**
+         * Pointer to _atom_site.pdbx_PDB_model_num
+         */
+        pdbx_PDB_model_num: int,
+        /**
+         * omega torsion angle
+         */
+        pdbx_omega_angle: str,
+        /**
+         * ordinal index
+         */
+        pdbx_id: str,
+        /**
+         * PDB Insertion code
+         */
+        pdbx_auth_ins_code: str,
+        /**
+         * PDB Insertion code
+         */
+        pdbx_auth_ins_code_2: str,
+    },
+    /**
+     * Data items in the STRUCT_NCS_OPER category describe the
+     * noncrystallographic symmetry operations.
+     *
+     * Each operator is specified as a matrix and a subsequent
+     * translation vector. Operators need not represent proper
+     * rotations.
+     */
+    struct_ncs_oper: {
+        /**
+         * A code to indicate whether this operator describes a
+         * relationship between coordinates all of which are given in the
+         * data block (in which case the value of code is 'given'), or
+         * whether the operator is used to generate new coordinates from
+         * those that are given in the data block (in which case the value
+         * of code is 'generate').
+         */
+        code: Aliased(str),
+        /**
+         * A description of special aspects of the noncrystallographic
+         * symmetry operator.
+         */
+        details: str,
+        /**
+         * The value of _struct_ncs_oper.id must uniquely identify a
+         * record in the STRUCT_NCS_OPER list.
+         *
+         * Note that for PDB _struct_ncs_oper.id must be a number.
+         */
+        id: int,
+        /**
+         * The elements of the 3x3 matrix component of a
+         * noncrystallographic symmetry operation.
+         */
+        matrix: Matrix(3, 3),
+        /**
+         * The elements of the three-element vector component of a
+         * noncrystallographic symmetry operation.
+         */
+        vector: Vector(3),
+    },
+    /**
+     * Data items in the STRUCT_SHEET_RANGE category record details
+     * about the residue ranges that form a beta-sheet. Residues are
+     * included in a range if they made beta-sheet-type hydrogen-bonding
+     * interactions with at least one adjacent strand and if there are
+     * at least two residues in the range.
+     */
+    struct_sheet_range: {
+        /**
+         * A component of the identifier for the residue at which the
+         * beta-sheet range begins.
+         *
+         * This data item is a pointer to _struct_asym.id in the
+         * STRUCT_ASYM category.
+         */
+        beg_label_asym_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * beta-sheet range begins.
+         *
+         * This data item is a pointer to _chem_comp.id in the CHEM_COMP
+         * category.
+         */
+        beg_label_comp_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * beta-sheet range begins.
+         *
+         * This data item is a pointer to _atom_site.label_seq_id in the
+         * ATOM_SITE category.
+         */
+        beg_label_seq_id: int,
+        /**
+         * A component of the identifier for the residue at which the
+         * beta-sheet range ends.
+         *
+         * This data item is a pointer to _struct_asym.id in the
+         * STRUCT_ASYM category.
+         */
+        end_label_asym_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * beta-sheet range ends.
+         *
+         * This data item is a pointer to _chem_comp.id in the CHEM_COMP
+         * category.
+         */
+        end_label_comp_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * beta-sheet range ends.
+         *
+         * This data item is a pointer to _atom_site.label_seq_id in the
+         * ATOM_SITE category.
+         */
+        end_label_seq_id: int,
+        /**
+         * A component of the identifier for the residue at which the
+         * beta-sheet range begins.
+         *
+         * This data item is a pointer to _atom_site.auth_asym_id in the
+         * ATOM_SITE category.
+         */
+        beg_auth_asym_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * beta-sheet range begins.
+         *
+         * This data item is a pointer to _atom_site.auth_comp_id in
+         * the ATOM_SITE category.
+         */
+        beg_auth_comp_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * beta-sheet range begins.
+         *
+         * This data item is a pointer to _atom_site.auth_seq_id in the
+         * ATOM_SITE category.
+         */
+        beg_auth_seq_id: int,
+        /**
+         * A component of the identifier for the residue at which the
+         * beta-sheet range ends.
+         *
+         * This data item is a pointer to _atom_site.auth_asym_id in the
+         * ATOM_SITE category.
+         */
+        end_auth_asym_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * beta-sheet range ends.
+         *
+         * This data item is a pointer to _atom_site.auth_comp_id in the
+         * ATOM_SITE category.
+         */
+        end_auth_comp_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * beta-sheet range ends.
+         *
+         * This data item is a pointer to _atom_site.auth_seq_id in the
+         * ATOM_SITE category.
+         */
+        end_auth_seq_id: int,
+        /**
+         * The value of _struct_sheet_range.id must uniquely identify a
+         * range in a given sheet in the STRUCT_SHEET_RANGE list.
+         *
+         * Note that this item need not be a number; it can be any unique
+         * identifier.
+         */
+        id: str,
+        /**
+         * This data item is a pointer to _struct_sheet.id in the
+         * STRUCT_SHEET category.
+         */
+        sheet_id: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * beta sheet range begins.  Insertion code.
+         */
+        pdbx_beg_PDB_ins_code: str,
+        /**
+         * A component of the identifier for the residue at which the
+         * beta sheet range ends. Insertion code.
+         */
+        pdbx_end_PDB_ins_code: str,
+    },
+    /**
+     * Data items in the STRUCT_SITE category record details about
+     * portions of the structure that contribute to structurally
+     * relevant sites (e.g. active sites, substrate-binding subsites,
+     * metal-coordination sites).
+     */
+    struct_site: {
+        /**
+         * A description of special aspects of the site.
+         */
+        details: str,
+        /**
+         * The value of _struct_site.id must uniquely identify a record in
+         * the STRUCT_SITE list.
+         *
+         * Note that this item need not be a number; it can be any unique
+         * identifier.
+         */
+        id: str,
+        /**
+         * Number of residues in the site.
+         */
+        pdbx_num_residues: int,
+        /**
+         * Source of evidence supporting the assignment of this site.
+         */
+        pdbx_evidence_code: str,
+        /**
+         * A component of the identifier for the ligand in the site.
+         *
+         * This data item is a pointer to _atom_site.auth_asym_id in the
+         * ATOM_SITE category.
+         */
+        pdbx_auth_asym_id: str,
+        /**
+         * A component of the identifier for the ligand in the site.
+         *
+         * This data item is a pointer to _atom_site.auth_comp_id in the
+         * ATOM_SITE category.
+         */
+        pdbx_auth_comp_id: str,
+        /**
+         * A component of the identifier for the ligand in the site.
+         *
+         * This data item is a pointer to _atom_site.auth_seq_id in the
+         * ATOM_SITE category.
+         */
+        pdbx_auth_seq_id: int,
+        /**
+         * PDB insertion code for the ligand in the site.
+         */
+        pdbx_auth_ins_code: str,
+    },
+    /**
+     * Data items in the STRUCT_SITE_GEN category record details about
+     * the generation of portions of the structure that contribute to
+     * structurally relevant sites.
+     */
+    struct_site_gen: {
+        /**
+         * A description of special aspects of the symmetry generation of
+         * this portion of the structural site.
+         */
+        details: str,
+        /**
+         * The value of _struct_site_gen.id must uniquely identify a record
+         * in the STRUCT_SITE_GEN list.
+         *
+         * Note that this item need not be a number; it can be any unique
+         * identifier.
+         */
+        id: str,
+        /**
+         * A component of the identifier for participants in the site.
+         *
+         * This data item is a pointer to _atom_sites_alt.id in the
+         * ATOM_SITES_ALT category.
+         */
+        label_alt_id: str,
+        /**
+         * A component of the identifier for participants in the site.
+         *
+         * This data item is a pointer to _atom_site.label_asym_id in the
+         * ATOM_SITE category.
+         */
+        label_asym_id: str,
+        /**
+         * A component of the identifier for participants in the site.
+         *
+         * This data item is a pointer to _chem_comp_atom.atom_id in the
+         * CHEM_COMP_ATOM category.
+         */
+        label_atom_id: str,
+        /**
+         * A component of the identifier for participants in the site.
+         *
+         * This data item is a pointer to _atom_site.label_comp_id in the
+         * ATOM_SITE category.
+         */
+        label_comp_id: str,
+        /**
+         * A component of the identifier for participants in the site.
+         *
+         * This data item is a pointer to _atom_site.label_seq_id in the
+         * ATOM_SITE category.
+         */
+        label_seq_id: int,
+        /**
+         * A component of the identifier for participants in the site.
+         *
+         * This data item is a pointer to _atom_site.auth_asym_id in the
+         * ATOM_SITE category.
+         */
+        auth_asym_id: str,
+        /**
+         * A component of the identifier for participants in the site.
+         *
+         * This data item is a pointer to _atom_site.auth_atom_id in the
+         * ATOM_SITE category.
+         */
+        auth_atom_id: str,
+        /**
+         * A component of the identifier for participants in the site.
+         *
+         * This data item is a pointer to _atom_site.auth_comp_id in the
+         * ATOM_SITE category.
+         */
+        auth_comp_id: str,
+        /**
+         * A component of the identifier for participants in the site.
+         *
+         * This data item is a pointer to _atom_site.auth_seq_id in the
+         * ATOM_SITE category.
+         */
+        auth_seq_id: int,
+        /**
+         * This data item is a pointer to _struct_site.id in the STRUCT_SITE
+         * category.
+         */
+        site_id: str,
+        /**
+         * Describes the symmetry operation that should be applied to the
+         * atom set specified by _struct_site_gen.label* to generate a
+         * portion of the site.
+         */
+        symmetry: str,
+        /**
+         * PDB insertion code.
+         */
+        pdbx_auth_ins_code: str,
+        /**
+         * Number of residues in the site.
+         */
+        pdbx_num_res: int,
+    },
+    /**
+     * Data items in the STRUCT_SITE_KEYWORDS category record
+     * keywords describing the site.
+     */
+    struct_site_keywords: {
+        /**
+         * This data item is a pointer to _struct_site.id in the STRUCT_SITE
+         * category.
+         */
+        site_id: str,
+        /**
+         * Keywords describing this site.
+         */
+        text: str,
+    },
+    /**
+     * Data items in the SYMMETRY category record details about the
+     * space-group symmetry.
+     */
+    symmetry: {
+        /**
+         * This data item is a pointer to _entry.id in the ENTRY category.
+         */
+        entry_id: str,
+        /**
+         * The cell settings for this space-group symmetry.
+         */
+        cell_setting: Aliased(lstr),
+        /**
+         * Space-group number from International Tables for Crystallography
+         * Vol. A (2002).
+         */
+        Int_Tables_number: int,
+        /**
+         * Space-group symbol as described by Hall (1981). This symbol
+         * gives the space-group setting explicitly. Leave spaces between
+         * the separate components of the symbol.
+         *
+         * Ref: Hall, S. R. (1981). Acta Cryst. A37, 517-525; erratum
+         * (1981) A37, 921.
+         */
+        space_group_name_Hall: str,
+        /**
+         * Hermann-Mauguin space-group symbol. Note that the
+         * Hermann-Mauguin symbol does not necessarily contain complete
+         * information about the symmetry and the space-group origin. If
+         * used, always supply the FULL symbol from International Tables
+         * for Crystallography Vol. A (2002) and indicate the origin and
+         * the setting if it is not implicit. If there is any doubt that
+         * the equivalent positions can be uniquely deduced from this
+         * symbol, specify the  _symmetry_equiv.pos_as_xyz or
+         * _symmetry.space_group_name_Hall  data items as well. Leave
+         * spaces between symbols referring to
+         * different axes.
+         */
+        'space_group_name_H-M': str,
+    },
+    /**
+     * These are internal RCSB records to keep track of data processing
+     * and status of the entry.
+     */
+    pdbx_database_status: {
+        /**
+         * Code for status of file.
+         */
+        status_code: Aliased(str),
+        /**
+         * Code for status of structure factor file.
+         */
+        status_code_sf: Aliased(str),
+        /**
+         * Code for status of NMR constraints file.
+         */
+        status_code_mr: Aliased(str),
+        /**
+         * The value of _pdbx_database_status.entry_id identifies the data block.
+         */
+        entry_id: str,
+        /**
+         * The date of initial deposition.  (The first message for
+         * deposition has been received.)
+         */
+        recvd_initial_deposition_date: str,
+        /**
+         * This code indicates whether the entry belongs to
+         * Structural Genomics Project.
+         */
+        SG_entry: Aliased(lstr),
+        /**
+         * The site where the file was deposited.
+         */
+        deposit_site: Aliased(str),
+        /**
+         * The site where the file was deposited.
+         */
+        process_site: Aliased(str),
+        /**
+         * Code for status of chemical shift data file.
+         */
+        status_code_cs: Aliased(str),
+        /**
+         * The methods development category in which this
+         * entry has been placed.
+         */
+        methods_development_category: Aliased(str),
+        /**
+         * A flag indicating that the entry is compatible with the PDB format.
+         *
+         * A value of 'N' indicates that the no PDB format data file is
+         * corresponding to this entry is available in the PDB archive.
+         */
+        pdb_format_compatible: Aliased(lstr),
+    },
+    /**
+     * The PDBX_NONPOLY_SCHEME category provides residue level nomenclature
+     * mapping for non-polymer entities.
+     */
+    pdbx_nonpoly_scheme: {
+        /**
+         * Pointer to _atom_site.label_asym_id.
+         */
+        asym_id: str,
+        /**
+         * Pointer to _atom_site.label_entity_id.
+         */
+        entity_id: str,
+        /**
+         * Pointer to _atom_site.label_comp_id.
+         */
+        mon_id: str,
+        /**
+         * PDB strand/chain id.
+         */
+        pdb_strand_id: str,
+        /**
+         * NDB/RCSB residue number.
+         */
+        ndb_seq_num: str,
+        /**
+         * PDB residue number.
+         */
+        pdb_seq_num: str,
+        /**
+         * Author provided residue numbering.   This value may differ from the PDB residue
+         * number and may not correspond to residue numbering within the coordinate records.
+         */
+        auth_seq_num: str,
+        /**
+         * PDB residue identifier.
+         */
+        pdb_mon_id: str,
+        /**
+         * Author provided residue identifier.   This value may differ from the PDB residue
+         * identifier and may not correspond to residue identification within the coordinate records.
+         */
+        auth_mon_id: str,
+        /**
+         * PDB insertion code.
+         */
+        pdb_ins_code: str,
+    },
+    /**
+     * Data items in PDBX_DATABASE_RELATED contain references to entries
+     * that are related to the this entry.
+     */
+    pdbx_database_related: {
+        /**
+         * The name of the database containing the related entry.
+         */
+        db_name: str,
+        /**
+         * A description of the related entry.
+         */
+        details: str,
+        /**
+         * The identifying code in the related database.
+         */
+        db_id: str,
+        /**
+         * The identifying content type of the related entry.
+         */
+        content_type: Aliased(str),
+    },
+    /**
+     * The PDBX_ENTITY_NONPOLY category provides a mapping between
+     * entity and the nonpolymer component
+     */
+    pdbx_entity_nonpoly: {
+        /**
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * This data item is a pointer to _chem_comp.id in the CHEM_COMP category.
+         */
+        comp_id: str,
+        /**
+         * A name for the non-polymer entity
+         */
+        name: str,
+    },
+    /**
+     * PDBX_CHEM_COMP_SYNONYMS holds chemical name and synonym correspondences.
+     */
+    pdbx_chem_comp_synonyms: {
+        /**
+         * The synonym of this particular chemical component.
+         */
+        name: str,
+        /**
+         * The chemical component for which this synonym applies.
+         */
+        comp_id: str,
+        /**
+         * The provenance of this synonym.
+         */
+        provenance: Aliased(str),
+    },
+    /**
+     * Data items in the CHEM_COMP_IDENTIFIER category provide
+     * identifiers for chemical components.
+     */
+    pdbx_chem_comp_identifier: {
+        /**
+         * This data item is a pointer to _chem_comp.id in the CHEM_COMP
+         * category.
+         */
+        comp_id: str,
+        /**
+         * This data item contains the identifier value for this
+         * component.
+         */
+        identifier: str,
+        /**
+         * This data item contains the identifier type.
+         */
+        type: Aliased(str),
+        /**
+         * This data item contains the name of the program
+         * or library used to compute the identifier.
+         */
+        program: str,
+        /**
+         * This data item contains the version of the program
+         * or library used to compute the identifier.
+         */
+        program_version: str,
+    },
+    /**
+     * Data items in the PDBX_UNOBS_OR_ZERO_OCC_RESIDUES category list the
+     * residues within the entry that are not observed or have zero occupancy.
+     */
+    pdbx_unobs_or_zero_occ_residues: {
+        /**
+         * The value of _pdbx_unobs_or_zero_occ_residues.id must uniquely identify
+         * each item in the PDBX_UNOBS_OR_ZERO_OCC_RESIDUES list.
+         *
+         * This is an integer serial number.
+         */
+        id: int,
+        /**
+         * The value of polymer flag indicates whether the unobserved or
+         * zero occupancy residue is part of a polymer chain or not
+         */
+        polymer_flag: Aliased(lstr),
+        /**
+         * The value of occupancy flag indicates whether the residue
+         * is unobserved (= 1) or the coordinates have an occupancy of zero (=0)
+         */
+        occupancy_flag: Aliased(int),
+        /**
+         * Part of the identifier for the unobserved or zero occupancy residue.
+         *
+         * This data item is a pointer to _atom_site.pdbx_PDB_model_num in the
+         * ATOM_SITE category.
+         */
+        PDB_model_num: int,
+        /**
+         * Part of the identifier for the unobserved or zero occupancy residue.
+         *
+         * This data item is a pointer to _atom_site.auth_asym_id in the
+         * ATOM_SITE category.
+         */
+        auth_asym_id: str,
+        /**
+         * Part of the identifier for the unobserved or zero occupancy residue.
+         *
+         * This data item is a pointer to _atom_site.auth_comp_id in the
+         * ATOM_SITE category.
+         */
+        auth_comp_id: str,
+        /**
+         * Part of the identifier for the unobserved or zero occupancy residue.
+         *
+         * This data item is a pointer to _atom_site.auth_seq_id in the
+         * ATOM_SITE category.
+         */
+        auth_seq_id: int,
+        /**
+         * Part of the identifier for the unobserved or zero occupancy residue.
+         *
+         * This data item is a pointer to _atom_site.pdbx_PDB_ins_code in the
+         * ATOM_SITE category.
+         */
+        PDB_ins_code: str,
+        /**
+         * Part of the identifier for the unobserved or zero occupancy residue.
+         *
+         * This data item is a pointer to _atom_site.label_asym_id in the
+         * ATOM_SITE category.
+         */
+        label_asym_id: str,
+        /**
+         * Part of the identifier for the unobserved or zero occupancy residue.
+         *
+         * This data item is a pointer to _atom_site.label_comp_id in the
+         * ATOM_SITE category.
+         */
+        label_comp_id: str,
+        /**
+         * Part of the identifier for the unobserved or zero occupancy residue.
+         *
+         * This data item is a pointer to _atom_site.label_seq_id in the
+         * ATOM_SITE category.
+         */
+        label_seq_id: int,
+    },
+    /**
+     * Data items in the PDBX_STRUCT_MOD_RESIDUE category list the
+     * modified polymer components in the entry and provide some
+     * details describing the nature of the modification.
+     */
+    pdbx_struct_mod_residue: {
+        /**
+         * The value of _pdbx_struct_mod_residue.id must uniquely identify
+         * each item in the PDBX_STRUCT_MOD_RESIDUE list.
+         *
+         * This is an integer serial number.
+         */
+        id: int,
+        /**
+         * Part of the identifier for the modified polymer component.
+         *
+         * This data item is a pointer to _atom_site.auth_asym_id in the
+         * ATOM_SITE category.
+         */
+        auth_asym_id: str,
+        /**
+         * Part of the identifier for the modified polymer component.
+         *
+         * This data item is a pointer to _atom_site.auth_comp_id in the
+         * ATOM_SITE category.
+         */
+        auth_comp_id: str,
+        /**
+         * Part of the identifier for the modified polymer component.
+         *
+         * This data item is a pointer to _atom_site.auth_seq_id in the
+         * ATOM_SITE category.
+         */
+        auth_seq_id: int,
+        /**
+         * Part of the identifier for the modified polymer component.
+         *
+         * This data item is a pointer to _atom_site.pdbx_PDB_ins_code in the
+         * ATOM_SITE category.
+         */
+        PDB_ins_code: str,
+        /**
+         * Part of the identifier for the modified polymer component.
+         *
+         * This data item is a pointer to _atom_site.label_asym_id in the
+         * ATOM_SITE category.
+         */
+        label_asym_id: str,
+        /**
+         * Part of the identifier for the modified polymer component.
+         *
+         * This data item is a pointer to _atom_site.label_comp_id in the
+         * ATOM_SITE category.
+         */
+        label_comp_id: str,
+        /**
+         * Part of the identifier for the unobserved or zero occupancy residue.
+         *
+         * This data item is a pointer to _atom_site.label_seq_id in the
+         * ATOM_SITE category.
+         */
+        label_seq_id: int,
+        /**
+         * The parent component identifier for this modified polymer component.
+         */
+        parent_comp_id: str,
+        /**
+         * Details of the modification for this polymer component.
+         */
+        details: str,
+    },
+    /**
+     * Data items in the PDBX_STRUCT_OPER_LIST category describe
+     * Cartesian rotation and translation operations required to
+     * generate or transform the coordinates deposited with this entry.
+     */
+    pdbx_struct_oper_list: {
+        /**
+         * This identifier code must uniquely identify a
+         * record in the PDBX_STRUCT_OPER_LIST list.
+         */
+        id: str,
+        /**
+         * A code to indicate the type of operator.
+         */
+        type: Aliased(str),
+        /**
+         * A descriptive name for the transformation operation.
+         */
+        name: str,
+        /**
+         * The symmetry operation corresponding to the transformation operation.
+         */
+        symmetry_operation: str,
+        /**
+         * The elements of the 3x3 matrix component of the
+         * transformation operation.
+         */
+        matrix: Matrix(3, 3),
+        /**
+         * The elements of the three-element vector component of the
+         * transformation operation.
+         */
+        vector: Vector(3),
+    },
+    /**
+     * Data items in the PDBX_STRUCT_ASSEMBLY category record details about
+     * the structural elements that form macromolecular assemblies.
+     */
+    pdbx_struct_assembly: {
+        /**
+         * Provides details of the method used to determine or
+         * compute the assembly.
+         */
+        method_details: str,
+        /**
+         * Provides the details of the oligomeric state of the assembly.
+         */
+        oligomeric_details: str,
+        /**
+         * The number of polymer molecules in the assembly.
+         */
+        oligomeric_count: int,
+        /**
+         * A description of special aspects of the macromolecular assembly.
+         *
+         * In the PDB, 'representative helical assembly', 'complete point assembly',
+         * 'complete icosahedral assembly', 'software_defined_assembly', 'author_defined_assembly',
+         * and 'author_and_software_defined_assembly' are considered "biologically relevant assemblies.
+         */
+        details: str,
+        /**
+         * The value of _pdbx_struct_assembly.id must uniquely identify a record in
+         * the PDBX_STRUCT_ASSEMBLY list.
+         */
+        id: str,
+    },
+    /**
+     * Data items in the PDBX_STRUCT_ASSEMBLY_GEN category record details about
+     * the generation of each macromolecular assemblies. The PDBX_STRUCT_ASSEMBLY_GEN
+     * data items provide the specifications of the components that
+     * constitute that assembly in terms of cartesian transformations.
+     */
+    pdbx_struct_assembly_gen: {
+        /**
+         * This data item is a pointer to _struct_asym.id in
+         * the STRUCT_ASYM category.
+         *
+         * This item may be expressed as a comma separated list of identifiers.
+         */
+        asym_id_list: List(',', x => x),
+        /**
+         * This data item is a pointer to _pdbx_struct_assembly.id in the
+         * PDBX_STRUCT_ASSEMBLY category.
+         */
+        assembly_id: str,
+        /**
+         * Identifies the operation of collection of operations
+         * from category PDBX_STRUCT_OPER_LIST.
+         *
+         * Operation expressions may have the forms:
+         *
+         * (1)        the single operation 1
+         * (1,2,5)    the operations 1, 2, 5
+         * (1-4)      the operations 1,2,3 and 4
+         * (1,2)(3,4) the combinations of operations
+         * 3 and 4 followed by 1 and 2 (i.e.
+         * the cartesian product of parenthetical
+         * groups applied from right to left)
+         */
+        oper_expression: str,
+    },
+    /**
+     * Data items in the PDBX_REFERENCE_ENTITY_LIST category record
+     * the list of entities within each reference molecule.
+     */
+    pdbx_reference_entity_list: {
+        /**
+         * The value of _pdbx_reference_entity_list.prd_id is a reference
+         * _pdbx_reference_molecule.prd_id in the PDBX_REFERENCE_MOLECULE category.
+         */
+        prd_id: str,
+        /**
+         * The value of _pdbx_reference_entity_list.ref_entity_id is a unique identifier
+         * the a constituent entity within this reference molecule.
+         */
+        ref_entity_id: str,
+        /**
+         * Defines the polymer characteristic of the entity.
+         */
+        type: Aliased(lstr),
+        /**
+         * Additional details about this entity.
+         */
+        details: str,
+        /**
+         * The component number of this entity within the molecule.
+         */
+        component_id: int,
+    },
+    /**
+     * Data items in the PDBX_REFERENCE_ENTITY_LINK category give details about
+     * the linkages between entities within reference molecules.
+     */
+    pdbx_reference_entity_link: {
+        /**
+         * The value of _pdbx_reference_entity_link.link_id uniquely identifies
+         * linkages between entities with a molecule.
+         */
+        link_id: int,
+        /**
+         * The value of _pdbx_reference_entity_link.prd_id is a reference
+         * _pdbx_reference_entity_list.prd_id in the PDBX_REFERENCE_ENTITY_LIST category.
+         */
+        prd_id: str,
+        /**
+         * A description of special aspects of a linkage between
+         * chemical components in the structure.
+         */
+        details: str,
+        /**
+         * The reference entity id of the first of the two entities joined by the
+         * linkage.
+         *
+         * This data item is a pointer to _pdbx_reference_entity_list.ref_entity_id
+         * in the PDBX_REFERENCE_ENTITY_LIST category.
+         */
+        ref_entity_id_1: str,
+        /**
+         * The reference entity id of the second of the two entities joined by the
+         * linkage.
+         *
+         * This data item is a pointer to _pdbx_reference_entity_list.ref_entity_id
+         * in the PDBX_REFERENCE_ENTITY_LIST category.
+         */
+        ref_entity_id_2: str,
+        /**
+         * For a polymer entity, the sequence number in the first of
+         * the two entities containing the linkage.
+         *
+         * This data item is a pointer to _pdbx_reference_entity_poly_seq.num
+         * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
+         */
+        entity_seq_num_1: int,
+        /**
+         * For a polymer entity, the sequence number in the second of
+         * the two entities containing the linkage.
+         *
+         * This data item is a pointer to _pdbx_reference_entity_poly_seq.num
+         * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
+         */
+        entity_seq_num_2: int,
+        /**
+         * The component identifier in the first of the two entities containing the linkage.
+         *
+         * For polymer entities, this data item is a pointer to _pdbx_reference_entity_poly_seq.mon_id
+         * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
+         *
+         * For non-polymer entities, this data item is a pointer to
+         * _pdbx_reference_entity_nonpoly.chem_comp_id in the
+         * PDBX_REFERENCE_ENTITY_NONPOLY category.
+         */
+        comp_id_1: str,
+        /**
+         * The component identifier in the second of the two entities containing the linkage.
+         *
+         * For polymer entities, this data item is a pointer to _pdbx_reference_entity_poly_seq.mon_id
+         * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
+         *
+         * For non-polymer entities, this data item is a pointer to
+         * _pdbx_reference_entity_nonpoly.chem_comp_id in the
+         * PDBX_REFERENCE_ENTITY_NONPOLY category.
+         */
+        comp_id_2: str,
+        /**
+         * The atom identifier/name in the first of the two entities containing the linkage.
+         */
+        atom_id_1: str,
+        /**
+         * The atom identifier/name in the second of the two entities containing the linkage.
+         */
+        atom_id_2: str,
+        /**
+         * The bond order target for the chemical linkage.
+         */
+        value_order: Aliased(lstr),
+        /**
+         * The entity component identifier for the first of two entities containing the linkage.
+         */
+        component_1: int,
+        /**
+         * The entity component identifier for the second of two entities containing the linkage.
+         */
+        component_2: int,
+        /**
+         * A code indicating the entity types involved in the linkage.
+         */
+        link_class: Aliased(str),
+    },
+    /**
+     * Data items in the PDBX_REFERENCE_ENTITY_POLY_LINK category give details about
+     * polymer linkages including both standard and non-standard linkages between
+     * polymer componnents.
+     */
+    pdbx_reference_entity_poly_link: {
+        /**
+         * The value of _pdbx_reference_entity_poly_link.link_id uniquely identifies
+         * a linkage within a polymer entity.
+         */
+        link_id: int,
+        /**
+         * The value of _pdbx_reference_entity_poly_link.prd_id is a reference
+         * _pdbx_reference_entity_list.prd_id in the PDBX_REFERENCE_ENTITY_POLY category.
+         */
+        prd_id: str,
+        /**
+         * The reference entity id of the polymer entity containing the linkage.
+         *
+         * This data item is a pointer to _pdbx_reference_entity_poly.ref_entity_id
+         * in the PDBX_REFERENCE_ENTITY_POLY category.
+         */
+        ref_entity_id: str,
+        /**
+         * The entity component identifier entity containing the linkage.
+         */
+        component_id: int,
+        /**
+         * For a polymer entity, the sequence number in the first of
+         * the two components making the linkage.
+         *
+         * This data item is a pointer to _pdbx_reference_entity_poly_seq.num
+         * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
+         */
+        entity_seq_num_1: int,
+        /**
+         * For a polymer entity, the sequence number in the second of
+         * the two components making the linkage.
+         *
+         * This data item is a pointer to _pdbx_reference_entity_poly_seq.num
+         * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
+         */
+        entity_seq_num_2: int,
+        /**
+         * The component identifier in the first of the two components making the
+         * linkage.
+         *
+         * This data item is a pointer to _pdbx_reference_entity_poly_seq.mon_id
+         * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
+         */
+        comp_id_1: str,
+        /**
+         * The component identifier in the second of the two components making the
+         * linkage.
+         *
+         * This data item is a pointer to _pdbx_reference_entity_poly_seq.mon_id
+         * in the PDBX_REFERENCE_ENTITY_POLY_SEQ category.
+         */
+        comp_id_2: str,
+        /**
+         * The atom identifier/name in the first of the two components making
+         * the linkage.
+         */
+        atom_id_1: str,
+        /**
+         * The atom identifier/name in the second of the two components making
+         * the linkage.
+         */
+        atom_id_2: str,
+        /**
+         * The bond order target for the non-standard linkage.
+         */
+        value_order: Aliased(lstr),
+    },
+    /**
+     * Data items in the PDBX_MOLECULE category identify reference molecules
+     * within a PDB entry.
+     */
+    pdbx_molecule: {
+        /**
+         * The value of _pdbx_molecule.prd_id is the PDB accession code for this
+         * reference molecule.
+         */
+        prd_id: str,
+        /**
+         * The value of _pdbx_molecule.instance_id is identifies a particular molecule
+         * in the molecule list.
+         */
+        instance_id: int,
+        /**
+         * A reference to _struct_asym.id in the STRUCT_ASYM category.
+         */
+        asym_id: str,
+    },
+    /**
+     * Data items in the PDBX_MOLECULE_FEATURES category record features of molecules
+     * within a PDB entry.
+     */
+    pdbx_molecule_features: {
+        /**
+         * The value of _pdbx_molecule_features.prd_id is the accession code for this
+         * reference molecule.
+         */
+        prd_id: str,
+        /**
+         * Broadly defines the function of the molecule.
+         */
+        class: Aliased(lstr),
+        /**
+         * Defines the structural classification of the molecule.
+         */
+        type: Aliased(lstr),
+        /**
+         * A name of the molecule.
+         */
+        name: str,
+        /**
+         * Additional details describing the molecule.
+         */
+        details: str,
+    },
+    /**
+     * Data items in the ENTITY_SRC_NAT category record details of
+     * the source from which the entity was obtained in cases
+     * where the entity was isolated directly from a natural tissue.
+     */
+    entity_src_nat: {
+        /**
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * Scientific name of the organism of the natural source.
+         */
+        pdbx_organism_scientific: str,
+        /**
+         * The plasmid containing the gene.
+         */
+        pdbx_plasmid_name: str,
+        /**
+         * This data item is an ordinal identifier for entity_src_nat data records.
+         */
+        pdbx_src_id: int,
+        /**
+         * The beginning polymer sequence position for the polymer section corresponding
+         * to this source.
+         *
+         * A reference to the sequence position in the entity_poly category.
+         */
+        pdbx_beg_seq_num: int,
+        /**
+         * The ending polymer sequence position for the polymer section corresponding
+         * to this source.
+         *
+         * A reference to the sequence position in the entity_poly category.
+         */
+        pdbx_end_seq_num: int,
+    },
+    /**
+     * Data items in the ENTITY_SRC_GEN category record details of
+     * the source from which the entity was obtained in cases
+     * where the source was genetically manipulated.  The
+     * following are treated separately:  items pertaining to the tissue
+     * from which the gene was obtained, items pertaining to the host
+     * organism for gene expression and items pertaining to the actual
+     * producing organism (plasmid).
+     */
+    entity_src_gen: {
+        /**
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * Identifies the gene.
+         */
+        pdbx_gene_src_gene: List(',', x => x),
+        /**
+         * Scientific name of the organism.
+         */
+        pdbx_gene_src_scientific_name: str,
+        /**
+         * The name of the plasmid that produced the entity in the host
+         * organism. Where full details of the protein production are available
+         * it would be expected that this item would be derived from
+         * _pdbx_construct.name of the construct pointed to from
+         * _entity_src_gen_express.plasmid_id.
+         */
+        plasmid_name: str,
+        /**
+         * This data item is an ordinal identifier for entity_src_gen data records.
+         */
+        pdbx_src_id: int,
+        /**
+         * The beginning polymer sequence position for the polymer section corresponding
+         * to this source.
+         *
+         * A reference to the sequence position in the entity_poly category.
+         */
+        pdbx_beg_seq_num: int,
+        /**
+         * The ending polymer sequence position for the polymer section corresponding
+         * to this source.
+         *
+         * A reference to the sequence position in the entity_poly category.
+         */
+        pdbx_end_seq_num: int,
+    },
+    /**
+     * The data items in category PDBX_ENTITY_SRC_SYN record the source details
+     * about chemically synthesized molecules.
+     */
+    pdbx_entity_src_syn: {
+        /**
+         * The scientific name of the organism from which the sequence of
+         * the synthetic entity was derived.
+         */
+        organism_scientific: str,
+        /**
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * This data item is an ordinal identifier for pdbx_entity_src_syn data records.
+         */
+        pdbx_src_id: int,
+        /**
+         * The beginning polymer sequence position for the polymer section corresponding
+         * to this source.
+         *
+         * A reference to the sequence position in the entity_poly category.
+         */
+        pdbx_beg_seq_num: int,
+        /**
+         * The ending polymer sequence position for the polymer section corresponding
+         * to this source.
+         *
+         * A reference to the sequence position in the entity_poly category.
+         */
+        pdbx_end_seq_num: int,
+    },
+    /**
+     * Data items in the PDBX_ENTITY_BRANCH_DESCRIPTOR category provide
+     * string descriptors of entity chemical structure.
+     */
+    pdbx_entity_branch_descriptor: {
+        /**
+         * This data item is a pointer to _entity_poly.entity_id in the ENTITY
+         * category.
+         */
+        entity_id: str,
+        /**
+         * This data item contains the descriptor value for this
+         * entity.
+         */
+        descriptor: str,
+        /**
+         * This data item contains the descriptor type.
+         */
+        type: Aliased(lstr),
+        /**
+         * This data item contains the name of the program
+         * or library used to compute the descriptor.
+         */
+        program: str,
+        /**
+         * This data item contains the version of the program
+         * or library used to compute the descriptor.
+         */
+        program_version: str,
+        /**
+         * Ordinal index for this category.
+         */
+        ordinal: int,
+    },
+    /**
+     * Data items in the pdbx_entity_instance_feature category records
+     * special features of selected entity instances.
+     */
+    pdbx_entity_instance_feature: {
+        /**
+         * Special structural details about this entity instance.
+         */
+        details: str,
+        /**
+         * A feature type associated with entity instance.
+         */
+        feature_type: Aliased(str),
+        /**
+         * Author instance identifier (formerly PDB Chain ID)
+         */
+        auth_asym_id: str,
+        /**
+         * Instance identifier for this entity.
+         */
+        asym_id: str,
+        /**
+         * Author provided residue number.
+         */
+        auth_seq_num: str,
+        /**
+         * Position in the sequence.
+         */
+        seq_num: int,
+        /**
+         * Chemical component identifier
+         */
+        comp_id: str,
+        /**
+         * The author provided chemical component identifier
+         */
+        auth_comp_id: str,
+        /**
+         * An ordinal index for this category
+         */
+        ordinal: int,
+    },
+    /**
+     * Data items in the PDBX_ENTITY_BRANCH_LIST category specify the list
+     * of monomers in a branched entity.  Allowance is made for the possibility
+     * of microheterogeneity in a sample by allowing a given sequence
+     * number to be correlated with more than one monomer ID. The
+     * corresponding ATOM_SITE entries should reflect this
+     * heterogeneity.
+     */
+    pdbx_entity_branch_list: {
+        /**
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * A flag to indicate whether this monomer in the entity is
+         * heterogeneous in sequence.
+         */
+        hetero: Aliased(lstr),
+        /**
+         * This data item is a pointer to _chem_comp.id in the CHEM_COMP
+         * category.
+         */
+        comp_id: str,
+        /**
+         * The value pair  _pdbx_entity_branch_list.num and _pdbx_entity_branch_list.comp_id
+         * must uniquely identify a record in the PDBX_ENTITY_BRANCH_LIST list.
+         */
+        num: int,
+    },
+    /**
+     * Data items in the PDBX_ENTITY_BRANCH_LINK category give details about
+     * the linkages between components within a branched entity.
+     */
+    pdbx_entity_branch_link: {
+        /**
+         * The value of _pdbx_entity_branch_link.link_id uniquely identifies
+         * linkages within the branched entity.
+         */
+        link_id: int,
+        /**
+         * A description of special aspects of this linkage.
+         */
+        details: str,
+        /**
+         * The entity id for this branched entity.
+         *
+         * This data item is a pointer to _pdbx_entity_branch_list.entity_id
+         * in the PDBX_ENTITY_BRANCH_LIST category.
+         */
+        entity_id: str,
+        /**
+         * The component number for the first component making the linkage.
+         *
+         * This data item is a pointer to _pdbx_entity_branch_list.num
+         * in the PDBX_ENTITY_BRANCH_LIST category.
+         */
+        entity_branch_list_num_1: int,
+        /**
+         * The component number for the second component making the linkage.
+         *
+         * This data item is a pointer to _pdbx_entity_branch_list.num
+         * in the PDBX_ENTITY_BRANCH_LIST category.
+         */
+        entity_branch_list_num_2: int,
+        /**
+         * The component identifier for the first component making the linkage.
+         *
+         * This data item is a pointer to _pdbx_entity_branch_list.comp_id
+         * in the PDBX_ENTITY_BRANCH_LIST category.
+         */
+        comp_id_1: str,
+        /**
+         * The component identifier for the second component making the linkage.
+         *
+         * This data item is a pointer to _pdbx_entity_branch_list.comp_id
+         * in the PDBX_ENTITY_BRANCH_LIST category.
+         */
+        comp_id_2: str,
+        /**
+         * The atom identifier/name for the first atom making the linkage.
+         */
+        atom_id_1: str,
+        /**
+         * The leaving atom identifier/name bonded to the first atom making the linkage.
+         */
+        leaving_atom_id_1: str,
+        /**
+         * The chiral configuration of the first atom making the linkage.
+         */
+        atom_stereo_config_1: Aliased(lstr),
+        /**
+         * The atom identifier/name for the second atom making the linkage.
+         */
+        atom_id_2: str,
+        /**
+         * The leaving atom identifier/name bonded to the second atom making the linkage.
+         */
+        leaving_atom_id_2: str,
+        /**
+         * The chiral configuration of the second atom making the linkage.
+         */
+        atom_stereo_config_2: Aliased(lstr),
+        /**
+         * The bond order target for the chemical linkage.
+         */
+        value_order: Aliased(lstr),
+    },
+    /**
+     * Data items in the PDBX_ENTITY_BRANCH category specify the list
+     * of branched entities and the type.
+     */
+    pdbx_entity_branch: {
+        /**
+         * The entity id for this branched entity.
+         *
+         * This data item is a pointer to _entity.id
+         */
+        entity_id: str,
+        /**
+         * The type of this branched oligosaccharide.
+         */
+        type: Aliased(str),
+    },
+    /**
+     * The PDBX_BRANCH_SCHEME category provides residue level nomenclature
+     * mapping for branch chain entities.
+     */
+    pdbx_branch_scheme: {
+        /**
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * A flag to indicate whether this monomer in the entity is
+         * heterogeneous in sequence.
+         */
+        hetero: Aliased(lstr),
+        /**
+         * Pointer to _atom_site.label_asym_id.
+         */
+        asym_id: str,
+        /**
+         * This data item is a pointer to _atom_site.label_comp_id in the
+         * PDBX_ENTITY_BRANCH_LIST category.
+         */
+        mon_id: str,
+        /**
+         * This data item is a pointer to _pdbx_entity_branch_list.num in the
+         * PDBX_ENTITY_BRANCH_LIST category.
+         */
+        num: int,
+        /**
+         * This data item is a pointer to _atom_site.auth_asym_id in the
+         * ATOM_SITE category.
+         */
+        pdb_asym_id: str,
+        /**
+         * This data item is a pointer to _atom_site.auth_seq_id in the
+         * ATOM_SITE category.
+         */
+        pdb_seq_num: str,
+        /**
+         * This data item is a pointer to _atom_site.auth_comp_id in the
+         * ATOM_SITE category.
+         */
+        pdb_mon_id: str,
+        /**
+         * This data item is a pointer to _atom_site.pdbx_auth_asym_id in the
+         * ATOM_SITE category.
+         */
+        auth_asym_id: str,
+        /**
+         * This data item is a pointer to _atom_site.pdbx_auth_seq_id in the
+         * ATOM_SITE category.
+         */
+        auth_seq_num: str,
+        /**
+         * This data item is a pointer to _atom_site.pdbx_auth_comp_id in the
+         * ATOM_SITE category.
+         */
+        auth_mon_id: str,
+    },
+    /**
+     * PDBX_CHEM_COMP_RELATED describes the relationship between two chemical components.
+     */
+    pdbx_chem_comp_related: {
+        /**
+         * The chemical component for which this relationship applies.
+         */
+        comp_id: str,
+        /**
+         * The related chemical component for which this chemical component is based.
+         */
+        related_comp_id: str,
+        /**
+         * Describes the type of relationship
+         */
+        relationship_type: Aliased(str),
+        /**
+         * Describes the type of relationship
+         */
+        details: str,
+    },
+    /**
+     * Data items in the IHM_STARTING_MODEL_DETAILS category records the
+     * details about structural models used as starting inputs in
+     * the integrative model building process.
+     */
+    ihm_starting_model_details: {
+        /**
+         * A unique identifier for the starting structural model.
+         */
+        starting_model_id: str,
+        /**
+         * A unique identifier for the distinct molecular entities.
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * A text description of the molecular entity
+         */
+        entity_description: str,
+        /**
+         * An asym/strand identifier for the entity molecule.
+         * This data item is a pointer to _struct_asym.id in the
+         * STRUCT_ASYM category.
+         */
+        asym_id: str,
+        /**
+         * The identifier for the polymeric segment modeled using this starting model.
+         * This data item is a pointer to _ihm_entity_poly_segment.id in the
+         * IHM_ENTITY_POLY_SEGMENT category.
+         */
+        entity_poly_segment_id: int,
+        /**
+         * The source of the starting model.
+         */
+        starting_model_source: Aliased(str),
+        /**
+         * The author assigned chainId/auth_asym_id corresponding to this starting model.
+         * This corresponds to the chainId/auth_asym_id of the experimental models in the
+         * PDB or comparative models in the Model Archive or the starting models referenced
+         * via a DOI. If starting models are included in IHM_STARTING_MODEL_COORD, then
+         * this will be the same as _ihm_starting_model_details.asym_id.
+         */
+        starting_model_auth_asym_id: str,
+        /**
+         * The offset in residue numbering between the starting model and the deposited I/H model, if applicable.
+         * I/H model residue number = Starting model residue number + offset
+         */
+        starting_model_sequence_offset: int,
+        /**
+         * Identifier to the starting model (comparative, experimental or integrative)
+         * used as input in the integrative modeling.
+         * This data item is a pointer to the _ihm_dataset_list.id in the
+         * IHM_DATASET_LIST category.
+         */
+        dataset_list_id: int,
+    },
+    /**
+     * Data items in the IHM_STARTING_COMPARATIVE_MODELS category records
+     * additional details about comparative models used as starting inputs in
+     * the integrative model building process.
+     */
+    ihm_starting_comparative_models: {
+        /**
+         * A unique identifier for the starting comparative model.
+         */
+        id: int,
+        /**
+         * The identifier for the starting structural model.
+         * This data item is a pointer to _ihm_starting_model_details.starting_model_id
+         * in the IHM_STARTING_MODEL_DETAILS category.
+         */
+        starting_model_id: str,
+        /**
+         * The chainId/auth_asym_id corresponding to the starting model.
+         */
+        starting_model_auth_asym_id: str,
+        /**
+         * The starting residue index of the starting model.
+         */
+        starting_model_seq_id_begin: int,
+        /**
+         * The ending residue index of the starting model.
+         */
+        starting_model_seq_id_end: int,
+        /**
+         * The chainId/auth_asym_id corresponding to the template.
+         */
+        template_auth_asym_id: str,
+        /**
+         * The starting residue index of the template.
+         */
+        template_seq_id_begin: int,
+        /**
+         * The ending residue index of the template.
+         */
+        template_seq_id_end: int,
+        /**
+         * The percentage sequence identity between the template sequence and the comparative model sequence.
+         */
+        template_sequence_identity: float,
+        /**
+         * The denominator used while calculating the sequence identity provided in
+         * _ihm_starting_comparative_models.template_sequence_identity.
+         */
+        template_sequence_identity_denominator: Aliased(int),
+        /**
+         * The dataset list id corresponding to the template used to obtain the comparative model.
+         * This data item is a pointer to _ihm_dataset_list.id in the IHM_DATASET_LIST category.
+         */
+        template_dataset_list_id: int,
+        /**
+         * The file id corresponding to the sequence alignment of the template sequence and the comparative model sequence.
+         * This data item is a pointer to _ihm_external_files.id in the IHM_EXTERNAL_FILES category.
+         */
+        alignment_file_id: int,
+    },
+    /**
+     * Data items in the IHM_STARTING_MODEL_SEQ_DIF category provide a
+     * mechanism for indicating and annotating point differences
+     * between the sequence of the entity or biological unit described
+     * in the data block and the sequence of the starting model used in
+     * the integrative modeling referenced from a database. The point
+     * differences may be due to point mutations introduced in the
+     * starting model or the presence of modified amino acid residues.
+     */
+    ihm_starting_model_seq_dif: {
+        /**
+         * A unique identifier for the entry.
+         */
+        id: int,
+        /**
+         * A unique identifier for the distinct molecular entities.
+         * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY category.
+         */
+        entity_id: str,
+        /**
+         * An asym/strand identifier for the entity molecule.
+         * This data item is a pointer to _struct_asym.id in the
+         * STRUCT_ASYM category.
+         */
+        asym_id: str,
+        /**
+         * The residue index.
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id: int,
+        /**
+         * The component identifier for the residue.
+         * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
+         */
+        comp_id: str,
+        /**
+         * Unique identifier for the starting model record.
+         * This data item is a pointer to _ihm_starting_model_details.starting_model_id in the
+         * IHM_STARTING_MODEL_DETAILS category.
+         */
+        starting_model_id: str,
+        /**
+         * The asym/strand identifier for the entity molecule of the database starting model.
+         */
+        db_asym_id: str,
+        /**
+         * The corresponding residue index of the database starting model.
+         */
+        db_seq_id: int,
+        /**
+         * The correspinding component identifier for the residue in the database starting model.
+         */
+        db_comp_id: str,
+        /**
+         * A description of special aspects of the point differences
+         * between the sequence of the entity or biological unit described
+         * in the data block and that in the starting model referenced
+         * from a database.
+         */
+        details: str,
+    },
+    /**
+     * Data items in the IHM_MODEL_REPRESENTATION category lists the
+     * various mono or multi-scale model representations used in the
+     * integrative modeling study.
+     */
+    ihm_model_representation: {
+        /**
+         * A unique identifier for the model representation.
+         */
+        id: int,
+        /**
+         * Name/brief description for the model representation.
+         */
+        name: str,
+        /**
+         * Additional details about the model representation.
+         */
+        details: str,
+    },
+    /**
+     * Data items in the IHM_MODEL_REPRESENTATION_DETAILS category records the
+     * details about the architecture and representation of structural
+     * models involved in the integrative modeling study.
+     */
+    ihm_model_representation_details: {
+        /**
+         * A unique identifier for the category.
+         */
+        id: int,
+        /**
+         * An identifier that collects or groups together a set of representations.
+         * This data item is a pointer to _ihm_model_representation.id in the
+         * IHM_MODEL_REPRESENTATION category.
+         */
+        representation_id: int,
+        /**
+         * The identifier for the polymeric segment in the representation.
+         * This data item is a pointer to _ihm_entity_poly_segment.id in the
+         * IHM_ENTITY_POLY_SEGMENT category.
+         */
+        entity_poly_segment_id: int,
+        /**
+         * A unique identifier distinct molecular entities.
+         * This data item is a pointer to _entity.id in the
+         * ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * A text description of the molecular entity
+         */
+        entity_description: str,
+        /**
+         * An asym/strand identifier for the entity molecule.
+         * This data item is a pointer to _struct_asym.id in the
+         * STRUCT_ASYM category.
+         */
+        entity_asym_id: str,
+        /**
+         * The primitive object used to model this segment.
+         */
+        model_object_primitive: Aliased(str),
+        /**
+         * The identifier for the starting structural model.
+         * This data item is a pointer to _ihm_starting_model_details.starting_model_id
+         * in the IHM_STARTING_MODEL_DETAILS category.
+         */
+        starting_model_id: str,
+        /**
+         * The manner in which the segment is modeled.
+         */
+        model_mode: Aliased(str),
+        /**
+         * The level of detail at which model primitive objects are applied to the structure.
+         */
+        model_granularity: Aliased(str),
+        /**
+         * The number of primitive objects used to model a feature in the case of 'by-feature' granularity.
+         */
+        model_object_count: int,
+    },
+    /**
+     * Data items in the IHM_STRUCT_ASSEMBLY_DETAILS category records
+     * the details of the structural assemblies and used in the
+     * integrative modeling.
+     */
+    ihm_struct_assembly_details: {
+        /**
+         * A unique identifier for the structural assembly description.
+         */
+        id: int,
+        /**
+         * An identifier for the structural assembly.
+         * This data item will remain the same for all components
+         * of an assembly.
+         * This data item is a pointer to _ihm_struct_assembly.id
+         * in the IHM_STRUCT_ASSEMBLY category.
+         */
+        assembly_id: int,
+        /**
+         * The parent of this assembly in a hierarchy.
+         * This data item is a pointer to _ihm_struct_assembly.id in the
+         * IHM_STRUCT_ASSEMBLY category.
+         * This data item should point to the assembly id of the immediate
+         * parent in a hierarchy.
+         * By convention, the full assembly (top of hierarchy) is assigned parent id 0 (zero).
+         * In case of assemblies that do not conform to a hierarchy,
+         * _ihm_struct_assembly_details.parent_assembly_id is the same as
+         * _ihm_struct_assembly_details.assembly_id indicating a self-parent.
+         */
+        parent_assembly_id: int,
+        /**
+         * A text description of the molecular entity
+         */
+        entity_description: str,
+        /**
+         * A unique identifier for distinct molecular entities.
+         * This data item is a pointer to _entity.id in the
+         * ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * An asym/strand identifier for the component in the assembly.
+         * This data item is a pointer to _struct_asym.id in the
+         * STRUCT_ASYM category.
+         */
+        asym_id: str,
+        /**
+         * The identifier for the polymeric segment in the assembly.
+         * This data item is a pointer to _ihm_entity_poly_segment.id in the
+         * IHM_ENTITY_POLY_SEGMENT category.
+         */
+        entity_poly_segment_id: int,
+    },
+    /**
+     * Data items in the IHM_STRUCT_ASSEMBLY category lists
+     * all the structural assemblies used in the integrative
+     * modeling study.
+     */
+    ihm_struct_assembly: {
+        /**
+         * A unique identifier for the structural assembly.
+         */
+        id: int,
+        /**
+         * A name for the structural assembly.
+         */
+        name: str,
+        /**
+         * Description of the structural assembly.
+         */
+        description: str,
+    },
+    /**
+     * Data items in the IHM_MODELING_PROTOCOL category lists all
+     * modeling protocols used in the integrative modeling study.
+     */
+    ihm_modeling_protocol: {
+        /**
+         * A unique identifier for the modeling protocol.
+         */
+        id: int,
+        /**
+         * Number of independent steps in the modeling protocol.
+         */
+        num_steps: int,
+        /**
+         * The name for the modeling protocol.
+         */
+        protocol_name: str,
+    },
+    /**
+     * Data items in the IHM_MODELING_PROTOCOL_DETAILS category records the
+     * step-wise details of the integrative modeling workflow.
+     */
+    ihm_modeling_protocol_details: {
+        /**
+         * A unique identifier for the modeling protocol/step combination.
+         */
+        id: int,
+        /**
+         * An index for the modeling protocol carried out.
+         * This data item is a pointer to _ihm_modeling_protocol.id in the
+         * IHM_MODELING_PROTOCOL category.
+         */
+        protocol_id: int,
+        /**
+         * An index for a particular step within the modeling protocol.
+         */
+        step_id: int,
+        /**
+         * An index for the structural assembly being modeled.
+         * This is an indicator to whether the whole assembly is modeled
+         * or if only a subset of the structural assembly is modeled.
+         * This data item is a pointer to _ihm_struct_assembly.id in the
+         * IHM_STRUCT_ASSEMBLY category. The IHM_STRUCT_ASSEMBLY category provides the
+         * details regarding the different structural assemblies used in the modeling.
+         * The default value for this data item is "1", indicating that the entire
+         * assembly is being modeled.
+         */
+        struct_assembly_id: int,
+        /**
+         * An index for the dataset group being used in the modeling protocol.
+         * This data item is a pointer to the _ihm_dataset_group.id in the
+         * IHM_DATASET_GROUP category.
+         */
+        dataset_group_id: int,
+        /**
+         * A textual description of the structural assembly being modeled.
+         */
+        struct_assembly_description: str,
+        /**
+         * The name or type of the modeling step.
+         */
+        step_name: str,
+        /**
+         * Description of the method involved in the modeling step.
+         */
+        step_method: str,
+        /**
+         * The number of models in the beginning of the step.
+         */
+        num_models_begin: int,
+        /**
+         * The number of models at the end of the step.
+         */
+        num_models_end: int,
+        /**
+         * A flag to indicate if the modeling is multi scale.
+         */
+        multi_scale_flag: Aliased(lstr),
+        /**
+         * A flag to indicate if the modeling is multi state.
+         */
+        multi_state_flag: Aliased(lstr),
+        /**
+         * A flag to indicate if the modeling involves an ensemble ordered by time or other order.
+         */
+        ordered_flag: Aliased(lstr),
+        /**
+         * The file id corresponding to the script used in the modeling protocol step.
+         * This data item is a pointer to _ihm_external_files.id in the IHM_EXTERNAL_FILES category.
+         */
+        script_file_id: int,
+        /**
+         * Identifier to the software used in the modeling protocol step.
+         * This data item is a pointer to the _software.pdbx_ordinal in the
+         * SOFTWARE category.
+         */
+        software_id: int,
+    },
+    /**
+     * Data items in the IHM_MULTI_STATE_MODELING category records the
+     * details of the multi-state modeling protocol, if applicable.
+     */
+    ihm_multi_state_modeling: {
+        /**
+         * A unique identifier for a particular state in the multi-state modeling.
+         */
+        state_id: int,
+        /**
+         * An identifier for a collections of states in the multi-state modeling.
+         * This data item can be used when structural models belong to diffent
+         * multi-state modeling types.
+         */
+        state_group_id: int,
+        /**
+         * A fraction representing the population of the particular state.
+         */
+        population_fraction: float,
+        /**
+         * The standard deviation of the population fraction.
+         */
+        population_fraction_sd: float,
+        /**
+         * The type that the multiple states being modeled belong to.
+         */
+        state_type: str,
+        /**
+         * A descriptive name for the state.
+         */
+        state_name: str,
+        /**
+         * The type of multi-state modeling experiment carried out.
+         */
+        experiment_type: Aliased(str),
+        /**
+         * Additional textual details of the multi-state modeling, if required.
+         */
+        details: str,
+    },
+    /**
+     * Data items in the IHM_MODELING_POST_PROCESS category records
+     * the details of the post processing of the models/results of
+     * the modeling protocol.
+     */
+    ihm_modeling_post_process: {
+        /**
+         * A unique identifier for the post modeling analysis/step combination.
+         */
+        id: int,
+        /**
+         * An identifier for the modeling protocol, whose post modeling analysis
+         * is being carried out.
+         * This data item is a pointer to the _ihm_modeling_protocol.id
+         * in the IHM_MODELING_PROTOCOL category.
+         */
+        protocol_id: int,
+        /**
+         * An identifier for the post modeling analysis. This data item accounts for
+         * multiple post-modeling analyses that can be carried out.
+         */
+        analysis_id: int,
+        /**
+         * In a multi-step process, this identifier denotes the particular
+         * step in the post modeling analysis.
+         */
+        step_id: int,
+        /**
+         * The type of post modeling analysis being carried out.
+         */
+        type: Aliased(str),
+        /**
+         * The parameter/feature used in the post modeling analysis.
+         */
+        feature: Aliased(str),
+        /**
+         * The number of models at the beginning of the post processing step.
+         */
+        num_models_begin: int,
+        /**
+         * The number of models the the end of the post processing step.
+         */
+        num_models_end: int,
+    },
+    /**
+     * Data items in the IHM_ENSEMBLE_INFO category records the
+     * details of the model clusters or ensembles obtained after
+     * sampling.
+     */
+    ihm_ensemble_info: {
+        /**
+         * A unique id for the ensemble.
+         */
+        ensemble_id: int,
+        /**
+         * An optional name for the cluster or ensemble for better description.
+         */
+        ensemble_name: str,
+        /**
+         * An identifier for the post modeling analyses carried out.
+         * This data item is a pointer to _ihm_modeling_post_process.id in
+         * the IHM_MODELING_POST_PROCESS category.
+         */
+        post_process_id: int,
+        /**
+         * An identifier for the cluster or group of models being deposited.
+         * This data item is a pointer to the _ihm_model_group.id
+         * in the IHM_MODEL_GROUP category.
+         */
+        model_group_id: int,
+        /**
+         * The clustering method used to obtain the ensemble, if applicable.
+         */
+        ensemble_clustering_method: Aliased(str),
+        /**
+         * The parameter/feature used for clustering the models, if applicable.
+         */
+        ensemble_clustering_feature: Aliased(str),
+        /**
+         * The number of models in the current ensemble being described.
+         */
+        num_ensemble_models: int,
+        /**
+         * The number of models from the current ensemble that is deposited.
+         */
+        num_ensemble_models_deposited: int,
+        /**
+         * The precision of each cluster or ensemble is calculated as dRMSD, which
+         * is the average C-alpha distance root mean square deviation (dRMSD)
+         * between the individual models in the cluster and the cluster centroid.
+         * The cluster centroid is defined as the model with the minimal sum of
+         * dRMSDs to the other models in the cluster or ensemble.
+         */
+        ensemble_precision_value: float,
+        /**
+         * A reference to the external file containing the structural models
+         * in the ensemble. The number of models in the external file should
+         * correspond to the number of models in the ensemble. This data item
+         * is a pointer to _ihm_external_files.id in the IHM_EXTERNAL_FILES
+         * category.
+         * It is recommended that the large ensemble files be stored as separate
+         * zip files within the same DOI. It is also recommended that large sphere
+         * model ensembles be in binary format, which facilitates faster access.
+         * Currently, a binary dump of co-ordinates in dcd format is suggested.
+         * The topology can be inferred from the IHM_SPHERE_OBJ_SITE and the
+         * ATOM_SITE categories in the corresponding mmCIF file.
+         */
+        ensemble_file_id: int,
+    },
+    /**
+     * Data items in the IHM_MODEL_LIST category record the
+     * details of the structure models being deposited.
+     */
+    ihm_model_list: {
+        /**
+         * A unique identifier for the structural model being deposited.
+         */
+        model_id: int,
+        /**
+         * A decsriptive name for the model.
+         */
+        model_name: str,
+        /**
+         * An identifier to the structure assembly corresponding to the model.
+         * This data item is a pointer to the _ihm_struct_assembly.id
+         * in the IHM_STRUCT_ASSEMBLY category.
+         */
+        assembly_id: int,
+        /**
+         * An identifier to the modeling protocol that produced the model.
+         * This data item is a pointer to the _ihm_modeling_protocol.id
+         * in the IHM_MODELING_PROTOCOL category.
+         */
+        protocol_id: int,
+        /**
+         * An identifier to the multi-scale model representation id of the model.
+         * This data item is a pointer to the _ihm_model_representation.id
+         * in the IHM_MODEL_REPRESENTATION category.
+         */
+        representation_id: int,
+    },
+    /**
+     * IHM_MODEL_GROUP category defines collections or groups of integrative
+     * structure models.
+     */
+    ihm_model_group: {
+        /**
+         * A unique identifier for a collection or group of structural models.
+         * This data item can be used to group models into structural clusters
+         * or using other criteria based on experimental data or other
+         * relationships such as those belonging to the same state or time stamp.
+         * An ensemble of models and its representative can either be grouped together
+         * or can be separate groups in the ihm_model_group table. The choice between
+         * the two options should be decided based on how the modeling was carried out
+         * and how the representative was chosen. If the representative is a member of
+         * the ensemble (i.e., best scoring model), then it is recommended that the
+         * representative and the ensemble belong to the same model group. If the
+         * representative is calculated from the ensemble (i.e., centroid), then it is
+         * recommended that the representative be separated into a different group.
+         */
+        id: int,
+        /**
+         * A name for the collection of models.
+         */
+        name: str,
+        /**
+         * Additional details about the collection of models.
+         */
+        details: str,
+    },
+    /**
+     * IHM_MODEL_GROUP_LINK category provides the list of structure models present in
+     * a particular structure model group.
+     */
+    ihm_model_group_link: {
+        /**
+         * An identifier for the structural model.
+         * This data item is a pointer to _ihm_model_list.model_id in the
+         * IHM_MODEL_LIST category.
+         */
+        model_id: int,
+        /**
+         * An identifier for the structural model group.
+         * This data item is a pointer to _ihm_model_group.id in the
+         * IHM_MODEL_GROUP category.
+         */
+        group_id: int,
+    },
+    /**
+     * Data items in the IHM_MODEL_REPRESENTATIVE category record the
+     * details of the representative structure model in an ensemble or cluster.
+     */
+    ihm_model_representative: {
+        /**
+         * A unique identifier for the representative of the model group.
+         */
+        id: int,
+        /**
+         * The model group identifier corresponding to the representative model.
+         * This data item is a pointer to _ihm_model_group.id in the
+         * IHM_MODEL_GROUP category.
+         */
+        model_group_id: int,
+        /**
+         * The model identifier corresponding to the representative model.
+         * This data item is a pointer to _ihm_model_list.model_id in the
+         * IHM_MODEL_LIST category.
+         */
+        model_id: int,
+        /**
+         * The selection criteria based on which the representative is chosen.
+         */
+        selection_criteria: Aliased(str),
+    },
+    /**
+     * Category holds the list of all datasets used in the IHM modeling.
+     * These can be datasets archived in other related databases such as
+     * BMRB, EMDB, EMPIAR, SASBDB, PRIDE etc., or can be hosted in other
+     * places such as the authors website, github etc. These datasets are
+     * elaborated in detail in the IHM_DATASET_RELATED_DB_REFERENCE and/or
+     * the IHM_DATASET_EXTERNAL_REFERENCE categories. This category
+     * holds the list of all datasets used.
+     */
+    ihm_dataset_list: {
+        /**
+         * A unique identifier for the dataset.
+         */
+        id: int,
+        /**
+         * The type of data held in the dataset.
+         */
+        data_type: Aliased(str),
+        /**
+         * A flag that indicates whether the dataset is archived in
+         * an IHM related database or elsewhere.
+         */
+        database_hosted: Aliased(lstr),
+    },
+    /**
+     * Category to define groups or collections of input datasets.
+     */
+    ihm_dataset_group: {
+        /**
+         * A unique identifier for the dataset group.
+         */
+        id: int,
+        /**
+         * A name for the dataset group.
+         */
+        name: str,
+        /**
+         * The application / utilization of the dataset group in modeling.
+         */
+        application: Aliased(str),
+        /**
+         * Additional details regarding the dataset group.
+         */
+        details: str,
+    },
+    /**
+     * IHM_DATASET_GROUP_LINK category provides the list of datasets present in
+     * a particular group.
+     */
+    ihm_dataset_group_link: {
+        /**
+         * An identifier for the dataset.
+         * This data item is a pointer to _ihm_dataset_list.id in the
+         * IHM_DATASET_LIST category.
+         */
+        dataset_list_id: int,
+        /**
+         * An identifier for the dataset group.
+         * This data item is a pointer to _ihm_dataset_group.id in the
+         * IHM_DATASET_GROUP category.
+         */
+        group_id: int,
+    },
+    /**
+     * Category holds information about related datasets, where one is derived from the other.
+     */
+    ihm_related_datasets: {
+        /**
+         * The dataset list id corresponding to the derived dataset.
+         * This data item is a pointer to _ihm_dataset_list.id in the
+         * IHM_DATASET_LIST category.
+         */
+        dataset_list_id_derived: int,
+        /**
+         * The primary dataset list id from which the corresponding derived dataset is obtained.
+         * This data item is a pointer to _ihm_dataset_list.id in the
+         * IHM_DATASET_LIST category.
+         */
+        dataset_list_id_primary: int,
+    },
+    /**
+     * Category holds information related to data sources for the entry.
+     * These can be datasets archived in other related databases such as
+     * BMRB, EMDB, EMPIAR, SASBDB, PRIDE etc.
+     */
+    ihm_dataset_related_db_reference: {
+        /**
+         * A unique identifier for the related database entry.
+         */
+        id: int,
+        /**
+         * Identifier to the dataset list used in the IHM modeling.
+         * This data item is a pointer to the _ihm_dataset_list.id in the
+         * IHM_DATASET_LIST category.
+         */
+        dataset_list_id: int,
+        /**
+         * The name of the database containing the dataset entry.
+         */
+        db_name: Aliased(str),
+        /**
+         * The accession code for the database entry.
+         */
+        accession_code: str,
+        /**
+         * Version of the database entry, if the database allows versioning.
+         */
+        version: str,
+        /**
+         * Details regarding the dataset entry.
+         */
+        details: str,
+    },
+    /**
+     * Category holds links to other external data sources for the I/H model entry.
+     * Input datasets held in other databases such as EMDB, BMRB, SASBDB etc.
+     * are referenced in the IHM_DATASET_RELATED_DB_REFERENCE category.
+     * This data category, along with IHM_EXTERNAL_FILES category, holds information
+     * regarding other non-database external data sources, such as  DOIs (digital
+     * object identifiers) or supplementary files stored locally. The DOIs can either
+     * lead to the external data file(s) directly (as in case of DOIs provided by the PDB)
+     * or might lead to an HTML landing page (as provided by Zenodo). In the latter case,
+     * additional URL (Uniform Resource Locator) information is required to retrieve
+     * the external data file(s).
+     */
+    ihm_external_reference_info: {
+        /**
+         * A unique identifier for the external reference.
+         */
+        reference_id: int,
+        /**
+         * The name of the reference provider.
+         */
+        reference_provider: str,
+        /**
+         * The type of external reference.
+         * Currently, only Digital Object Identifiers (DOIs) and supplementary files
+         * stored locally are supported.
+         */
+        reference_type: Aliased(str),
+        /**
+         * The external reference or the Digital Object Identifier (DOI).
+         * This field is not relevant for local files.
+         */
+        reference: str,
+        /**
+         * The type of object that the external reference points to, usually
+         * a single file or an archive.
+         */
+        refers_to: Aliased(str),
+        /**
+         * The Uniform Resource Locator (URL) corresponding to the external reference (DOI).
+         * This URL should link to the corresponding downloadable file or archive and is provided
+         * to enable automated software to download the referenced file or archive.
+         */
+        associated_url: str,
+    },
+    /**
+     * Category provides details regarding external files. The IHM_EXTERNAL_REFERENCE_INFO
+     * category captures the top-level details regarding external data sources.
+     * This category captures the specific details regarding externally stored files
+     * related to the particular I/H model entry.
+     */
+    ihm_external_files: {
+        /**
+         * A unique identifier for each external file.
+         */
+        id: int,
+        /**
+         * A pointer to the source of the external file - either DOI or locally stored.
+         * This data item is a pointer to _ihm_external_reference_info.reference_id in the
+         * IHM_EXTERNAL_REFERENCE_INFO category.
+         */
+        reference_id: int,
+        /**
+         * The relative path (including filename) for each external file.
+         * Absolute paths (starting with "/") are not permitted.
+         * This is required for identifying individual files from within
+         * a tar-zipped archive file or for identifying supplementary local
+         * files organized within a directory structure.
+         * This data item assumes a POSIX-like directory structure or file path.
+         */
+        file_path: str,
+        /**
+         * The type of content in the file.
+         */
+        content_type: Aliased(str),
+        /**
+         * Storage size of the external file in bytes.
+         */
+        file_size_bytes: float,
+        /**
+         * Additional textual details regarding the external file.
+         */
+        details: str,
+    },
+    /**
+     * Category provides additional details regarding input data hosted externally
+     * at other resources.
+     */
+    ihm_dataset_external_reference: {
+        /**
+         * A unique identifier for the external data.
+         */
+        id: int,
+        /**
+         * Identifier to the dataset list used in the I/H modeling.
+         * This data item is a pointer to the _ihm_dataset_list.id in the
+         * IHM_DATASET_LIST category.
+         */
+        dataset_list_id: int,
+        /**
+         * The file id corresponding to this external data file.
+         * This data item is a pointer to _ihm_external_files.id
+         * in the IHM_EXTERNAL_FILES category.
+         */
+        file_id: int,
+    },
+    /**
+     * Data items in the IHM_LOCALIZATION_DENSITY_FILES category records the
+     * details of files that provide information regarding localization densities
+     * of ensembles. These may be stored externally as local files or linked via
+     * DOI and can be in any accepted format that provides volume information
+     * (CCP4, MRC, etc.).
+     */
+    ihm_localization_density_files: {
+        /**
+         * A unique identifier.
+         */
+        id: int,
+        /**
+         * The file id for the externally stored localization density file.
+         * This data item is a pointer to _ihm_external_files.id
+         * in the IHM_EXTERNAL_FILES category.
+         */
+        file_id: int,
+        /**
+         * The ensemble identifier for the ensemble, for which the localization density is provided.
+         * This data item is a pointer to _ihm_ensemble_info.ensemble_id in the IHM_ENSEMBLE_INFO category.
+         */
+        ensemble_id: int,
+        /**
+         * The entity identifier corresponding to this localization density.
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * The identifier for the polymeric segment corresponding to this
+         * localization density.
+         * This data item is a pointer to _ihm_entity_poly_segment.id in the
+         * IHM_ENTITY_POLY_SEGMENT category.
+         */
+        entity_poly_segment_id: int,
+        /**
+         * An asym/strand identifier corresponding to this localization density.
+         * This data item is a pointer to _struct_asym.id in the STRUCT_ASYM category.
+         */
+        asym_id: str,
+    },
+    /**
+     * Data items in the IHM_PREDICTED_CONTACT_RESTRAINT category records the
+     * list of predicted contacts used in the integrative modeling experiment.
+     * This has been adapted from the widely used CASP RR format
+     * (http://www.predictioncenter.org/casp8/index.cgi?page=format#RR).
+     * These contacts may be derived from various computational tools.
+     * The software information can be provided in the SOFTWARE category.
+     */
+    ihm_predicted_contact_restraint: {
+        /**
+         * A unique identifier for the predicted contact restraint.
+         */
+        id: int,
+        /**
+         * An identifier to group the predicted contacts.
+         */
+        group_id: int,
+        /**
+         * The entity identifier for the first monomer partner in the predicted contact.
+         * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY_SEQ category.
+         */
+        entity_id_1: str,
+        /**
+         * The entity identifier for the second monomer partner in the predicted contact.
+         * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY_SEQ category.
+         */
+        entity_id_2: str,
+        /**
+         * An asym/strand identifier for the first monomer partner in the predicted contact.
+         * This data item is a pointer to _struct_asym.id in the
+         * STRUCT_ASYM category.
+         */
+        asym_id_1: str,
+        /**
+         * An asym/strand identifier for the second monomer partner in the predicted contact.
+         * This data item is a pointer to _struct_asym.id in the
+         * STRUCT_ASYM category.
+         */
+        asym_id_2: str,
+        /**
+         * The component identifier for the first monomer partner in the predicted contact.
+         * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
+         */
+        comp_id_1: str,
+        /**
+         * The component identifier for the second monomer partner in the predicted contact.
+         * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
+         */
+        comp_id_2: str,
+        /**
+         * The sequence index for the first monomer partner in the predicted contact.
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id_1: int,
+        /**
+         * The sequence index for the second monomer partner in the predicted contact.
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id_2: int,
+        /**
+         * If _ihm_predicted_contact_restraint.model_granularity is by-residue, then indicate the atom
+         * used to represent the first monomer partner in three-dimension. Default is the C-alpha atom.
+         */
+        rep_atom_1: Aliased(str),
+        /**
+         * If _ihm_predicted_contact_restraint.model_granularity is by-residue, then indicate the atom
+         * used to represent the second monomer partner in three-dimension. Default is the C-alpha atom.
+         */
+        rep_atom_2: Aliased(str),
+        /**
+         * The lower limit to the distance threshold applied to this predicted contact restraint
+         * in the integrative modeling task.
+         */
+        distance_lower_limit: float,
+        /**
+         * The upper limit to the distance threshold applied to this predicted contact restraint
+         * in the integrative modeling task.
+         */
+        distance_upper_limit: float,
+        /**
+         * The real number that indicates the probability that the predicted distance restraint
+         * is correct. This number should fall between 0.0 and 1.0.
+         */
+        probability: float,
+        /**
+         * The type of distance restraint applied.
+         */
+        restraint_type: Aliased(str),
+        /**
+         * The granularity of the predicted contact as applied to the multi-scale model.
+         */
+        model_granularity: Aliased(str),
+        /**
+         * Identifier to the predicted contacts dataset.
+         * This data item is a pointer to the _ihm_dataset_list.id in the
+         * IHM_DATASET_LIST category.
+         */
+        dataset_list_id: int,
+        /**
+         * Identifier to the software used to obtain the predicted contacts dataset.
+         * This data item is a pointer to the _software.pdbx_ordinal in the
+         * SOFTWARE category.
+         */
+        software_id: int,
+    },
+    /**
+     * Data items in the IHM_CROSS_LINK_LIST category records the
+     * list of spatial restraints derived from chemical crosslinking
+     * experiment.
+     */
+    ihm_cross_link_list: {
+        /**
+         * A unique identifier for the cross link restraint.
+         */
+        id: int,
+        /**
+         * An identifier for a set of ambiguous crosslink restraints.
+         * Handles experimental uncertainties in the identities of
+         * crosslinked residues.
+         */
+        group_id: int,
+        /**
+         * A text description of molecular entity 1.
+         */
+        entity_description_1: str,
+        /**
+         * A text description of molecular entity 2.
+         */
+        entity_description_2: str,
+        /**
+         * The entity identifier for the first monomer partner in the cross link
+         * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY_SEQ category.
+         */
+        entity_id_1: str,
+        /**
+         * The entity identifier for the second monomer partner in the cross link
+         *
+         * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY_SEQ category.
+         */
+        entity_id_2: str,
+        /**
+         * The component identifier for the first monomer partner in the cross link.
+         *
+         * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
+         */
+        comp_id_1: str,
+        /**
+         * The component identifier for the second monomer partner in the cross link.
+         *
+         * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
+         */
+        comp_id_2: str,
+        /**
+         * The sequence index for the first monomer partner in the cross link.
+         *
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id_1: int,
+        /**
+         * The sequence index for the second monomer partner in the cross link.
+         *
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id_2: int,
+        /**
+         * The type of crosslinker used.
+         */
+        linker_type: Aliased(str),
+        /**
+         * Identifier to the crosslinking dataset.
+         * This data item is a pointer to the _ihm_dataset_list.id in the
+         * IHM_DATASET_LIST category.
+         */
+        dataset_list_id: int,
+    },
+    /**
+     * Data items in the IHM_CROSS_LINK_RESTRAINT category enumerates the
+     * implementation details of the chemical crosslinking restraints in
+     * the integrative modeling. This category holds the details of how
+     * the experimentally derived crosslinks are applied in the modeling.
+     */
+    ihm_cross_link_restraint: {
+        /**
+         * A unique identifier for the cross link record.
+         */
+        id: int,
+        /**
+         * An identifier for a set of ambiguous cross-links.
+         * Handles implementation uncertainties related to multiple copies of subunit.
+         * This data item is a pointer to _ihm_cross_link_list.id in the
+         * IHM_CROSS_LINK_LIST category.
+         */
+        group_id: int,
+        /**
+         * The entity identifier for the first monomer partner in the cross link
+         *
+         * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY_SEQ category
+         * and the _ihm_cross_link_restraint.entity_id_1 in the IHM_CROSS_LINK_RESTRAINT category.
+         */
+        entity_id_1: str,
+        /**
+         * The entity identifier for the second monomer partner in the cross link
+         *
+         * This data item is a pointer to _entity_poly_seq.entity_id in the ENTITY_POLY_SEQ category
+         * and the _ihm_cross_link_restraint.entity_id_2 in the IHM_CROSS_LINK_RESTRAINT category.
+         */
+        entity_id_2: str,
+        /**
+         * An asym/strand identifier for the first monomer partner in the cross-link.
+         *
+         * This data item is a pointer to _struct_asym.id in the
+         * STRUCT_ASYM category.
+         */
+        asym_id_1: str,
+        /**
+         * An asym/strand identifier for the second monomer partner in the cross-link.
+         *
+         * This data item is a pointer to _struct_asym.id in the
+         * STRUCT_ASYM category.
+         */
+        asym_id_2: str,
+        /**
+         * The component identifier for the first monomer partner in the cross link.
+         *
+         * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category
+         * and the _ihm_cross_link_restraint.comp_id_1 in the IHM_CROSS_LINK_RESTRAINT category.
+         */
+        comp_id_1: str,
+        /**
+         * The component identifier for the second monomer partner in the cross link.
+         *
+         * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category
+         * and the _ihm_cross_link_restraint.comp_id_2 in the IHM_CROSS_LINK_RESTRAINT category.
+         */
+        comp_id_2: str,
+        /**
+         * The sequence index for the first monomer partner in the cross link.
+         *
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category
+         * and the _ihm_cross_link_restraint.seq_id_1 in the IHM_CROSS_LINK_RESTRAINT category.
+         */
+        seq_id_1: int,
+        /**
+         * The sequence index for the second monomer partner in the cross link.
+         *
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category
+         * and the _ihm_cross_link_restraint.seq_id_2 in the IHM_CROSS_LINK_RESTRAINT category.
+         */
+        seq_id_2: int,
+        /**
+         * The atom identifier for the first monomer partner in the cross link.
+         * This data item is a pointer to _chem_comp_atom.atom_id in the
+         * CHEM_COMP_ATOM category.
+         */
+        atom_id_1: str,
+        /**
+         * The atom identifier for the second monomer partner in the cross link.
+         * This data item is a pointer to _chem_comp_atom.atom_id in the
+         * CHEM_COMP_ATOM category.
+         */
+        atom_id_2: str,
+        /**
+         * The type of the cross link restraint applied.
+         */
+        restraint_type: Aliased(str),
+        /**
+         * The cross link conditionality.
+         */
+        conditional_crosslink_flag: Aliased(str),
+        /**
+         * The coarse-graining information for the crosslink implementation.
+         */
+        model_granularity: Aliased(str),
+        /**
+         * The distance threshold applied to this crosslink in the integrative modeling task.
+         */
+        distance_threshold: float,
+        /**
+         * The uncertainty in the crosslinking experimental data;
+         * may be approximated to the false positive rate.
+         */
+        psi: float,
+        /**
+         * The uncertainty in the position of residue 1 in the crosslink
+         * arising due to the multi-scale nature of the model represention.
+         */
+        sigma_1: float,
+        /**
+         * The uncertainty in the position of residue 2 in the crosslink
+         * arising due to the multi-scale nature of the model represention.
+         */
+        sigma_2: float,
+    },
+    /**
+     * Data items in the IHM_CROSS_LINK_RESULT_PARAMETERS category records the
+     * results of the crosslinking restraint parameters in the IHM modeling.
+     */
+    ihm_cross_link_result_parameters: {
+        /**
+         * A unique identifier for the restraint/model combination.
+         */
+        id: int,
+        /**
+         * An identifier for the crosslink restraint between a pair of residues.
+         * This data item is a pointer to _ihm_cross_link_restraint.id in the
+         * IHM_CROSS_LINK_RESTRAINT category.
+         */
+        restraint_id: int,
+        /**
+         * The model number corresponding to the cross link result presented.
+         * This data item is a pointer to _ihm_model_list.model_id in the
+         * IHM_MODEL_LIST category.
+         */
+        model_id: int,
+        /**
+         * The uncertainty in the crosslinking experimental data;
+         * May be approximated to the false positive rate.
+         */
+        psi: float,
+        /**
+         * The uncertainty in the position of residue 1 in the crosslink
+         * arising due to the multi-scale nature of the model represention.
+         */
+        sigma_1: float,
+        /**
+         * The uncertainty in the position of residue 2 in the crosslink
+         * arising due to the multi-scale nature of the model represention.
+         */
+        sigma_2: float,
+    },
+    /**
+     * Data items in the IHM_2DEM_CLASS_AVERAGE_RESTRAINT category records the
+     * details of the 2DEM class averages used in the IHM modeling.
+     */
+    ihm_2dem_class_average_restraint: {
+        /**
+         * A unique identifier for the 2dem class average.
+         */
+        id: int,
+        /**
+         * Identifier to the 2dem class average dataset.
+         * This data item is a pointer to the _ihm_dataset_list.id in the
+         * IHM_DATASET_LIST category.
+         */
+        dataset_list_id: int,
+        /**
+         * The number of raw micrographs used to obtain the class average.
+         */
+        number_raw_micrographs: int,
+        /**
+         * Pixel size width of the 2dem class average image.
+         * While fitting the model to the image, _ihm_2dem_class_average_restraint.pixel_size_width
+         * is used along with _ihm_2dem_class_average_restraint.pixel_size_height to scale the image.
+         */
+        pixel_size_width: float,
+        /**
+         * Pixel size height of the 2dem class average image.
+         * While fitting the model to the image, _ihm_2dem_class_average_restraint.pixel_size_height
+         * is used along with _ihm_2dem_class_average_restraint.pixel_size_width to scale the image.
+         */
+        pixel_size_height: float,
+        /**
+         * Resolution of the 2dem class average.
+         */
+        image_resolution: float,
+        /**
+         * A flag that indicates whether or not the 2DEM class average image is segmented i.e.,
+         * whether the whole image is used or only a portion of it is used (by masking
+         * or by other means) as restraint in the modeling.
+         */
+        image_segment_flag: Aliased(lstr),
+        /**
+         * Number of 2D projections of the model used in the fitting.
+         */
+        number_of_projections: int,
+        /**
+         * An indicator to whether the whole assembly that is modeled is fit into the image
+         * or if only a subset of the structural assembly is fit into the image.
+         * This data item is a pointer to _ihm_struct_assembly.id in the
+         * IHM_STRUCT_ASSEMBLY category. The IHM_STRUCT_ASSEMBLY category provides the
+         * details regarding the different structural assemblies used in the modeling.
+         * The default value for this data item is "1" indicating that the entire assembly
+         * being modeled is fit into the EM data.
+         */
+        struct_assembly_id: int,
+        /**
+         * Details of how the 2DEM restraint is applied in the modeling algorithm.
+         */
+        details: str,
+    },
+    /**
+     * Data items in the IHM_2DEM_CLASS_AVERAGE_FITTING category records the
+     * details of the fitting of the model to the 2DEM class averages
+     * used in the IHM modeling. The following conventions are recommended
+     * while generating the rotation matrix and translation vector for
+     * transformation.
+     *
+     * - The model is rotated and translated to fit to the 2DEM image.
+     * - The 2DEM image should be in the XY plane.
+     * - The lower left image corner (image pixel index 0,0) should be at x,y,z = (0,0,0).
+     * - The 2D image is scaled by the _ihm_2dem_class_average_restraint.pixel_size_width
+     * and _ihm_2dem_class_average_restraint.pixel_size_height from the
+     * IHM_2DEM_CLASS_AVERAGE_RESTRAINT table.
+     * - The transformation is applied after the scaling and hence the translation vector
+     * should account for the scaling.
+     * - There are no specifications for Z translations i.e., how far the image should be
+     * from the model while projecting. It may be set to zero.
+     */
+    ihm_2dem_class_average_fitting: {
+        /**
+         * A unique identifier for the 2dem class average fitting data.
+         */
+        id: int,
+        /**
+         * Identifier to the 2dem class average restraint.
+         * This data item is a pointer to the _ihm_2dem_class_average_restraint.id in the
+         * IHM_2DEM_CLASS_AVERAGE_RESTRAINT category.
+         */
+        restraint_id: int,
+        /**
+         * The model number corresponding to the 2DEM fitting result presented.
+         * This data item is a pointer to _ihm_model_list.model_id in the
+         * IHM_MODEL_LIST category.
+         */
+        model_id: int,
+        /**
+         * The cross correlation coefficient corresponding to the model to image fitting.
+         */
+        cross_correlation_coefficient: float,
+        /**
+         * Data item  of the rotation matrix used in the fitting of the model to the image.
+         */
+        rot_matrix: Matrix(3, 3),
+        /**
+         * Data item  of the tranlation vector used in the fitting of the model to the image.
+         */
+        tr_vector: Vector(3),
+    },
+    /**
+     * Data items in the IHM_3DEM_RESTRAINT category records the
+     * details of the 3DEM maps used as restraints in the
+     * IHM modeling.
+     */
+    ihm_3dem_restraint: {
+        /**
+         * A unique identifier for the 3DEM restraint description.
+         */
+        id: int,
+        /**
+         * Identifier to the 3DEM map used.
+         * This data item is a pointer to the _ihm_dataset_list.id in the
+         * IHM_DATASET_LIST category.
+         */
+        dataset_list_id: int,
+        /**
+         * The model number corresponding to the 3DEM fitting result presented.
+         * This data item is a pointer to _ihm_model_list.model_id in the
+         * IHM_MODEL_LIST category.
+         */
+        model_id: int,
+        /**
+         * An indicator to whether the whole assembly that is modeled is fit into the 3DEM map
+         * or if only a subset of the structural assembly is fit into the map.
+         * This data item is a pointer to _ihm_struct_assembly.id in the
+         * IHM_STRUCT_ASSEMBLY category. The IHM_STRUCT_ASSEMBLY category provides the
+         * details regarding the different structural assemblies used in the modeling.
+         * The default value for this data item is "1" indicating that the entire assembly
+         * being modeled is fit into the EM map.
+         */
+        struct_assembly_id: int,
+        /**
+         * Method used to fit the model to the 3DEM map.
+         */
+        fitting_method: str,
+        /**
+         * In case of Gaussian mixture models, the number of gaussians
+         * is a parameter used to covert the 3DEM maps and models into
+         * GMMs. This captures the level of granularity used in
+         * representing the maps and/or models as 3D Gaussians.
+         */
+        number_of_gaussians: int,
+        /**
+         * The cross correlation coefficient corresponding to the model to map fitting.
+         */
+        cross_correlation_coefficient: float,
+    },
+    /**
+     * Data items in the IHM_SAS_RESTRAINT category records the
+     * details of the SAS data used as restraints in the
+     * IHM modeling.
+     */
+    ihm_sas_restraint: {
+        /**
+         * A unique identifier for the SAS restraint description.
+         */
+        id: int,
+        /**
+         * Identifier to the SAS data used.
+         * This data item is a pointer to the _ihm_dataset_list.id in the
+         * IHM_DATASET_LIST category.
+         */
+        dataset_list_id: int,
+        /**
+         * The model number corresponding to the SAS fitting result presented.
+         * This data item is a pointer to _ihm_model_list.model_id in the
+         * IHM_MODEL_LIST category.
+         */
+        model_id: int,
+        /**
+         * An indicator to whether the whole assembly that is modeled is fit into the SAS data
+         * or if only a subset of the structural assembly is fit into the data.
+         * This data item is a pointer to _ihm_struct_assembly.id in the
+         * IHM_STRUCT_ASSEMBLY category. The IHM_STRUCT_ASSEMBLY category provides the
+         * details regarding the different structural assemblies used in the modeling.
+         * The default value for this data item is "1" indicating that the entire assembly
+         * being modeled is fit into the SAS data.
+         */
+        struct_assembly_id: int,
+        /**
+         * A flag that indicates whether or not the SAS profile is segmented i.e.,
+         * whether the whole SAS profile is used or only a portion of it is used
+         * (by masking or by other means) as restraint in the modeling.
+         */
+        profile_segment_flag: Aliased(lstr),
+        /**
+         * The type of atoms in the model fit to the SAS data.
+         */
+        fitting_atom_type: str,
+        /**
+         * The method used for fitting the model to the SAS data.
+         */
+        fitting_method: str,
+        /**
+         * An indicator to single or multiple state fitting.
+         */
+        fitting_state: Aliased(str),
+        /**
+         * Radius of gyration obtained from the SAS profile, if used as input restraint.
+         */
+        radius_of_gyration: float,
+        /**
+         * The chi value resulting from fitting the model to the SAS data.
+         */
+        chi_value: float,
+        /**
+         * Additional details regarding the SAS restraint used.
+         */
+        details: str,
+    },
+    /**
+     * Data items in the IHM_STARTING_MODEL_COORD category records the coordinates
+     * for structural templates used as starting inputs in the integrative model
+     * building tasks.
+     */
+    ihm_starting_model_coord: {
+        /**
+         * A unique identifier for this coordinate position.
+         */
+        ordinal_id: int,
+        /**
+         * The identifier for the starting structural model.
+         * This data item is a pointer to _ihm_starting_model_details.starting_model_id
+         * in the IHM_STARTING_MODEL_DETAILS category.
+         */
+        starting_model_id: str,
+        /**
+         * The group of atoms to which the atom site in the starting model belongs. This data
+         * item is provided for compatibility with the original Protein Data Bank format,
+         * and only for that purpose.
+         */
+        group_PDB: Aliased(str),
+        /**
+         * The serial number for this coordinate position.
+         */
+        id: int,
+        /**
+         * The atom type symbol(element symbol) corresponding to this coordinate position.
+         */
+        type_symbol: str,
+        /**
+         * The entity identifier corresponding to this coordinate position.
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * The atom identifier/name corresponding to this coordinate position.
+         * This data item is a pointer to _chem_comp_atom.atom_id in the
+         * CHEM_COMP_ATOM category.
+         */
+        atom_id: str,
+        /**
+         * The component identifier corresponding to this coordinate position.
+         * This data item is a pointer to _chem_comp.id in the
+         * CHEM_COMP category.
+         */
+        comp_id: str,
+        /**
+         * The sequence index corresponding this to coordinate position.
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id: int,
+        /**
+         * The asym/strand id corresponding to this coordinate position.
+         *
+         * This data item is a pointer to _struct_asym.id in the STRUCT_ASYM category.
+         */
+        asym_id: str,
+        /**
+         * The Cartesian X component corresponding to this coordinate position.
+         */
+        Cartn_x: float,
+        /**
+         * The Cartesian Y component corresponding to this coordinate position.
+         */
+        Cartn_y: float,
+        /**
+         * The Cartesian Z component corresponding to this coordinate position.
+         */
+        Cartn_z: float,
+        /**
+         * The isotropic temperature factor corresponding to this coordinate position.
+         */
+        B_iso_or_equiv: float,
+    },
+    /**
+     * Data items in the IHM_SPHERE_OBJ_SITE category records the details
+     * of the spherical objects modeled in the integrative structural model.
+     */
+    ihm_sphere_obj_site: {
+        /**
+         * A unique identifier for this pseudo atom / sphere object.
+         */
+        id: int,
+        /**
+         * The entity identifier corresponding to this sphere object.
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * The leading sequence index corresponding to this sphere object.
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id_begin: int,
+        /**
+         * The trailing sequence index corresponding to this sphere object.
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id_end: int,
+        /**
+         * An asym/strand identifier corresponding to this sphere object.
+         * This data item is a pointer to _struct_asym.id in the STRUCT_ASYM category.
+         */
+        asym_id: str,
+        /**
+         * The Cartesian X component corresponding to this sphere object.
+         */
+        Cartn_x: float,
+        /**
+         * The Cartesian Y component corresponding to this sphere object.
+         */
+        Cartn_y: float,
+        /**
+         * The Cartesian Z component corresponding to this sphere object.
+         */
+        Cartn_z: float,
+        /**
+         * The radius associated with the primitive sphere object at this position.
+         */
+        object_radius: float,
+        /**
+         * The Root Mean Square Fluctuation (RMSF) observed in the primitive
+         * sphere object at this position.
+         */
+        rmsf: float,
+        /**
+         * The model id corresponding to the sphere object.
+         * This data item is a pointer to _ihm_model_list.model_id
+         * in the IHM_MODEL_LIST category.
+         */
+        model_id: int,
+    },
+    /**
+     * Data items in the IHM_GAUSSIAN_OBJ_SITE category records the details
+     * of the gaussian objects modeled in the integrative structural model.
+     */
+    ihm_gaussian_obj_site: {
+        /**
+         * A unique identifier for this gaussian object in the model.
+         */
+        id: int,
+        /**
+         * The entity identifier corresponding to this gaussian object.
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * The leading sequence index corresponding to this gaussian object.
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id_begin: int,
+        /**
+         * The trailing sequence index corresponding to this gaussian object.
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id_end: int,
+        /**
+         * An asym/strand identifier corresponding to this gaussian object.
+         * This data item is a pointer to _struct_asym.id in the STRUCT_ASYM category.
+         */
+        asym_id: str,
+        /**
+         * The mean Cartesian X component corresponding to this gaussian object.
+         */
+        mean_Cartn_x: float,
+        /**
+         * The mean Cartesian Y component corresponding to this gaussian object.
+         */
+        mean_Cartn_y: float,
+        /**
+         * The mean Cartesian Z component corresponding to this gaussian object.
+         */
+        mean_Cartn_z: float,
+        /**
+         * The weight of the gaussian object.
+         */
+        weight: float,
+        /**
+         * Data item  of the covariance matrix representing the Gaussian object.
+         */
+        covariance_matrix: Matrix(3, 3),
+        /**
+         * The model id corresponding to the gaussian object.
+         * This data item is a pointer to _ihm_model_list.model_id
+         * in the IHM_MODEL_LIST category.
+         */
+        model_id: int,
+    },
+    /**
+     * Data items in the IHM_GAUSSIAN_OBJ_ENSEMBLE category records the details
+     * of the gaussian objects representing an ensemble or cluster of models.
+     */
+    ihm_gaussian_obj_ensemble: {
+        /**
+         * A unique identifier for this gaussian object.
+         */
+        id: int,
+        /**
+         * The entity identifier corresponding to this gaussian object.
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * The leading sequence index corresponding to this gaussian object.
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id_begin: int,
+        /**
+         * The trailing sequence index corresponding to this gaussian object.
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id_end: int,
+        /**
+         * An asym/strand identifier corresponding to this gaussian object.
+         * This data item is a pointer to _struct_asym.id in the STRUCT_ASYM category.
+         */
+        asym_id: str,
+        /**
+         * The mean Cartesian X component corresponding to this gaussian object.
+         */
+        mean_Cartn_x: float,
+        /**
+         * The mean Cartesian Y component corresponding to this gaussian object.
+         */
+        mean_Cartn_y: float,
+        /**
+         * The mean Cartesian Z component corresponding to this gaussian object.
+         */
+        mean_Cartn_z: float,
+        /**
+         * The weight of the gaussian object.
+         */
+        weight: float,
+        /**
+         * Data item  of the covariance matrix representing the Gaussian object.
+         */
+        covariance_matrix: Matrix(3, 3),
+        /**
+         * The ensemble id corresponding to the gaussian object.
+         * This data item is a pointer to _ihm_ensemble_info.ensemble_id
+         * in the IHM_ENSEMBLE_INFO category.
+         */
+        ensemble_id: int,
+    },
+    /**
+     * IHM_FEATURE_LIST is the high level category that provides defintions
+     * to select atoms/residues from polymeric and non-polymeric entities.
+     */
+    ihm_feature_list: {
+        /**
+         * A unique identifier for the feature.
+         */
+        feature_id: int,
+        /**
+         * The type of feature.
+         */
+        feature_type: Aliased(str),
+        /**
+         * The type of entity.
+         */
+        entity_type: Aliased(str),
+    },
+    /**
+     * Data items in the IHM_POLY_RESIDUE_FEATURE category provides the defintions
+     * required to select a specific residue or a set of residues that may or may not be
+     * in a contiguous range.
+     */
+    ihm_poly_residue_feature: {
+        /**
+         * A unique identifier for the category.
+         */
+        ordinal_id: int,
+        /**
+         * An identifier for the selected residue / residue range feature.
+         * This data item is a pointer to _ihm_feature_list.feature_id in the
+         * IHM_FEATURE_LIST category.
+         */
+        feature_id: int,
+        /**
+         * The entity identifier for residue / residue range.
+         * This data item is a pointer to _entity_poly_seq.entity_id in the
+         * ENTITY_POLY_SEQ category.
+         */
+        entity_id: str,
+        /**
+         * An asym/strand identifier for the residue / residue range, if applicable.
+         * This data item is a pointer to _struct_asym.id in the
+         * STRUCT_ASYM category.
+         */
+        asym_id: str,
+        /**
+         * The component identifier of the beginning residue / residue range.
+         * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
+         */
+        comp_id_begin: str,
+        /**
+         * The component identifier of the ending residue / residue range.
+         * This data item is a pointer to _entity_poly_seq.mon_id in the ENTITY_POLY_SEQ category.
+         */
+        comp_id_end: str,
+        /**
+         * The sequence index of the beginning residue / residue range.
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id_begin: int,
+        /**
+         * The sequence index of the ending residue / residue range.
+         * This data item is a pointer to _entity_poly_seq.num in the ENTITY_POLY_SEQ category.
+         */
+        seq_id_end: int,
+    },
+    /**
+     * Data items in the IHM_DERIVED_DISTANCE_RESTRAINT category records the
+     * list of distance restraints used in the integrative modeling experiment.
+     * These distance redistance restraints may be derived from various kinds of experiments.
+     */
+    ihm_derived_distance_restraint: {
+        /**
+         * A unique identifier for the derived distance restraint.
+         */
+        id: int,
+        /**
+         * An identifier to group the distance restraints.
+         * This can be the same as the _ihm_derived_distance_restraint.id in case
+         * the some of the restraints are not grouped.
+         */
+        group_id: int,
+        /**
+         * The feature identifier for the first partner in the distance restraint.
+         * This data item is a pointer to _ihm_feature_list.feature_id in the
+         * IHM_FEATURE_LIST category.
+         */
+        feature_id_1: int,
+        /**
+         * The feature identifier for the second partner in the distance restraint.
+         * This data item is a pointer to _ihm_feature_list.feature_id in the
+         * IHM_FEATURE_LIST category.
+         */
+        feature_id_2: int,
+        /**
+         * If a group of atoms or residues are restrained, this data item defines
+         * the conditionality based on which the restraint is applied in the modeling.
+         */
+        group_conditionality: Aliased(str),
+        /**
+         * The fraction of randomly excluded distance restraints during modeling.
+         * In HADDOCK, this is used along with ambiguous interface restraints (AIRs)
+         * to account for uncertainties in AIRs.
+         */
+        random_exclusion_fraction: float,
+        /**
+         * The upper limit to the distance threshold applied to this distance restraint
+         * in the integrative modeling task.
+         */
+        distance_upper_limit: float,
+        /**
+         * The type of distance restraint applied.
+         */
+        restraint_type: Aliased(str),
+        /**
+         * Identifier to the input data from which the distance restraint is derived.
+         * This data item is a pointer to the _ihm_dataset_list.id in the
+         * IHM_DATASET_LIST category.
+         * This data item may not be applicable for all cases. For example, in case of
+         * ambiguous interface restraints where the interface residues are identified
+         * from multiple experiments, the reference to the _ihm_dataset_list.id is
+         * handled in the IHM_INTERFACE_RESIDUE_FEATURE category rather than here.
+         */
+        dataset_list_id: int,
+    },
+    /**
+     * Data items in the MA_MODEL_LIST category record the
+     * details of the models being deposited.
+     */
+    ma_model_list: {
+        /**
+         * A unique identifier for the model / model group combination.
+         */
+        ordinal_id: int,
+        /**
+         * A unique identifier for the structural model being deposited.
+         */
+        model_id: int,
+        /**
+         * An identifier to group structural models into collections or sets.
+         * A cluster of models and its representative can either be grouped together
+         * or can be separate groups in the ma_model_list table. The choice between
+         * the two options should be decided based on how the modeling was carried out
+         * and how the representative was chosen. If the representative is a member of
+         * the ensemble (i.e., best scoring model), then it is recommended that the
+         * representative and the ensemble belong to the same model group. If the
+         * representative is calculated from the ensemble (i.e., centroid), then it is
+         * recommended that the representative be separated into a different group.
+         * If the models do not need to be grouped into collections, then the
+         * _ma_model_list.model_group_id is the same as _ma_model_list.model_id.
+         */
+        model_group_id: int,
+        /**
+         * A decsriptive name for the model.
+         */
+        model_name: str,
+        /**
+         * A decsriptive name for the model group.
+         */
+        model_group_name: str,
+        /**
+         * The type of model.
+         */
+        model_type: Aliased(str),
+        /**
+         * The data_id identifier. This data item is a pointer to
+         * _ma_data.id in the MA_DATA category.
+         */
+        data_id: int,
+    },
+    /**
+     * Data items in the MA_TARGET_ENTITY category record details about
+     * the target entities. The details are provided for each entity
+     * being modeled.
+     */
+    ma_target_entity: {
+        /**
+         * A unique identifier for the distinct molecular entity of the target.
+         * This data item is a pointer to _entity.id in the ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * The data_id identifier. This data item is a pointer to
+         * _ma_data.id in the MA_DATA category.
+         */
+        data_id: int,
+        /**
+         * The origin of the target entity.
+         */
+        origin: Aliased(str),
+    },
+    /**
+     * Data items in the MA_TARGET_ENTITY_INSTANCE category record details about
+     * the instances of target entities modeled.
+     */
+    ma_target_entity_instance: {
+        /**
+         * A unique identifier for the instance of the entity.
+         */
+        asym_id: str,
+        /**
+         * A unique identifier for the distinct molecular entity of the target.
+         * This data item is a pointer to _ma_target_entity.entity_id in the
+         * MA_TARGET_ENTITY category.
+         */
+        entity_id: str,
+        /**
+         * Additional details about the entity instance.
+         */
+        details: str,
+    },
+    /**
+     * Data items in the MA_TARGET_REF_DB_DETAILS category record details about
+     * the reference databases for the target sequences.
+     */
+    ma_target_ref_db_details: {
+        /**
+         * An identifier for the target entity.
+         */
+        target_entity_id: str,
+        /**
+         * The name of the database containing reference information about
+         * this entity or biological unit.
+         */
+        db_name: Aliased(str),
+        /**
+         * The code for this entity or biological unit or for a closely
+         * related entity or biological unit in the named database.
+         * This can include the version number.
+         */
+        db_code: str,
+        /**
+         * Accession code assigned by the reference database.
+         */
+        db_accession: str,
+        /**
+         * Database code assigned by the reference database for a sequence isoform.   An isoform sequence is an
+         * alternative protein sequence that can be generated from the same gene by a single or by a combination of
+         * biological events such as: alternative promoter usage, alternative splicing, alternative initiation
+         * and ribosomal frameshifting.
+         */
+        seq_db_isoform: str,
+        /**
+         * Beginning index in the chemical sequence from the
+         * reference database.
+         */
+        seq_db_align_begin: str,
+        /**
+         * Ending index in the chemical sequence from the
+         * reference database.
+         */
+        seq_db_align_end: str,
+        /**
+         * Taxonomy identifier provided by NCBI.
+         */
+        ncbi_taxonomy_id: str,
+        /**
+         * Scientific name of the organism.
+         */
+        organism_scientific: str,
+    },
+    /**
+     * Data items in the MA_DATA category capture the different kinds of
+     * data used in the modeling. These can be multiple sequence
+     * alignments, spatial restraints, template structures etc.
+     */
+    ma_data: {
+        /**
+         * A unique identifier for the data.
+         */
+        id: int,
+        /**
+         * The type of data held in the dataset.
+         */
+        content_type: Aliased(str),
+        /**
+         * Details for other content types.
+         */
+        content_type_other_details: str,
+        /**
+         * An author-given name for the content held in the dataset.
+         */
+        name: str,
+    },
+    /**
+     * Data items in the MA_SOFTWARE_GROUP category describes the
+     * collection of software into groups so that they can be used
+     * efficiently in the MA_PROTOCOL_STEP category.
+     */
+    ma_software_group: {
+        /**
+         * A unique identifier for the category.
+         */
+        ordinal_id: int,
+        /**
+         * An identifier for the group entry.
+         * If data does not need to be grouped, then _ma_software_group.group_id
+         * is the same as _ma_software_group.software_id.
+         */
+        group_id: int,
+        /**
+         * The identifier for the software.
+         * This data item is a pointer to _software.pdbx_ordinal
+         * in the SOFTWARE category.
+         */
+        software_id: int,
+    },
+    /**
+     * Data items in the MA_QA_METRIC category record the
+     * details of the metrics use to assess model quality.
+     */
+    ma_qa_metric: {
+        /**
+         * An identifier for the QA metric.
+         */
+        id: int,
+        /**
+         * Name of the QA metric.
+         */
+        name: str,
+        /**
+         * The type of QA metric.
+         */
+        type: Aliased(str),
+        /**
+         * The mode of calculation of the QA metric.
+         */
+        mode: Aliased(str),
+        /**
+         * Identifier to the set of software used to calculate the QA metric.
+         * This data item is a pointer to the _ma_software_group.group_id in the
+         * MA_SOFTWARE_GROUP category.
+         */
+        software_group_id: int,
+    },
+    /**
+     * Data items in the MA_QA_METRIC_GLOBAL category captures the
+     * details of the global QA metrics, calculated at the model-level.
+     */
+    ma_qa_metric_global: {
+        /**
+         * A unique identifier for the category.
+         */
+        ordinal_id: int,
+        /**
+         * The identifier for the structural model, for which global QA metric is provided.
+         * This data item is a pointer to _ma_model_list.model_id
+         * in the MA_MODEL_LIST category.
+         */
+        model_id: int,
+        /**
+         * The identifier for the QA metric.
+         * This data item is a pointer to _ma_qa_metric.id in the
+         * MA_QA_METRIC category.
+         */
+        metric_id: int,
+        /**
+         * The value of the global QA metric.
+         */
+        metric_value: float,
+    },
+    /**
+     * Data items in the MA_QA_METRIC_LOCAL category captures the
+     * details of the local QA metrics, calculated at the residue-level.
+     */
+    ma_qa_metric_local: {
+        /**
+         * A unique identifier for the category.
+         */
+        ordinal_id: int,
+        /**
+         * The identifier for the structural model, for which local QA metric is provided.
+         * This data item is a pointer to _ma_model_list.model_id
+         * in the MA_MODEL_LIST category.
+         */
+        model_id: int,
+        /**
+         * The identifier for the asym id of the residue in the
+         * structural model, for which local QA metric is provided.
+         * This data item is a pointer to _atom_site.label_asym_id
+         * in the ATOM_SITE category.
+         */
+        label_asym_id: str,
+        /**
+         * The identifier for the sequence index of the residue
+         * in the structural model, for which local QA metric is provided.
+         * This data item is a pointer to _atom_site.label_seq_id
+         * in the ATOM_SITE category.
+         */
+        label_seq_id: int,
+        /**
+         * The component identifier for the residue in the
+         * structural model, for which local QA metric is provided.
+         * This data item is a pointer to _atom_site.label_comp_id
+         * in the ATOM_SITE category.
+         */
+        label_comp_id: str,
+        /**
+         * The identifier for the QA metric.
+         * This data item is a pointer to _ma_qa_metric.id in the
+         * MA_QA_METRIC category.
+         */
+        metric_id: int,
+        /**
+         * The value of the local QA metric.
+         */
+        metric_value: float,
+    },
+    /**
+     * Data items in the MA_QA_METRIC_LOCAL_PAIRWISE category captures the
+     * details of the local QA metrics, calculated at the pairwise residue level.
+     */
+    ma_qa_metric_local_pairwise: {
+        /**
+         * A unique identifier for the category.
+         */
+        ordinal_id: int,
+        /**
+         * The identifier for the structural model, for which local QA metric is provided.
+         * This data item is a pointer to _ma_model_list.model_id
+         * in the MA_MODEL_LIST category.
+         */
+        model_id: int,
+        /**
+         * The identifier for the asym id of the first residue in the
+         * pair, for which local QA metric is provided.
+         * This data item is a pointer to _atom_site.label_asym_id
+         * in the ATOM_SITE category.
+         */
+        label_asym_id_1: str,
+        /**
+         * The identifier for the sequence index of the first residue
+         * in the pair, for which local QA metric is provided.
+         * This data item is a pointer to _atom_site.label_seq_id
+         * in the ATOM_SITE category.
+         */
+        label_seq_id_1: int,
+        /**
+         * The component identifier for the first residue in the
+         * pair, for which local QA metric is provided.
+         * This data item is a pointer to _atom_site.label_comp_id
+         * in the ATOM_SITE category.
+         */
+        label_comp_id_1: str,
+        /**
+         * The identifier for the asym id of the second residue in the
+         * pair, for which local QA metric is provided.
+         * This data item is a pointer to _atom_site.label_asym_id
+         * in the ATOM_SITE category.
+         */
+        label_asym_id_2: str,
+        /**
+         * The identifier for the sequence index of the second residue
+         * in the pair, for which local QA metric is provided.
+         * This data item is a pointer to _atom_site.label_seq_id
+         * in the ATOM_SITE category.
+         */
+        label_seq_id_2: int,
+        /**
+         * The component identifier for the second residue in the
+         * pair, for which local QA metric is provided.
+         * This data item is a pointer to _atom_site.label_comp_id
+         * in the ATOM_SITE category.
+         */
+        label_comp_id_2: str,
+        /**
+         * The identifier for the QA metric.
+         * This data item is a pointer to _ma_qa_metric.id in the
+         * MA_QA_METRIC category.
+         */
+        metric_id: int,
+        /**
+         * The value of the local QA metric.
+         */
+        metric_value: float,
+    },
+};
+
+/**
+ * Copyright (c) 2021-24 mol* contributors, licensed under MIT, See LICENSE file for more info.
+ *
+ * @author Alexander Rose <alexander.rose@weirdbyte.de>
+ * @author David Sehnal <david.sehnal@gmail.com>
+ */
+var QualityAssessment;
+(function (QualityAssessment) {
+    const Empty = {
+        value: {
+            localMetrics: new Map(),
+        }
+    };
+    function isApplicable(model, localMetricName) {
+        if (!model || !MmcifFormat.is(model.sourceData))
+            return false;
+        const { db } = model.sourceData.data;
+        const hasLocalMetric = (db.ma_qa_metric.id.isDefined &&
+            db.ma_qa_metric_local.ordinal_id.isDefined);
+        if (localMetricName && hasLocalMetric) {
+            for (let i = 0, il = db.ma_qa_metric._rowCount; i < il; i++) {
+                if (db.ma_qa_metric.mode.value(i) !== 'local')
+                    continue;
+                if (localMetricName === db.ma_qa_metric.name.value(i))
+                    return true;
+            }
+            return false;
+        }
+        else {
+            return hasLocalMetric;
+        }
+    }
+    QualityAssessment.isApplicable = isApplicable;
+    async function obtain(ctx, model, props) {
+        if (!model || !MmcifFormat.is(model.sourceData))
+            return Empty;
+        const { ma_qa_metric, ma_qa_metric_local } = model.sourceData.data.db;
+        const { model_id, label_asym_id, label_seq_id, metric_id, metric_value } = ma_qa_metric_local;
+        const { index } = model.atomicHierarchy;
+        // for simplicity we assume names in ma_qa_metric for mode 'local' are unique
+        const localMetrics = new Map();
+        const localNames = new Map();
+        for (let i = 0, il = ma_qa_metric._rowCount; i < il; i++) {
+            if (ma_qa_metric.mode.value(i) !== 'local')
+                continue;
+            const name = ma_qa_metric.name.value(i);
+            if (localMetrics.has(name)) {
+                console.warn(`local ma_qa_metric with name '${name}' already added`);
+                continue;
+            }
+            localMetrics.set(name, new Map());
+            localNames.set(ma_qa_metric.id.value(i), name);
+        }
+        const residueKey = {
+            label_entity_id: '',
+            label_asym_id: '',
+            label_seq_id: 0,
+            pdbx_PDB_ins_code: undefined,
+        };
+        for (let i = 0, il = ma_qa_metric_local._rowCount; i < il; i++) {
+            if (model_id.value(i) !== model.modelNum)
+                continue;
+            const labelAsymId = label_asym_id.value(i);
+            const entityIndex = index.findEntity(labelAsymId);
+            residueKey.label_entity_id = model.entities.data.id.value(entityIndex);
+            residueKey.label_asym_id = labelAsymId;
+            residueKey.label_seq_id = label_seq_id.value(i);
+            const rI = index.findResidueLabel(residueKey);
+            if (rI >= 0) {
+                const name = localNames.get(metric_id.value(i));
+                localMetrics.get(name).set(rI, metric_value.value(i));
+            }
+        }
+        return {
+            value: {
+                localMetrics,
+                pLDDT: localMetrics.get('pLDDT'),
+                qmean: localMetrics.get('qmean'),
+                lipScore: localMetrics.get('lipScore'),
+            }
+        };
+    }
+    QualityAssessment.obtain = obtain;
+    const PairwiseSchema = {
+        ma_qa_metric: mmCIF_Schema.ma_qa_metric,
+        ma_qa_metric_local_pairwise: mmCIF_Schema.ma_qa_metric_local_pairwise // Ensure this matches schema definition
+    };
+    function findModelArchiveCIFPAEMetrics(frame) {
+        const { ma_qa_metric, ma_qa_metric_local_pairwise } = toDatabase(PairwiseSchema, frame);
+        const result = [];
+        if (ma_qa_metric_local_pairwise._rowCount === 0)
+            return result;
+        for (let i = 0, il = ma_qa_metric._rowCount; i < il; i++) {
+            if (ma_qa_metric.mode.value(i) !== 'local-pairwise')
+                continue;
+            const id = ma_qa_metric.id.value(i);
+            const name = ma_qa_metric.name.value(i);
+            if (!name.toLowerCase().includes('pae'))
+                continue;
+            result.push({ id, name });
+        }
+        return result;
+    }
+    QualityAssessment.findModelArchiveCIFPAEMetrics = findModelArchiveCIFPAEMetrics;
+    function pairwiseMetricFromModelArchiveCIF(model, frame, metricId) {
+        const db = toDatabase(PairwiseSchema, frame);
+        if (!db.ma_qa_metric_local_pairwise._rowCount)
+            return undefined;
+        const { ma_qa_metric, ma_qa_metric_local_pairwise } = db;
+        const { model_id, label_asym_id_1, label_seq_id_1, label_asym_id_2, label_seq_id_2, metric_id, metric_value } = db.ma_qa_metric_local_pairwise;
+        const { index } = model.atomicHierarchy;
+        let metric;
+        for (let i = 0, il = ma_qa_metric._rowCount; i < il; i++) {
+            if (ma_qa_metric.mode.value(i) !== 'local-pairwise')
+                continue;
+            const id = ma_qa_metric.id.value(i);
+            if (id !== metricId)
+                continue;
+            const name = ma_qa_metric.name.value(i);
+            metric = {
+                id,
+                name,
+                residueRange: [Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER],
+                valueRange: [Number.MAX_VALUE, -Number.MAX_VALUE],
+                values: {}
+            };
+        }
+        if (!metric)
+            return undefined;
+        const { values, residueRange, valueRange } = metric;
+        const residueKey = {
+            label_entity_id: '',
+            label_asym_id: '',
+            label_seq_id: 0,
+            pdbx_PDB_ins_code: undefined,
+        };
+        for (let i = 0, il = ma_qa_metric_local_pairwise._rowCount; i < il; i++) {
+            if (model_id.value(i) !== model.modelNum || metric_id.value(i) !== metricId)
+                continue;
+            let labelAsymId = label_asym_id_1.value(i);
+            let entityIndex = index.findEntity(labelAsymId);
+            residueKey.label_entity_id = model.entities.data.id.value(entityIndex);
+            residueKey.label_asym_id = labelAsymId;
+            residueKey.label_seq_id = label_seq_id_1.value(i);
+            const rI_1 = index.findResidueLabel(residueKey);
+            if (rI_1 < 0)
+                continue;
+            labelAsymId = label_asym_id_2.value(i);
+            entityIndex = index.findEntity(labelAsymId);
+            residueKey.label_entity_id = model.entities.data.id.value(entityIndex);
+            residueKey.label_asym_id = labelAsymId;
+            residueKey.label_seq_id = label_seq_id_2.value(i);
+            const rI_2 = index.findResidueLabel(residueKey);
+            if (rI_1 < 0)
+                continue;
+            let r1 = values[rI_1];
+            if (!r1) {
+                r1 = {};
+                values[rI_1] = r1;
+            }
+            const value = metric_value.value(i);
+            r1[rI_2] = value;
+            if (rI_1 < residueRange[0])
+                residueRange[0] = rI_1;
+            if (rI_2 < residueRange[0])
+                residueRange[0] = rI_2;
+            if (rI_1 > residueRange[1])
+                residueRange[1] = rI_1;
+            if (rI_2 > residueRange[1])
+                residueRange[1] = rI_2;
+            if (value < valueRange[0])
+                valueRange[0] = value;
+            if (value > valueRange[1])
+                valueRange[1] = value;
+        }
+        return metric;
+    }
+    QualityAssessment.pairwiseMetricFromModelArchiveCIF = pairwiseMetricFromModelArchiveCIF;
+    QualityAssessment.symbols = {
+        pLDDT: QuerySymbolRuntime.Dynamic(CustomPropSymbol('ma', 'quality-assessment.pLDDT', Type.Num), ctx => {
+            var _a, _b;
+            const { unit, element } = ctx.element;
+            if (!Unit.isAtomic(unit))
+                return -1;
+            const qualityAssessment = QualityAssessmentProvider.get(unit.model).value;
+            return (_b = (_a = qualityAssessment === null || qualityAssessment === void 0 ? void 0 : qualityAssessment.pLDDT) === null || _a === void 0 ? void 0 : _a.get(unit.model.atomicHierarchy.residueAtomSegments.index[element])) !== null && _b !== void 0 ? _b : -1;
+        }),
+        lipScore: QuerySymbolRuntime.Dynamic(CustomPropSymbol('ma', 'quality-assessment.lipScore', Type.Num), ctx => {
+            var _a, _b;
+            const { unit, element } = ctx.element;
+            if (!Unit.isAtomic(unit))
+                return -1;
+            const qualityAssessment = QualityAssessmentProvider.get(unit.model).value;
+            return (_b = (_a = qualityAssessment === null || qualityAssessment === void 0 ? void 0 : qualityAssessment.pLDDT) === null || _a === void 0 ? void 0 : _a.get(unit.model.atomicHierarchy.residueAtomSegments.index[element])) !== null && _b !== void 0 ? _b : -1;
+        }),
+        qmean: QuerySymbolRuntime.Dynamic(CustomPropSymbol('ma', 'quality-assessment.qmean', Type.Num), ctx => {
+            var _a, _b;
+            const { unit, element } = ctx.element;
+            if (!Unit.isAtomic(unit))
+                return -1;
+            const qualityAssessment = QualityAssessmentProvider.get(unit.model).value;
+            return (_b = (_a = qualityAssessment === null || qualityAssessment === void 0 ? void 0 : qualityAssessment.qmean) === null || _a === void 0 ? void 0 : _a.get(unit.model.atomicHierarchy.residueAtomSegments.index[element])) !== null && _b !== void 0 ? _b : -1;
+        }),
+    };
+})(QualityAssessment || (QualityAssessment = {}));
+const QualityAssessmentParams = {};
+const QualityAssessmentProvider = CustomModelProperty.createProvider({
+    label: 'QualityAssessment',
+    descriptor: CustomPropertyDescriptor({
+        name: 'ma_quality_assessment',
+        symbols: QualityAssessment.symbols
+    }),
+    type: 'static',
+    defaultParams: QualityAssessmentParams,
+    getParams: (data) => QualityAssessmentParams,
+    isApplicable: (data) => QualityAssessment.isApplicable(data),
+    obtain: async (ctx, data, props) => {
+        const p = { ...ParamDefinition.getDefaultValues(QualityAssessmentParams), ...props };
+        return await QualityAssessment.obtain(ctx, data, p);
+    }
+});
+
+const DefaultColor = Color(0xf0f0f5);
+const ConfidenceColors = {
+    'No Score': DefaultColor,
+    'Very Low': Color(0xfb3b3ff),
+    'Low': Color(0xf2d9e6),
+    'Confident': Color(0xd98cb3),
+    'Very High': Color(0x993366)
+};
+const ConfidenceColorLegend = TableLegend(Object.entries(ConfidenceColors));
+function getLIPColorThemeParams(ctx) {
+    return {};
+}
+function LIPColorTheme(ctx, props) {
+    let color = () => DefaultColor;
+    console.log("lipscore appliying test");
+    if (ctx.structure) {
+        const l = Location.create(ctx.structure.root);
+        const getColor = (location) => {
+            var _a;
+            const { unit, element } = location;
+            if (!Unit.isAtomic(unit))
+                return DefaultColor;
+            const qualityAssessment = QualityAssessmentProvider.get(unit.model).value;
+            let score = (_a = qualityAssessment === null || qualityAssessment === void 0 ? void 0 : qualityAssessment.lipScore) === null || _a === void 0 ? void 0 : _a.get(unit.model.atomicHierarchy.residueAtomSegments.index[element]);
+            console.log("score", score);
+            if (typeof score !== 'number') {
+                score = unit.model.atomicConformation.B_iso_or_equiv.value(element);
+            }
+            if (score < 0) {
+                return DefaultColor;
+            }
+            else if (score <= 50) {
+                return Color(0xfb3b3ff);
+            }
+            else if (score <= 70) {
+                return Color(0xf2d9e6);
+            }
+            else if (score <= 90) {
+                return Color(0xd98cb3);
+            }
+            else {
+                return Color(0x993366);
+            }
+        };
+        color = (location) => {
+            if (Location.is(location)) {
+                return getColor(location);
+            }
+            else if (Bond.isLocation(location)) {
+                l.unit = location.aUnit;
+                l.element = location.aUnit.elements[location.aIndex];
+                return getColor(l);
+            }
+            return DefaultColor;
+        };
+    }
+    return {
+        factory: LIPColorTheme,
+        granularity: 'group',
+        preferSmoothing: true,
+        color,
+        props,
+        description: 'Assigns residue colors according to the LIP score.',
+        legend: ConfidenceColorLegend
+    };
+}
+const LIPColorThemeProvider = {
+    name: 'lipScore',
+    label: 'lipScore',
+    category: ColorTheme.Category.Validation,
+    factory: LIPColorTheme,
+    getParams: getLIPColorThemeParams,
+    defaultValues: ParamDefinition.getDefaultValues(getLIPColorThemeParams()),
+    isApplicable: (ctx) => { var _a; return !!((_a = ctx.structure) === null || _a === void 0 ? void 0 : _a.models.some(m => QualityAssessment.isApplicable(m, 'lipScore') || (m.atomicConformation.B_iso_or_equiv.isDefined))); }, //  && !Model.isExperimental(m))
+    ensureCustomProperties: {
+        attach: async (ctx, data) => {
+            if (data.structure) {
+                for (const m of data.structure.models) {
+                    await QualityAssessmentProvider.attach(ctx, m, void 0, true);
+                }
+            }
+        },
+        detach: async (data) => {
+            if (data.structure) {
+                for (const m of data.structure.models) {
+                    QualityAssessmentProvider.ref(m, false);
+                }
+            }
+        }
+    }
+};
+
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+class CustomPluginContext extends PluginContext {
+    constructor(spec) {
+        super(spec);
+        this.customState = {
+            lipscoreArray: [],
+        };
+    }
+}
+const QualityAssessmentLIPPreset = StructureRepresentationPresetProvider({
+    id: 'preset-structure-representation-ma-quality-assessment-lipScore',
+    display: {
+        name: 'lipScore', group: 'Annotation',
+        description: 'Color structure based on LIP Score.'
+    },
+    isApplicable(a) {
+        return true;
+    },
+    params: () => StructureRepresentationPresetProvider.CommonParams,
+    async apply(ref, params, plugin) {
+        var _a;
+        const structureCell = StateObjectRef.resolveAndCheck(plugin.state.data, ref);
+        const structure = (_a = structureCell === null || structureCell === void 0 ? void 0 : structureCell.obj) === null || _a === void 0 ? void 0 : _a.data;
+        if (!structureCell || !structure)
+            return {};
+        const colorTheme = LIPColorThemeProvider.name;
+        return await PresetStructureRepresentations.auto.apply(ref, { ...params, theme: {
+                globalName: colorTheme, focus: { name: colorTheme }
+            } }, plugin);
+    }
+});
 const Extensions = {
     'ma-quality-assessment': PluginSpec.Behavior(MAQualityAssessment),
 };
@@ -127876,65 +133503,52 @@ const viewerOptions = {
     viewportShowSettings: PluginConfig.Viewport.ShowSettings.defaultValue,
     extensions: ObjectKeys(Extensions),
 };
-function addLiPScoresToStructure(structureData, lipScoreArray) {
+function addLiPScoresToStructure(structureData, lipscoreArray) {
+    if (!lipscoreArray || lipscoreArray.length === 0) {
+        console.error('lipScoreArray is null or empty. Skipping LiP scores application.');
+        return structureData;
+    }
     const lipScoresMap = new Map();
-    lipScoreArray.forEach((score, index) => {
+    lipscoreArray.forEach((score, index) => {
         lipScoresMap.set(index, score);
     });
-    if (!structureData.models[0]._staticPropertyData.ma_quality_assessment) {
-        structureData.models[0]._staticPropertyData.ma_quality_assessment = {
+    const modelData = structureData.models[0]._staticPropertyData;
+    // Ensure `ma_quality_assessment` and its nested properties are initialized
+    if (!modelData.ma_quality_assessment) {
+        modelData.ma_quality_assessment = {
             data: {
                 value: {
-                    pLDDT: undefined,
-                    localMetrics: {
-                        pLDDT: undefined,
-                    }
-                }
-            }
+                    lipScore: undefined,
+                    localMetrics: undefined,
+                },
+            },
         };
     }
-    else if (!structureData.models[0]._staticPropertyData.ma_quality_assessment.data) {
-        structureData.models[0]._staticPropertyData.ma_quality_assessment.data = {
+    else if (!modelData.ma_quality_assessment.data) {
+        modelData.ma_quality_assessment.data = {
             value: {
-                pLDDT: undefined,
-                localMetrics: {
-                    pLDDT: undefined,
-                }
-            }
+                lipScore: undefined,
+                localMetrics: undefined,
+            },
         };
     }
-    else if (!structureData.models[0]._staticPropertyData.ma_quality_assessment.data.value) {
-        structureData.models[0]._staticPropertyData.ma_quality_assessment.data.value = {
-            pLDDT: undefined,
-            localMetrics: {
-                pLDDT: undefined,
-            }
+    else if (!modelData.ma_quality_assessment.data.value) {
+        modelData.ma_quality_assessment.data.value = {
+            lipScore: undefined,
+            localMetrics: undefined,
         };
     }
-    else if (!structureData.models[0]._staticPropertyData.ma_quality_assessment.data.value.localMetrics) {
-        structureData.models[0]._staticPropertyData.ma_quality_assessment.data.value.localMetrics = {
-            pLDDT: undefined,
-        };
+    else if (!modelData.ma_quality_assessment.data.value.localMetrics) {
+        // Initialize `localMetrics` as a Map
+        modelData.ma_quality_assessment.data.value.localMetrics = new Map();
     }
-    // Replace pLDDT with LiP scores
-    structureData.models[0]._staticPropertyData.ma_quality_assessment.data.value.pLDDT = lipScoresMap;
-    structureData.models[0]._staticPropertyData.ma_quality_assessment.data.value.localMetrics.pLDDT = lipScoresMap;
+    // Assign the LiP scores map
+    modelData.ma_quality_assessment.data.value.lipScore = lipScoresMap;
+    modelData.ma_quality_assessment.data.value.localMetrics = lipScoresMap;
+    console.log('LiP scores successfully added to structure data.');
+    console.log('Updated structure data:', JSON.stringify(modelData, null, 2));
     return structureData;
 }
-const lipScoreArray = [
-    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-    60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-    60, 60, 60, 60
-];
 const ViewerAutoPreset = StructureRepresentationPresetProvider({
     id: 'preset-structure-representation-viewer-auto',
     display: {
@@ -127942,8 +133556,8 @@ const ViewerAutoPreset = StructureRepresentationPresetProvider({
         description: 'Show standard automatic representation but colored by quality assessment (if available in the model).'
     },
     isApplicable(a) {
-        return (!!a.data.models.some(m => QualityAssessment.isApplicable(m, 'pLDDT')) ||
-            !!a.data.models.some(m => QualityAssessment.isApplicable(m, 'qmean')));
+        return (!!a.data.models.some(m => QualityAssessment$1.isApplicable(m, 'pLDDT')) ||
+            !!a.data.models.some(m => QualityAssessment$1.isApplicable(m, 'qmean')));
     },
     params: () => StructureRepresentationPresetProvider.CommonParams,
     async apply(ref, params, plugin) {
@@ -127952,16 +133566,22 @@ const ViewerAutoPreset = StructureRepresentationPresetProvider({
         const structure = (_a = structureCell === null || structureCell === void 0 ? void 0 : structureCell.obj) === null || _a === void 0 ? void 0 : _a.data;
         if (!structureCell || !structure)
             return {};
+        const lipscoreArray = plugin.customState.lipscoreArray;
         // Apply LiP scores
-        const structuremodified = addLiPScoresToStructure(structure, lipScoreArray);
-        // Apply the quality assessment presets or the default representation preset
-        if (structuremodified.models.some(m => QualityAssessment.isApplicable(m, 'pLDDT'))) {
-            console.log('Applying pLDDT preset');
-            return await QualityAssessmentPLDDTPreset.apply(ref, params, plugin);
+        if (lipscoreArray && lipscoreArray.length > 0) {
+            console.log('Applying LiP scores...');
+            addLiPScoresToStructure(structure, lipscoreArray);
         }
-        else if (structuremodified.models.some(m => QualityAssessment.isApplicable(m, 'qmean'))) {
-            console.log('Applying Qmean preset');
-            return await QualityAssessmentQmeanPreset.apply(ref, params, plugin);
+        else {
+            console.warn('No LiP scores provided. Skipping application.');
+        }
+        // Apply the quality assessment presets or the default representation preset
+        if (lipscoreArray && lipscoreArray.length > 0) {
+            console.log('Applying LiP Score Preset...', structure);
+            console.log('rtest');
+            const qu = await QualityAssessmentLIPPreset.apply(ref, params, plugin);
+            console.log("que", qu);
+            return qu;
         }
         else {
             console.log('Applying default auto preset');
@@ -127999,9 +133619,11 @@ const spec = {
         [PluginConfig.Structure.DefaultRepresentationPreset, ViewerAutoPreset.id],
     ],
 };
-const getStructureViewer = async (container, onHighlightClick) => {
-    const plugin = new PluginContext(spec);
+const getStructureViewer = async (container, onHighlightClick, lipscoreArray // Add this parameter
+) => {
+    const plugin = new CustomPluginContext(spec);
     await plugin.init();
+    plugin.customState.lipscoreArray = lipscoreArray || [];
     console.log(plugin.builders.structure);
     plugin.builders.structure.representation.registerPreset(ViewerAutoPreset);
     const canvas = container.querySelector("canvas");
@@ -128019,7 +133641,7 @@ const getStructureViewer = async (container, onHighlightClick) => {
     });
     PluginCommands.Canvas3D.SetSettings(plugin, {
         settings: ({ renderer, marking }) => {
-            renderer.backgroundColor = Color(0xeeeeee);
+            renderer.backgroundColor = Color(0xffffff);
             // For highlight
             marking.edgeScale = 1.5;
             renderer.selectStrength = 0;
@@ -128030,27 +133652,15 @@ const getStructureViewer = async (container, onHighlightClick) => {
     const structureViewer = {
         plugin,
         async loadPdb(pdb) {
-            await this.loadCifUrl(`https://www.ebi.ac.uk/pdbe/model-server/v1/${pdb.toLowerCase()}/full?encoding=bcif`, true);
+            await this.loadCifUrl(`https://www.ebi.ac.uk/pdbe/model-server/v1/${pdb.toLowerCase()}/full?encoding=bcif`, [], true);
         },
-        async loadCifUrl(url, isBinary = false) {
+        async loadCifUrl(url, lipscoreArray = [], isBinary = false) {
             const data = await plugin.builders.data.download({ url, isBinary }, { state: { isGhost: true } });
             console.log("data", data);
             const trajectory = await plugin.builders.structure.parseTrajectory(data, "mmcif");
             await plugin.builders.structure.hierarchy.applyPreset(trajectory, "all-models", { useDefaultIfSingleModel: true });
-            this.addLiPScores([
-                60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60,
-                60, 60, 60, 60
-            ]);
+            plugin.customState.lipscoreArray = lipscoreArray || [];
+            this.addLiPScores(lipscoreArray);
         },
         highlight(ranges) {
             var _a, _b;
@@ -128096,7 +133706,7 @@ const getStructureViewer = async (container, onHighlightClick) => {
         handleResize() {
             plugin.layout.events.updated.next(null);
         },
-        addLiPScores(lipScoreArray) {
+        addLiPScores(lipscoreArray) {
             var _a, _b;
             const structureData = (_b = (_a = plugin.managers.structure.hierarchy.current.structures[0]) === null || _a === void 0 ? void 0 : _a.cell.obj) === null || _b === void 0 ? void 0 : _b.data;
             if (!structureData) {
@@ -128104,13 +133714,13 @@ const getStructureViewer = async (container, onHighlightClick) => {
                 return;
             }
             const lipScoresMap = new Map();
-            lipScoreArray.forEach((score, index) => {
+            lipscoreArray.forEach((score, index) => {
                 lipScoresMap.set(index, score);
             });
             // replace plddt with lipscore 
-            structureData.models[0]._staticPropertyData.ma_quality_assessment.data.value.pLDDT = lipScoresMap;
-            structureData.models[0]._staticPropertyData.ma_quality_assessment.data.value.localMetrics.pLDDT = lipScoresMap;
-            structureData.models[0]._staticPropertyData.ma_quality_assessment.data.value.localMetrics.set('pLDDT', lipScoresMap);
+            structureData.models[0]._staticPropertyData.ma_quality_assessment.data.value.lipScore = lipScoresMap;
+            structureData.models[0]._staticPropertyData.ma_quality_assessment.data.value.localMetrics.lipScore = lipScoresMap;
+            structureData.models[0]._staticPropertyData.ma_quality_assessment.data.value.localMetrics.set('lipScore', lipScoresMap);
             console.log("LiP scores applied and representation updated.");
         },
     };
@@ -131088,15 +136698,43 @@ let NightingaleStructure = class NightingaleStructure extends H$1(W$1(rs)) {
     firstUpdated() {
         const structureViewerDiv = this.renderRoot.querySelector("#molstar-parent");
         if (structureViewerDiv) {
-            getStructureViewer(structureViewerDiv, this.updateHighlight).then((structureViewer) => {
+            console.log('Structure Viewer container found:', structureViewerDiv);
+            //const lipscoreArray = this["lipscore-array"]; //this.lipscoreArray || [];
+            const lipscoreArray = [
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100,
+                100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100
+            ];
+            console.log('LipScore Array:', lipscoreArray);
+            getStructureViewer(structureViewerDiv, this.updateHighlight, lipscoreArray).then((structureViewer) => {
+                var _a;
                 __classPrivateFieldSet(this, _NightingaleStructure_structureViewer, structureViewer, "f");
-                const color = this["highlight-color"].substring(1, 7);
+                const color = ((_a = this["highlight-color"]) === null || _a === void 0 ? void 0 : _a.substring(1, 7)) || "FF6699";
                 __classPrivateFieldGet(this, _NightingaleStructure_structureViewer, "f").changeHighlightColor(parseInt(color, 16));
+            })
+                .catch((error) => {
+                console.error('Error initializing structure viewer:', error);
             });
+        }
+        else {
+            console.error('#molstar-parent not found');
         }
     }
     updated(changedProperties) {
-        var _a, _b, _c;
+        var _a, _b;
         if (changedProperties.has("structure-id")) {
             this.selectMolecule();
         }
@@ -131108,9 +136746,6 @@ let NightingaleStructure = class NightingaleStructure extends H$1(W$1(rs)) {
             const color = this["highlight-color"].substring(1, 7);
             (_a = __classPrivateFieldGet(this, _NightingaleStructure_structureViewer, "f")) === null || _a === void 0 ? void 0 : _a.changeHighlightColor(parseInt(color, 16));
             (_b = __classPrivateFieldGet(this, _NightingaleStructure_structureViewer, "f")) === null || _b === void 0 ? void 0 : _b.handleResize();
-        }
-        if (changedProperties.has("lipscore-array")) {
-            (_c = __classPrivateFieldGet(this, _NightingaleStructure_structureViewer, "f")) === null || _c === void 0 ? void 0 : _c.addLiPScores([1, 2, 3, 4]);
         }
     }
     disconnectedCallback() {
@@ -131148,14 +136783,55 @@ let NightingaleStructure = class NightingaleStructure extends H$1(W$1(rs)) {
     async selectMolecule() {
         var _a, _b, _c, _d;
         if (!this["structure-id"] || !this["protein-accession"]) {
+            console.error('Missing structure-id or protein-accession');
             return;
         }
+        //const lipscoreArray = this["lipscore-array"]; 
+        const lipscoreArray = [
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50,
+            50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50
+        ];
+        console.log("lip array load", lipscoreArray);
         let mappings;
         if (this.isAF()) {
             const afPredictions = await this.loadAFEntry(this["protein-accession"]);
             const afInfo = afPredictions.find((prediction) => prediction.entryId === this["structure-id"]);
             if (afInfo === null || afInfo === void 0 ? void 0 : afInfo.cifUrl) {
-                await ((_a = __classPrivateFieldGet(this, _NightingaleStructure_structureViewer, "f")) === null || _a === void 0 ? void 0 : _a.loadCifUrl(afInfo.cifUrl, false));
+                console.log(afInfo.cifUrl);
+                await ((_a = __classPrivateFieldGet(this, _NightingaleStructure_structureViewer, "f")) === null || _a === void 0 ? void 0 : _a.loadCifUrl(afInfo.cifUrl, lipscoreArray, false));
                 this.clearMessage();
             }
         }
@@ -131164,7 +136840,7 @@ let NightingaleStructure = class NightingaleStructure extends H$1(W$1(rs)) {
             mappings =
                 (_b = Object.values(pdbEntry)[0].UniProt[this["protein-accession"]]) === null || _b === void 0 ? void 0 : _b.mappings;
             if (this["custom-download-url"]) {
-                await ((_c = __classPrivateFieldGet(this, _NightingaleStructure_structureViewer, "f")) === null || _c === void 0 ? void 0 : _c.loadCifUrl(`${this["custom-download-url"]}${this["structure-id"].toLowerCase()}.cif`));
+                await ((_c = __classPrivateFieldGet(this, _NightingaleStructure_structureViewer, "f")) === null || _c === void 0 ? void 0 : _c.loadCifUrl(`${this["custom-download-url"]}${this["structure-id"].toLowerCase()}.cif`, lipscoreArray));
                 this.clearMessage();
             }
             else {
