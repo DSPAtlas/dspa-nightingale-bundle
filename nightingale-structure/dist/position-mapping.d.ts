@@ -27,11 +27,11 @@ export type TranslatedPosition = {
 /**
  * Translate between UniProt and PDBe positions using SIFTs mappings
  * @function translatePositions
- * @param  {Number}     start            The start index for the sequence (1-based)
- * @param  {Number}     end              The end index for the sequence (1-based)
- * @param  {Mapping[]}   mappings         The array of mapping objects
- * @param  {String}     mappingDirection Indicates direction of maping: UniProt to PDB or PDB to UniProt
- * @return {Translated}                  Object with: mapped entity ID; mapped chain ID; translated start & end positions
+ * @param  {number}     start            The start index for the sequence (1-based)
+ * @param  {number}     end              The end index for the sequence (1-based)
+ * @param  {Direction}  mappingDirection Indicates direction of mapping: UniProt to PDB or PDB to UniProt
+ * @param  {Mapping[]}  mappings         The array of mapping objects
+ * @return {TranslatedPosition[]}        Array of translated positions
  */
 declare const translatePositions: (start: number, end: number, mappingDirection: Direction, mappings?: Mapping[]) => TranslatedPosition[];
 export default translatePositions;
