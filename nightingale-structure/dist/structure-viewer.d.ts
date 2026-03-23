@@ -23,6 +23,7 @@ export type StructureViewer = {
     highlight(ranges: Range[]): void;
     clearHighlight(): void;
     changeHighlightColor(color: number): void;
+    zoom(factor: number): void;
     handleResize(): void;
     addLiPScores(lipscoreArray: Array<number>): void;
     applyLipColorTheme(): void;

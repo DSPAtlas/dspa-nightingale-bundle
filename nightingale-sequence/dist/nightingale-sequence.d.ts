@@ -14,7 +14,7 @@ declare class NightingaleSequence extends NightingaleSequence_base {
     numberOfTicks?: number;
     chWidth?: number;
     chHeight?: number;
-    length?: number;
+    getSingleBaseWidth(): number;
     connectedCallback(): void;
     get data(): string | Record<string, unknown>;
     set data(data: string | Record<string, unknown>);

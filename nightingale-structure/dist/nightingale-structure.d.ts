@@ -53,7 +53,9 @@ declare class NightingaleStructure extends NightingaleStructure_base {
         content: string;
     } | null;
     constructor();
-    protected render(): import("lit").TemplateResult<1>;
+    private zoomIn;
+    private zoomOut;
+    protected render(): import("lit-html").TemplateResult<1>;
     protected firstUpdated(): void;
     protected updated(changedProperties: Map<PropertyKey, unknown>): void;
     disconnectedCallback(): void;
