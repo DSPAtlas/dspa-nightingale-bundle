@@ -18,7 +18,7 @@ type Range = {
 };
 export type StructureViewer = {
     plugin: CustomPluginContext;
-    loadPdb(pdb: string): Promise<void>;
+    loadPdb(pdb: string, lipscoreArray?: Array<number>): Promise<void>;
     loadCifUrl(url: string, lipscoreArray: Array<number>, isBinary?: boolean): Promise<void>;
     highlight(ranges: Range[]): void;
     clearHighlight(): void;
@@ -26,7 +26,7 @@ export type StructureViewer = {
     zoom(factor: number): void;
     handleResize(): void;
     addLiPScores(lipscoreArray: Array<number>): void;
-    applyLipColorTheme(): void;
+    applyLipColorTheme(): Promise<void>;
 };
 export declare const getStructureViewer: (container: HTMLDivElement, onHighlightClick: (sequencePositions: SequencePosition[]) => void, lipscoreArray: Array<number>, colorTheme?: string) => Promise<StructureViewer>;
 export {};
