@@ -66,6 +66,7 @@ declare class NightingaleSequenceHeatmap extends NightingaleSequenceHeatmap_base
      * Main heatmap rendering function. Should only be triggered once
      * Necessary to bind zoom and hover events between Heatmap component and Nightingale
      */
+    private constrainTooltipPosition;
     renderHeatmap(): void;
     /**
      * Function to bind zoom and hover events between Heatmap component and Nightingale
