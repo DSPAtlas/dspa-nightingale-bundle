@@ -9,6 +9,8 @@ import NightingaleElement, {
 } from "@nightingale-elements/nightingale-new-core";
 
 import { getStructureViewer, StructureViewer } from "./structure-viewer";
+import type { PlddtData, PlddtScore } from "./plddt";
+export type { PlddtData, PlddtScore } from "./plddt";
 import translatePositions, {
   PositionMappingError,
   Mapping,
@@ -102,6 +104,23 @@ class NightingaleStructure extends withManager(
   };
 
   #structureViewer?: StructureViewer;
+  #structureViewerReady?: Promise<StructureViewer | undefined>;
+  #selectionVersion = 0;
+  #selectionTask: Promise<void> = Promise.resolve();
+  #plddtData: PlddtData | null = null;
+
+  get plddtData(): PlddtData | null {
+    return this.#plddtData;
+  }
+
+  private publishPlddt(proteinAccession: string, structureId: string, scores: PlddtScore[]) {
+    this.#plddtData = { proteinAccession, structureId, scores };
+    this.dispatchEvent(new CustomEvent<PlddtData>("plddt-change", {
+      detail: this.#plddtData,
+      bubbles: true,
+      composed: true,
+    }));
+  }
 
   constructor() {
     super();
@@ -207,14 +226,20 @@ class NightingaleStructure extends withManager(
       const lipscoreArray = this["lipscore-array"]; //this.lipscoreArray || [];
       console.log('LipScore Array:', lipscoreArray);
   
-      getStructureViewer(structureViewerDiv, this.updateHighlight, lipscoreArray).then(
+      this.#structureViewerReady = getStructureViewer(structureViewerDiv, this.updateHighlight, lipscoreArray).then(
         (structureViewer) => {
+          if (!this.isConnected) {
+            structureViewer.plugin.dispose();
+            return undefined;
+          }
           this.#structureViewer = structureViewer;
           const color = this["highlight-color"]?.substring(1, 7) || "FF6699";
           this.#structureViewer.changeHighlightColor(parseInt(color, 16));
+          return structureViewer;
         })
         .catch((error) => {
           console.error('Error initializing structure viewer:', error);
+          return undefined;
         });
     } else {
       console.error('#molstar-parent not found');
@@ -222,7 +247,7 @@ class NightingaleStructure extends withManager(
   }
 
   protected updated(changedProperties: Map<PropertyKey, unknown>): void {
-    if (changedProperties.has("structure-id")) {
+    if (changedProperties.has("structure-id") || changedProperties.has("protein-accession")) {
       this.selectMolecule();
     }
     if (changedProperties.has("lipscore-array") && !changedProperties.has("structure-id")) {
@@ -245,6 +270,7 @@ class NightingaleStructure extends withManager(
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    this.#selectionVersion++;
     this.#structureViewer?.plugin.dispose();
   }
 
@@ -284,8 +310,22 @@ class NightingaleStructure extends withManager(
     return this["structure-id"].startsWith("AF-");
   }
 
-  async selectMolecule(): Promise<void> {
-    if (!this["structure-id"] || !this["protein-accession"]) {
+  selectMolecule(): Promise<void> {
+    const version = ++this.#selectionVersion;
+    const proteinAccession = this["protein-accession"] || "";
+    const structureId = this["structure-id"] || "";
+    this.publishPlddt(proteinAccession, structureId, []);
+    // Mol* loads mutate shared plugin state, so let the latest selection follow
+    // any in-flight load; obsolete requests never publish confidence data.
+    this.#selectionTask = this.#selectionTask.then(() => this.loadSelectedMolecule(version, proteinAccession, structureId));
+    return this.#selectionTask;
+  }
+
+  private async loadSelectedMolecule(version: number, proteinAccession: string, structureId: string): Promise<void> {
+    const isCurrent = () => this.isConnected && version === this.#selectionVersion;
+    const structureViewer = await this.#structureViewerReady;
+    if (!isCurrent() || !structureViewer) return;
+    if (!structureId || !proteinAccession) {
       console.error('Missing structure-id or protein-accession');
       return;
     }
@@ -295,41 +335,50 @@ class NightingaleStructure extends withManager(
 
     let mappings;
     try {
-      if (this.isAF()) {
-        const afPredictions = await this.loadAFEntry(this["protein-accession"]);
+      if (structureId.startsWith("AF-")) {
+        const afPredictions = await this.loadAFEntry(proteinAccession);
+        if (!isCurrent()) return;
         const afInfo = afPredictions.find(
-          (prediction) => prediction.entryId === this["structure-id"],
+          (prediction) => prediction.entryId === structureId,
         );
         if (afInfo?.cifUrl) {
           console.log(afInfo.cifUrl);
-          await this.#structureViewer?.loadCifUrl(afInfo.cifUrl, lipscoreArray, false);
+          await structureViewer.loadCifUrl(afInfo.cifUrl, lipscoreArray, false);
+          if (!isCurrent()) return;
+          this.publishPlddt(proteinAccession, structureId, structureViewer.getPlddtScores(afInfo.uniprotStart, afInfo.uniprotEnd));
           this.clearMessage();
         } else {
           this.showMessage("Error", `Could not find AF entry for ${this["structure-id"]}`);
         }
       } else {
-        const pdbEntry = await this.loadPDBEntry(this["structure-id"]);
+        const pdbEntry = await this.loadPDBEntry(structureId);
+        if (!isCurrent()) return;
         mappings =
-          Object.values(pdbEntry)[0].UniProt[this["protein-accession"]]?.mappings;
+          Object.values(pdbEntry)[0].UniProt[proteinAccession]?.mappings;
           if (this["custom-download-url"]) {
-            await this.#structureViewer?.loadCifUrl(
-              `${this["custom-download-url"]}${this["structure-id"].toLowerCase()}.cif`, lipscoreArray
+            await structureViewer.loadCifUrl(
+              `${this["custom-download-url"]}${structureId.toLowerCase()}.cif`, lipscoreArray
             );
+            if (!isCurrent()) return;
             this.clearMessage();
         } else {
-          await this.#structureViewer?.loadPdb(
-            this["structure-id"].toLowerCase(),
+          await structureViewer.loadPdb(
+            structureId.toLowerCase(),
             lipscoreArray,
           );
+          if (!isCurrent()) return;
           this.clearMessage();
         }
       }
     } catch (e) {
+      if (!isCurrent()) return;
+      this.publishPlddt(proteinAccession, structureId, []);
       console.error('Error selecting molecule:', e);
       // Errors are already displayed via showMessage in loadAFEntry/loadPDBEntry
     }
+    if (!isCurrent()) return;
     this.selectedMolecule = {
-      id: this["structure-id"],
+      id: structureId,
       mappings,
     };
   }

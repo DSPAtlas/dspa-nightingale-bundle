@@ -17,6 +17,7 @@ import { ChainIdColorThemeProvider } from "molstar/lib/mol-theme/color/chain-id"
 import { Vec3 } from "molstar/lib/mol-math/linear-algebra";
 
 import {LIPColorTheme} from './color_new';
+import { extractPlddtScores, PlddtScore } from './plddt';
 
 
 
@@ -112,6 +113,7 @@ export type StructureViewer = {
   handleResize(): void;
   addLiPScores(lipscoreArray: Array<number>): void;
   applyLipColorTheme(): Promise<void>;
+  getPlddtScores(uniprotStart?: number, uniprotEnd?: number): PlddtScore[];
 };
 
 
@@ -175,6 +177,10 @@ PluginCommands.Canvas3D.SetSettings(plugin, {
 
 const structureViewer: StructureViewer = {
   plugin,
+  getPlddtScores(uniprotStart = 1, uniprotEnd) {
+    const model = plugin.managers.structure.hierarchy.current.structures[0]?.cell.obj?.data.models[0];
+    return extractPlddtScores(model, uniprotStart, uniprotEnd);
+  },
   async loadPdb(pdb, lipscoreArray: Array<number> = []) {
     await this.loadCifUrl(
       `https://www.ebi.ac.uk/pdbe/model-server/v1/${pdb.toLowerCase()}/full?encoding=bcif`,

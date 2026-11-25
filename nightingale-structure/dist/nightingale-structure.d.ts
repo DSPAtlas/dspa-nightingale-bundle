@@ -1,4 +1,6 @@
 import NightingaleElement from "@nightingale-elements/nightingale-new-core";
+import type { PlddtData } from "./plddt";
+export type { PlddtData, PlddtScore } from "./plddt";
 import { Mapping } from "./position-mapping";
 export type StructureData = {
     dbReferences: {
@@ -52,10 +54,12 @@ declare class NightingaleStructure extends NightingaleStructure_base {
         title: string;
         content: string;
     } | null;
+    get plddtData(): PlddtData | null;
+    private publishPlddt;
     constructor();
     private zoomIn;
     private zoomOut;
-    protected render(): import("lit-html").TemplateResult<1>;
+    protected render(): import("lit").TemplateResult<1>;
     protected firstUpdated(): void;
     protected updated(changedProperties: Map<PropertyKey, unknown>): void;
     disconnectedCallback(): void;
@@ -63,6 +67,7 @@ declare class NightingaleStructure extends NightingaleStructure_base {
     loadAFEntry(id: string): Promise<PredictionData[]>;
     isAF(): boolean;
     selectMolecule(): Promise<void>;
+    private loadSelectedMolecule;
     private showMessage;
     private clearMessage;
     updateHighlight(sequencePositions: {

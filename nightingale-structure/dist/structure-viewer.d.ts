@@ -1,5 +1,6 @@
 import "molstar/lib/mol-util/polyfill";
 import { PluginContext } from "molstar/lib/mol-plugin/context";
+import { PlddtScore } from './plddt';
 interface CustomPluginState {
     lipscoreArray: Array<number>;
 }
@@ -27,6 +28,7 @@ export type StructureViewer = {
     handleResize(): void;
     addLiPScores(lipscoreArray: Array<number>): void;
     applyLipColorTheme(): Promise<void>;
+    getPlddtScores(uniprotStart?: number, uniprotEnd?: number): PlddtScore[];
 };
 export declare const getStructureViewer: (container: HTMLDivElement, onHighlightClick: (sequencePositions: SequencePosition[]) => void, lipscoreArray: Array<number>, colorTheme?: string) => Promise<StructureViewer>;
 export {};
