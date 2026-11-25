@@ -18,6 +18,8 @@ import { Vec3 } from "molstar/lib/mol-math/linear-algebra";
 
 import {LIPColorTheme} from './color_new';
 import { extractPlddtScores, PlddtScore } from './plddt';
+import { markAlphaFoldModels, PlddtColorThemeProvider } from './color-plddt';
+import { getZoomOutClippingSnapshot, getZoomSnapshot } from './camera';
 
 
 
@@ -101,18 +103,20 @@ const spec: PluginSpec = {
 
 type SequencePosition = { chain: string; position: number };
 type Range = { chain: string; start: number; end: number };
+export type StructureColorMode = "lip" | "plddt";
 
 export type StructureViewer = {
   plugin: CustomPluginContext;
   loadPdb(pdb: string, lipscoreArray?: Array<number>): Promise<void>;
-  loadCifUrl(url: string, lipscoreArray: Array<number>, isBinary?: boolean): Promise<void>;
+  loadCifUrl(url: string, lipscoreArray: Array<number>, isBinary?: boolean, isAlphaFold?: boolean): Promise<void>;
   highlight(ranges: Range[]): void;
   clearHighlight(): void;
   changeHighlightColor(color: number): void;
   zoom(factor: number): void;
   handleResize(): void;
   addLiPScores(lipscoreArray: Array<number>): void;
-  applyLipColorTheme(): Promise<void>;
+  setColorMode(mode: StructureColorMode): Promise<void>;
+  applyColorTheme(): Promise<void>;
   getPlddtScores(uniprotStart?: number, uniprotEnd?: number): PlddtScore[];
 };
 
@@ -135,6 +139,26 @@ export const getStructureViewer = async (
     throw new Error("Failed to init Mol*");
   }
 
+  const canvas3d = plugin.canvas3d!;
+  let previousDistance = Vec3.distance(canvas3d.camera.position, canvas3d.camera.target);
+  canvas3d.didDraw.subscribe(() => {
+    const camera = canvas3d.camera;
+    const snapshot = camera.getSnapshot();
+    const clipping = !camera.transition.inTransition
+      ? getZoomOutClippingSnapshot(snapshot, canvas3d.boundingSphereVisible, previousDistance)
+      : undefined;
+    previousDistance = Vec3.distance(snapshot.position, snapshot.target);
+    if (!clipping || canvas3d.boundingSphere.radius <= 0) return;
+
+    // Mol* resets radiusMax on scene commits, so retain the recovered depth
+    // across color changes too. This also handles wheel and gesture zoom-out.
+    const sceneRadiusFactor = Math.max(canvas3d.props.sceneRadiusFactor,
+      clipping.radiusMax / canvas3d.boundingSphere.radius);
+    if (sceneRadiusFactor > canvas3d.props.sceneRadiusFactor) canvas3d.setProps({ sceneRadiusFactor });
+    camera.setState(clipping);
+    canvas3d.requestDraw();
+  });
+
   if (LIPColorTheme.colorThemeProvider)
     plugin.representation.structure.themes.colorThemeRegistry.add(
       LIPColorTheme.colorThemeProvider
@@ -147,6 +171,9 @@ export const getStructureViewer = async (
     LIPColorTheme.propertyProvider,
     true
   );
+  plugin.representation.structure.themes.colorThemeRegistry.add(PlddtColorThemeProvider);
+  let colorMode: StructureColorMode = "lip";
+  let colorThemeTask: Promise<void> = Promise.resolve();
 
 
 plugin.behaviors.interaction.click.subscribe((event) => {
@@ -188,7 +215,8 @@ const structureViewer: StructureViewer = {
       true
     );
   },
-  async loadCifUrl(url:string, lipscoreArray:Array<number> = [], isBinary:boolean = false): Promise<void> {
+  async loadCifUrl(url:string, lipscoreArray:Array<number> = [], isBinary:boolean = false, isAlphaFold:boolean = false): Promise<void> {
+    plugin.customState.lipscoreArray = lipscoreArray || [];
     const data = await plugin.builders.data.download(
       { url, isBinary },
       { state: { isGhost: true } }
@@ -204,12 +232,16 @@ const structureViewer: StructureViewer = {
       { useDefaultIfSingleModel: true }
     );
 
-    plugin.customState.lipscoreArray = lipscoreArray || [];
-    this.addLiPScores(lipscoreArray);  
-    await this.applyLipColorTheme();
+    for (const structure of plugin.managers.structure.hierarchy.current.structures) {
+      const models = structure.cell.obj?.data.models;
+      if (models) markAlphaFoldModels(models, isAlphaFold);
+    }
+    this.addLiPScores(plugin.customState.lipscoreArray);
+    await this.applyColorTheme();
     // TODO maybe add here more logic
   },
   addLiPScores(lipscoreArray: Array<number>) {
+    plugin.customState.lipscoreArray = lipscoreArray || [];
     const structureData = plugin.managers.structure.hierarchy.current.structures[0]?.cell.obj?.data;
     if(!structureData){
       return;
@@ -268,8 +300,14 @@ const structureViewer: StructureViewer = {
     console.log('Updated structure data:', JSON.stringify(modelData, null, 2));
   },
 
-  applyLipColorTheme() {
-    return plugin.dataTransaction(async () => {
+  setColorMode(mode) {
+    colorMode = mode;
+    return this.applyColorTheme();
+  },
+  applyColorTheme() {
+    colorThemeTask = colorThemeTask.catch(() => undefined).then(() => plugin.dataTransaction(async () => {
+      const themeName = colorMode === "plddt"
+        ? PlddtColorThemeProvider.name : LIPColorTheme.propertyProvider.descriptor.name;
       for (const structure of plugin.managers.structure.hierarchy.current.structures || []) {
         if (!structure?.components?.length) {
           continue;
@@ -278,11 +316,12 @@ const structureViewer: StructureViewer = {
         await plugin.managers.structure.component.updateRepresentationsTheme(
           structure.components,
           {
-            color: LIPColorTheme.propertyProvider.descriptor.name as typeof ChainIdColorThemeProvider.name, // Replace with a predefined type
+            color: themeName as typeof ChainIdColorThemeProvider.name,
           }
         );
       }
-    });
+    }));
+    return colorThemeTask;
   },
   
   
@@ -341,25 +380,9 @@ const structureViewer: StructureViewer = {
 
   zoom(factor: number) {
     const camera = plugin.canvas3d?.camera;
-    if (!camera || factor <= 0) {
-      return;
-    }
-
-    const snapshot = camera.getSnapshot();
-    const direction = Vec3.sub(Vec3(), snapshot.position, snapshot.target);
-    const currentDistance = Vec3.magnitude(direction);
-    if (!Number.isFinite(currentDistance) || currentDistance === 0) {
-      return;
-    }
-
-    const nextDistance = Math.max(currentDistance * factor, 1);
-    const nextDirection = Vec3.setMagnitude(direction, direction, nextDistance);
-    const nextPosition = Vec3.add(Vec3(), snapshot.target, nextDirection);
-    plugin.managers.camera.setSnapshot({
-      position: nextPosition,
-      radius: Math.max(snapshot.radius * factor, 0.1),
-      radiusMax: Math.max(snapshot.radiusMax * factor, 0.1),
-    }, 150);
+    if (!camera) return;
+    const snapshot = getZoomSnapshot(camera.getSnapshot(), factor);
+    if (snapshot) camera.setState(snapshot, 150);
   },
 
   handleResize() {

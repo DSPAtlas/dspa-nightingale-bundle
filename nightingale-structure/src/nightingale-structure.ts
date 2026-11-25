@@ -91,6 +91,9 @@ class NightingaleStructure extends withManager(
   @property({ type: Array})
    "lipscore-array": Array<number>;
 
+  @property({ type: String })
+  "color-by": "lip" | "plddt" = "lip";
+
   @state()
   selectedMolecule?: {
     id: string;
@@ -227,12 +230,13 @@ class NightingaleStructure extends withManager(
       console.log('LipScore Array:', lipscoreArray);
   
       this.#structureViewerReady = getStructureViewer(structureViewerDiv, this.updateHighlight, lipscoreArray).then(
-        (structureViewer) => {
+        async (structureViewer) => {
           if (!this.isConnected) {
             structureViewer.plugin.dispose();
             return undefined;
           }
           this.#structureViewer = structureViewer;
+          await structureViewer.setColorMode(this["color-by"] === "plddt" ? "plddt" : "lip");
           const color = this["highlight-color"]?.substring(1, 7) || "FF6699";
           this.#structureViewer.changeHighlightColor(parseInt(color, 16));
           return structureViewer;
@@ -253,7 +257,10 @@ class NightingaleStructure extends withManager(
     if (changedProperties.has("lipscore-array") && !changedProperties.has("structure-id")) {
       const lipscoreArray = this["lipscore-array"] || [];
       this.#structureViewer?.addLiPScores(lipscoreArray);
-      this.#structureViewer?.applyLipColorTheme()?.catch(console.error);
+      this.#structureViewer?.applyColorTheme()?.catch(console.error);
+    }
+    if (changedProperties.has("color-by")) {
+      this.#structureViewer?.setColorMode(this["color-by"] === "plddt" ? "plddt" : "lip").catch(console.error);
     }
     if (
       changedProperties.has("highlight") ||
@@ -343,7 +350,7 @@ class NightingaleStructure extends withManager(
         );
         if (afInfo?.cifUrl) {
           console.log(afInfo.cifUrl);
-          await structureViewer.loadCifUrl(afInfo.cifUrl, lipscoreArray, false);
+          await structureViewer.loadCifUrl(afInfo.cifUrl, this["lipscore-array"] || [], false, true);
           if (!isCurrent()) return;
           this.publishPlddt(proteinAccession, structureId, structureViewer.getPlddtScores(afInfo.uniprotStart, afInfo.uniprotEnd));
           this.clearMessage();
@@ -357,14 +364,14 @@ class NightingaleStructure extends withManager(
           Object.values(pdbEntry)[0].UniProt[proteinAccession]?.mappings;
           if (this["custom-download-url"]) {
             await structureViewer.loadCifUrl(
-              `${this["custom-download-url"]}${structureId.toLowerCase()}.cif`, lipscoreArray
+              `${this["custom-download-url"]}${structureId.toLowerCase()}.cif`, this["lipscore-array"] || []
             );
             if (!isCurrent()) return;
             this.clearMessage();
         } else {
           await structureViewer.loadPdb(
             structureId.toLowerCase(),
-            lipscoreArray,
+            this["lipscore-array"] || [],
           );
           if (!isCurrent()) return;
           this.clearMessage();

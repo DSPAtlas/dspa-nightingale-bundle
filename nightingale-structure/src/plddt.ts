@@ -8,6 +8,15 @@ export type PlddtData = {
   scores: PlddtScore[];
 };
 
+/** The same confidence boundaries and colors used by the pLDDT barcode. */
+export const getPlddtColor = (score: number | null | undefined, isAlphaFold: boolean): number => {
+  if (!isAlphaFold || typeof score !== "number" || !Number.isFinite(score) || score < 0 || score > 100) return 0xaaaaaa;
+  if (score > 90) return 0x0053d6;
+  if (score >= 70) return 0x65cbf3;
+  if (score >= 50) return 0xffdb13;
+  return 0xff7d45;
+};
+
 /** Read AlphaFold confidence from the original atomic column, not LiP properties. */
 export const extractPlddtScores = (
   model: Model | undefined,

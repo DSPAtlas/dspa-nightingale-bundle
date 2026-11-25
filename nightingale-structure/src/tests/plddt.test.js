@@ -1,4 +1,4 @@
-import { extractPlddtScores } from "../plddt";
+import { extractPlddtScores, getPlddtColor } from "../plddt";
 
 const column = (values, missing = []) => ({
   isDefined: true,
@@ -15,6 +15,25 @@ const makeModel = (positions, scores, { atoms, offsets, missing = [] } = {}) => 
   atomicConformation: { B_iso_or_equiv: column(scores, missing) },
   // LiP injection may replace these metrics, so confidence must come from atoms.
   _staticPropertyData: { ma_quality_assessment: { data: { value: { localMetrics: new Map([[0, 3]]) } } } },
+});
+
+describe("pLDDT structure colors", () => {
+  it("matches the barcode palette at all confidence boundaries", () => {
+    for (const [score, color] of [
+      [0, 0xff7d45], [49.99, 0xff7d45],
+      [50, 0xffdb13], [69.99, 0xffdb13],
+      [70, 0x65cbf3], [90, 0x65cbf3],
+      [90.01, 0x0053d6], [100, 0x0053d6],
+      [null, 0xaaaaaa], [undefined, 0xaaaaaa],
+      [-1, 0xaaaaaa], [101, 0xaaaaaa], [NaN, 0xaaaaaa], [Infinity, 0xaaaaaa],
+    ]) expect(getPlddtColor(score, true)).toBe(color);
+  });
+
+  it("does not interpret experimental B-factors as prediction confidence", () => {
+    for (const bFactor of [0, 20, 50, 70, 90, 99]) {
+      expect(getPlddtColor(bFactor, false)).toBe(0xaaaaaa);
+    }
+  });
 });
 
 describe("AlphaFold pLDDT extraction", () => {

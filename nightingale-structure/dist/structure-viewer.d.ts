@@ -17,17 +17,19 @@ type Range = {
     start: number;
     end: number;
 };
+export type StructureColorMode = "lip" | "plddt";
 export type StructureViewer = {
     plugin: CustomPluginContext;
     loadPdb(pdb: string, lipscoreArray?: Array<number>): Promise<void>;
-    loadCifUrl(url: string, lipscoreArray: Array<number>, isBinary?: boolean): Promise<void>;
+    loadCifUrl(url: string, lipscoreArray: Array<number>, isBinary?: boolean, isAlphaFold?: boolean): Promise<void>;
     highlight(ranges: Range[]): void;
     clearHighlight(): void;
     changeHighlightColor(color: number): void;
     zoom(factor: number): void;
     handleResize(): void;
     addLiPScores(lipscoreArray: Array<number>): void;
-    applyLipColorTheme(): Promise<void>;
+    setColorMode(mode: StructureColorMode): Promise<void>;
+    applyColorTheme(): Promise<void>;
     getPlddtScores(uniprotStart?: number, uniprotEnd?: number): PlddtScore[];
 };
 export declare const getStructureViewer: (container: HTMLDivElement, onHighlightClick: (sequencePositions: SequencePosition[]) => void, lipscoreArray: Array<number>, colorTheme?: string) => Promise<StructureViewer>;
