@@ -1,6 +1,6 @@
 import { Camera } from "molstar/lib/mol-canvas3d/camera";
 import { Vec3 } from "molstar/lib/mol-math/linear-algebra";
-import { getZoomOutClippingSnapshot, getZoomSnapshot } from "../camera";
+import { createZoomOutClippingTracker, getZoomOutClippingSnapshot, getZoomSnapshot } from "../camera";
 
 describe("structure zoom clipping", () => {
   it("preserves the full scene depth while zooming and rotating", () => {
@@ -129,5 +129,79 @@ describe("structure zoom clipping", () => {
       }
       expect(getZoomOutClippingSnapshot(camera.getSnapshot(), scene, previousDistance)).toBeUndefined();
     }
+  });
+});
+
+describe("animated focus and zoom", () => {
+  const scene = { center: Vec3.create(0, 0, 0), radius: 72 };
+  const target = Vec3.create(30, 0, 0);
+  const focusedCamera = () => {
+    const camera = new Camera({
+      ...Camera.createDefaultSnapshot(),
+      radius: scene.radius,
+      radiusMax: scene.radius,
+    });
+    camera.setState(camera.getFocus(target, 5), 0);
+    return camera;
+  };
+
+  const drawFrames = (camera, getClipping, times) => {
+    const updates = [];
+    for (const time of times) {
+      camera.transition.tick(time);
+      const clipping = getClipping(scene);
+      if (clipping) {
+        updates.push(clipping);
+        camera.setState(clipping);
+      }
+    }
+    return updates;
+  };
+
+  it.each([
+    ["larger region", target, 10],
+    ["different region", Vec3.create(-30, 0, 0), 10],
+    ["same region after zooming in", target, 5],
+  ])("preserves close-up clipping when focusing the %s", (_name, focusTarget, radius) => {
+    const camera = focusedCamera();
+    const getClipping = createZoomOutClippingTracker(camera);
+    expect(getClipping(scene)).toBeUndefined(); // Initial settled draw.
+    camera.setState(getZoomSnapshot(camera.getSnapshot(), 0.8), 0);
+    expect(getClipping(scene)).toBeUndefined();
+
+    // Match Mol*'s focusLoci/requestCameraReset path, including its animation.
+    camera.setState({ ...camera.getFocus(focusTarget, radius), radiusMax: scene.radius }, 250);
+    expect(drawFrames(camera, getClipping, [0, 50, 100, 150, 200, 250])).toEqual([]);
+    expect(camera.state.radius).toBe(radius);
+    expect(camera.state.radiusMax).toBe(scene.radius);
+    expect(camera.target).toEqual(focusTarget);
+    camera.update();
+    expect(camera.far - camera.near).toBeCloseTo(radius * 2, 8);
+
+    // A subsequent wheel/gesture zoom still recovers the whole protein.
+    const direction = Vec3.sub(Vec3(), camera.position, camera.target);
+    Vec3.scaleAndAdd(camera.position, camera.target, direction, 1.25);
+    const clipping = getClipping(scene);
+    expect(clipping.radius).toBe(scene.radius + Vec3.distance(scene.center, focusTarget) + 1);
+    camera.setState(clipping);
+    expect(getClipping(scene)).toBeUndefined();
+  });
+
+  it.each([
+    ["normal frames", [0, 50, 100, 150]],
+    ["a tiny final step", [0, 50, 100, 149.999, 150]],
+  ])("recovers clipping after animated button zoom with %s", (_name, times) => {
+    const camera = focusedCamera();
+    const getClipping = createZoomOutClippingTracker(camera);
+    expect(getClipping(scene)).toBeUndefined(); // Initial settled draw.
+    const zoom = getZoomSnapshot(camera.getSnapshot(), 1.25);
+    camera.setState(zoom, 150);
+
+    expect(drawFrames(camera, getClipping, times)).toHaveLength(1);
+    expect(camera.state.radius).toBe(103);
+    expect(camera.state.radiusMax).toBe(103);
+    expect(camera.target).toEqual(target);
+    expect(camera.position).toEqual(zoom.position);
+    expect(getClipping(scene)).toBeUndefined();
   });
 });

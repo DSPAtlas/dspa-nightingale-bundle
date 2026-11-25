@@ -14,12 +14,11 @@ import { PluginCommands } from "molstar/lib/mol-plugin/commands";
 import { Color } from "molstar/lib/mol-util/color";
 import { ValueBox } from "molstar/lib/mol-util/value-cell";
 import { ChainIdColorThemeProvider } from "molstar/lib/mol-theme/color/chain-id";
-import { Vec3 } from "molstar/lib/mol-math/linear-algebra";
 
 import {LIPColorTheme} from './color_new';
 import { extractPlddtScores, PlddtScore } from './plddt';
 import { markAlphaFoldModels, PlddtColorThemeProvider } from './color-plddt';
-import { getZoomOutClippingSnapshot, getZoomSnapshot } from './camera';
+import { createZoomOutClippingTracker, getZoomSnapshot } from './camera';
 
 
 
@@ -140,14 +139,10 @@ export const getStructureViewer = async (
   }
 
   const canvas3d = plugin.canvas3d!;
-  let previousDistance = Vec3.distance(canvas3d.camera.position, canvas3d.camera.target);
+  const getZoomOutClipping = createZoomOutClippingTracker(canvas3d.camera);
   canvas3d.didDraw.subscribe(() => {
     const camera = canvas3d.camera;
-    const snapshot = camera.getSnapshot();
-    const clipping = !camera.transition.inTransition
-      ? getZoomOutClippingSnapshot(snapshot, canvas3d.boundingSphereVisible, previousDistance)
-      : undefined;
-    previousDistance = Vec3.distance(snapshot.position, snapshot.target);
+    const clipping = getZoomOutClipping(canvas3d.boundingSphereVisible);
     if (!clipping || canvas3d.boundingSphere.radius <= 0) return;
 
     // Mol* resets radiusMax on scene commits, so retain the recovered depth

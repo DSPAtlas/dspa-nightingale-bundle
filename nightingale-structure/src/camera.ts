@@ -26,7 +26,7 @@ export const getZoomSnapshot = (
  * Restore full protein depth after zooming out from a barcode close-up.
  * Hover focus can intentionally narrow the clipping range to the selected region.
  * structure-viewer.ts calls this after a rendered frame, once any camera animation
- * has finished, passing the camera-to-target distance from the previous frame.
+ * has finished, passing the camera-to-target distance from the previous settled frame.
  * Only clipping settings are returned; camera position and focus stay unchanged.
  */
 export const getZoomOutClippingSnapshot = (
@@ -56,5 +56,23 @@ export const getZoomOutClippingSnapshot = (
     radiusMax: Math.max(snapshot.radiusMax, radius),
     // Use the recovered radius for the far clipping plane as well as the near one.
     clipFar: true,
+  };
+};
+
+/** Track zoom separately from Mol* focus/reset commands, including same-region refocus. */
+export const createZoomOutClippingTracker = (camera: Camera) => {
+  let previousDistance = NaN;
+  camera.stateChanged.subscribe((state) => {
+    // Focus/reset commands carry a target or radius; zoom buttons only set position,
+    // and wheel/gesture zoom mutates position directly. Rebase after focus settles.
+    if (state.target !== undefined || state.radius !== undefined) previousDistance = NaN;
+  });
+
+  return (scene: Readonly<Sphere3D>) => {
+    if (camera.transition.inTransition) return undefined;
+    const snapshot = camera.getSnapshot();
+    const clipping = getZoomOutClippingSnapshot(snapshot, scene, previousDistance);
+    previousDistance = Vec3.distance(snapshot.position, snapshot.target);
+    return clipping;
   };
 };
