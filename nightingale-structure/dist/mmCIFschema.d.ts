@@ -5069,7 +5069,7 @@ export declare const mmCIF_Schema: {
         /**
          * The type of data held in the dataset.
          */
-        content_type: Schema.Aliased<"target" | "other" | "reference database" | "template structure" | "polymeric template library" | "spatial restraints" | "target-template alignment" | "coevolution MSA" | "model coordinates" | "input structure">;
+        content_type: Schema.Aliased<"other" | "reference database" | "target" | "template structure" | "polymeric template library" | "spatial restraints" | "target-template alignment" | "coevolution MSA" | "model coordinates" | "input structure">;
         /**
          * Details for other content types.
          */
