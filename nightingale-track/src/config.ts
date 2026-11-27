@@ -177,8 +177,8 @@ export const config = {
     name: "active site",
     label: "Active site",
     tooltip: "Amino acid(s) directly involved in the activity of an enzyme",
-    shape: "circle",
-    color: "#FF6666",
+    shape: "circleWithRange",
+    color: "#B59B00",
   },
   MOD_RES: {
     name: "Post-translationally modified residue",

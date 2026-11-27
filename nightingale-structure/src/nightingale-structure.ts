@@ -9,6 +9,7 @@ import NightingaleElement, {
 } from "@nightingale-elements/nightingale-new-core";
 
 import { getStructureViewer, StructureViewer } from "./structure-viewer";
+import type { ActiveSiteRange } from "./active-sites";
 import type { PlddtData, PlddtScore } from "./plddt";
 export type { PlddtData, PlddtScore } from "./plddt";
 import translatePositions, {
@@ -90,6 +91,9 @@ class NightingaleStructure extends withManager(
 
   @property({ type: Array})
    "lipscore-array": Array<number>;
+
+  @property({ type: Array })
+  "active-site-ranges": ActiveSiteRange[] = [];
 
   @property({ type: String })
   "color-by": "lip" | "plddt" = "lip";
@@ -236,6 +240,7 @@ class NightingaleStructure extends withManager(
             return undefined;
           }
           this.#structureViewer = structureViewer;
+          await structureViewer.setActiveSiteRanges(this["protein-accession"] || "", this["active-site-ranges"]);
           await structureViewer.setColorMode(this["color-by"] === "plddt" ? "plddt" : "lip");
           const color = this["highlight-color"]?.substring(1, 7) || "FF6699";
           this.#structureViewer.changeHighlightColor(parseInt(color, 16));
@@ -251,6 +256,9 @@ class NightingaleStructure extends withManager(
   }
 
   protected updated(changedProperties: Map<PropertyKey, unknown>): void {
+    if (changedProperties.has("active-site-ranges") || changedProperties.has("protein-accession")) {
+      this.#structureViewer?.setActiveSiteRanges(this["protein-accession"] || "", this["active-site-ranges"]).catch(console.error);
+    }
     if (changedProperties.has("structure-id") || changedProperties.has("protein-accession")) {
       this.selectMolecule();
     }
@@ -350,7 +358,10 @@ class NightingaleStructure extends withManager(
         );
         if (afInfo?.cifUrl) {
           console.log(afInfo.cifUrl);
-          await structureViewer.loadCifUrl(afInfo.cifUrl, this["lipscore-array"] || [], false, true);
+          await structureViewer.loadCifUrl(afInfo.cifUrl, this["lipscore-array"] || [], false, true, {
+            kind: "alphafold", proteinAccession,
+            uniprotStart: afInfo.uniprotStart, uniprotEnd: afInfo.uniprotEnd,
+          });
           if (!isCurrent()) return;
           this.publishPlddt(proteinAccession, structureId, structureViewer.getPlddtScores(afInfo.uniprotStart, afInfo.uniprotEnd));
           this.clearMessage();
@@ -364,7 +375,8 @@ class NightingaleStructure extends withManager(
           Object.values(pdbEntry)[0].UniProt[proteinAccession]?.mappings;
           if (this["custom-download-url"]) {
             await structureViewer.loadCifUrl(
-              `${this["custom-download-url"]}${structureId.toLowerCase()}.cif`, this["lipscore-array"] || []
+              `${this["custom-download-url"]}${structureId.toLowerCase()}.cif`, this["lipscore-array"] || [], false, false,
+              { kind: "pdb", proteinAccession, mappings: mappings || [] },
             );
             if (!isCurrent()) return;
             this.clearMessage();
@@ -372,6 +384,7 @@ class NightingaleStructure extends withManager(
           await structureViewer.loadPdb(
             structureId.toLowerCase(),
             this["lipscore-array"] || [],
+            { kind: "pdb", proteinAccession, mappings: mappings || [] },
           );
           if (!isCurrent()) return;
           this.clearMessage();

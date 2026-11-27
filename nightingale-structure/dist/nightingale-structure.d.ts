@@ -1,4 +1,5 @@
 import NightingaleElement from "@nightingale-elements/nightingale-new-core";
+import type { ActiveSiteRange } from "./active-sites";
 import type { PlddtData } from "./plddt";
 export type { PlddtData, PlddtScore } from "./plddt";
 import { Mapping } from "./position-mapping";
@@ -46,6 +47,7 @@ declare class NightingaleStructure extends NightingaleStructure_base {
     "structure-id": string;
     "custom-download-url"?: string;
     "lipscore-array": Array<number>;
+    "active-site-ranges": ActiveSiteRange[];
     "color-by": "lip" | "plddt";
     selectedMolecule?: {
         id: string;

@@ -14,6 +14,7 @@ export type Shapes =
   | "hexagon"
   | "pentagon"
   | "circle"
+  | "circleWithRange"
   | "arrow"
   | "doubleBar"
   | "discontinuosStart"
@@ -53,6 +54,8 @@ export default class FeatureShape {
         return () => this.pentagon();
       case "circle":
         return () => this.circle();
+      case "circleWithRange":
+        return () => this.circleWithRange();
       case "arrow":
         return () => this.arrow();
       case "doubleBar":
@@ -219,6 +222,15 @@ export default class FeatureShape {
     return this.#ftLength !== 1
       ? `${shape + this.#getMiddleLine(symbolSize / 2)}Z`
       : `${shape}Z`;
+  }
+
+  circleWithRange() {
+    // Keep the fixed-size marker visible when the residue span is only a few
+    // pixels wide. The bar follows the full inclusive span at every zoom level.
+    const barHeight = 3;
+    const top = (symbolSize - barHeight) / 2;
+    const bottom = top + barHeight;
+    return `${this.circle()}M0,${top}H${this.#ftWidth}V${bottom}H0Z`;
   }
 
   arrow() {

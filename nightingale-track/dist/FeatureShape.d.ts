@@ -1,4 +1,4 @@
-export type Shapes = "rectangle" | "roundRectangle" | "bridge" | "line" | "bridge" | "diamond" | "chevron" | "catFace" | "triangle" | "wave" | "hexagon" | "pentagon" | "circle" | "arrow" | "doubleBar" | "discontinuosStart" | "discontinuos" | "discontinuosEnd" | "helix" | "strand";
+export type Shapes = "rectangle" | "roundRectangle" | "bridge" | "line" | "bridge" | "diamond" | "chevron" | "catFace" | "triangle" | "wave" | "hexagon" | "pentagon" | "circle" | "circleWithRange" | "arrow" | "doubleBar" | "discontinuosStart" | "discontinuos" | "discontinuosEnd" | "helix" | "strand";
 export default class FeatureShape {
     #private;
     private shape2function;
@@ -17,6 +17,7 @@ export default class FeatureShape {
     hexagon(): string;
     pentagon(): string;
     circle(): string;
+    circleWithRange(): string;
     arrow(): string;
     doubleBar(): string;
     discontinuosStart(): string;

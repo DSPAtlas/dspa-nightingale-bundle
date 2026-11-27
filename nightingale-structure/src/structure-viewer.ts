@@ -19,11 +19,15 @@ import {LIPColorTheme} from './color_new';
 import { extractPlddtScores, PlddtScore } from './plddt';
 import { markAlphaFoldModels, PlddtColorThemeProvider } from './color-plddt';
 import { createZoomOutClippingTracker, getZoomSnapshot } from './camera';
+import { ActiveSiteData, createActiveSiteData, setModelActiveSiteData } from './active-sites';
+import { ActiveSiteMapping, setActiveSiteMapping } from './active-site-color';
+import { withActiveSiteColor } from './color-active-sites';
 
 
 
 interface CustomPluginState {
   lipscoreArray: Array<number>;
+  activeSiteData: ActiveSiteData;
 }
 
 class CustomPluginContext extends PluginContext {
@@ -33,6 +37,7 @@ class CustomPluginContext extends PluginContext {
     super(spec);
     this.customState = {
       lipscoreArray: [],
+      activeSiteData: createActiveSiteData("", []),
     };
   }
 }
@@ -106,14 +111,15 @@ export type StructureColorMode = "lip" | "plddt";
 
 export type StructureViewer = {
   plugin: CustomPluginContext;
-  loadPdb(pdb: string, lipscoreArray?: Array<number>): Promise<void>;
-  loadCifUrl(url: string, lipscoreArray: Array<number>, isBinary?: boolean, isAlphaFold?: boolean): Promise<void>;
+  loadPdb(pdb: string, lipscoreArray?: Array<number>, activeSiteMapping?: ActiveSiteMapping): Promise<void>;
+  loadCifUrl(url: string, lipscoreArray: Array<number>, isBinary?: boolean, isAlphaFold?: boolean, activeSiteMapping?: ActiveSiteMapping): Promise<void>;
   highlight(ranges: Range[]): void;
   clearHighlight(): void;
   changeHighlightColor(color: number): void;
   zoom(factor: number): void;
   handleResize(): void;
   addLiPScores(lipscoreArray: Array<number>): void;
+  setActiveSiteRanges(proteinAccession: string, ranges: unknown): Promise<void>;
   setColorMode(mode: StructureColorMode): Promise<void>;
   applyColorTheme(): Promise<void>;
   getPlddtScores(uniprotStart?: number, uniprotEnd?: number): PlddtScore[];
@@ -156,7 +162,7 @@ export const getStructureViewer = async (
 
   if (LIPColorTheme.colorThemeProvider)
     plugin.representation.structure.themes.colorThemeRegistry.add(
-      LIPColorTheme.colorThemeProvider
+      withActiveSiteColor(LIPColorTheme.colorThemeProvider)
     );
   if (LIPColorTheme.labelProvider)
     plugin.managers.lociLabels.addProvider(
@@ -166,9 +172,17 @@ export const getStructureViewer = async (
     LIPColorTheme.propertyProvider,
     true
   );
-  plugin.representation.structure.themes.colorThemeRegistry.add(PlddtColorThemeProvider);
+  plugin.representation.structure.themes.colorThemeRegistry.add(withActiveSiteColor(PlddtColorThemeProvider));
   let colorMode: StructureColorMode = "lip";
   let colorThemeTask: Promise<void> = Promise.resolve();
+
+  const attachActiveSiteData = () => {
+    for (const structure of plugin.managers.structure.hierarchy.current.structures) {
+      for (const model of structure.cell.obj?.data.models || []) {
+        setModelActiveSiteData(model, plugin.customState.activeSiteData);
+      }
+    }
+  };
 
 
 plugin.behaviors.interaction.click.subscribe((event) => {
@@ -203,14 +217,16 @@ const structureViewer: StructureViewer = {
     const model = plugin.managers.structure.hierarchy.current.structures[0]?.cell.obj?.data.models[0];
     return extractPlddtScores(model, uniprotStart, uniprotEnd);
   },
-  async loadPdb(pdb, lipscoreArray: Array<number> = []) {
+  async loadPdb(pdb, lipscoreArray: Array<number> = [], activeSiteMapping) {
     await this.loadCifUrl(
       `https://www.ebi.ac.uk/pdbe/model-server/v1/${pdb.toLowerCase()}/full?encoding=bcif`,
       lipscoreArray,
-      true
+      true,
+      false,
+      activeSiteMapping
     );
   },
-  async loadCifUrl(url:string, lipscoreArray:Array<number> = [], isBinary:boolean = false, isAlphaFold:boolean = false): Promise<void> {
+  async loadCifUrl(url:string, lipscoreArray:Array<number> = [], isBinary:boolean = false, isAlphaFold:boolean = false, activeSiteMapping?: ActiveSiteMapping): Promise<void> {
     plugin.customState.lipscoreArray = lipscoreArray || [];
     const data = await plugin.builders.data.download(
       { url, isBinary },
@@ -230,8 +246,10 @@ const structureViewer: StructureViewer = {
     for (const structure of plugin.managers.structure.hierarchy.current.structures) {
       const models = structure.cell.obj?.data.models;
       if (models) markAlphaFoldModels(models, isAlphaFold);
+      for (const model of models || []) setActiveSiteMapping(model, activeSiteMapping);
     }
     this.addLiPScores(plugin.customState.lipscoreArray);
+    attachActiveSiteData();
     await this.applyColorTheme();
     // TODO maybe add here more logic
   },
@@ -293,6 +311,12 @@ const structureViewer: StructureViewer = {
 
     console.log('LiP scores successfully added to structure data.');
     console.log('Updated structure data:', JSON.stringify(modelData, null, 2));
+  },
+
+  setActiveSiteRanges(proteinAccession, ranges) {
+    plugin.customState.activeSiteData = createActiveSiteData(proteinAccession, ranges);
+    attachActiveSiteData();
+    return this.applyColorTheme();
   },
 
   setColorMode(mode) {
