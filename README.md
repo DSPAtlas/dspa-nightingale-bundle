@@ -24,9 +24,8 @@ temporary staging directory, or pre-existing `node_modules` is needed.
 For one component, use `npm run build --workspace=nightingale-structure` (or run
 `npm run build` in its directory). Run all tests from the root with `npm test`.
 The suites cover camera clipping, pLDDT, position mapping, active-site mapping,
-and the active-site colour overlay. The historical
-`alpha-missense-parser.test.js` references an implementation not shipped in this
-repository and is excluded explicitly in `jest.config.cjs`.
+and the active-site colour overlay. Jest discovers tests using its default
+file patterns.
 
 ## Application integration
 
