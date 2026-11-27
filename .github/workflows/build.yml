@@ -1,0 +1,28 @@
+name: Build and test bundle
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Rebuild every component from source
+        run: |
+          rm -rf nightingale-sequence/dist nightingale-sequence-heatmap/dist nightingale-structure/dist nightingale-track/dist
+          npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nightingale-bundle
+          path: |
+            nightingale-*/dist/
+            nightingale-*/package.json
+          if-no-files-found: error
